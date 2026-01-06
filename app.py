@@ -49,6 +49,10 @@ import io
 from simple_pdf_generator import generate_simple_pdf
 import MySQLdb
 from flask import jsonify, request
+import os
+from flask import Flask
+import pymysql
+import os
 UPLOAD_FOLDER = 'static/uploads/profile_images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
@@ -70,18 +74,33 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Initialize Flask app
+
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'wellness-coach-secure-key-2024'
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'Reddy@123'
-app.config['MYSQL_DB'] = 'wellness_coach'
+
+# Security
+app.config['SECRET_KEY'] = os.getenv(
+    'SECRET_KEY',
+    'wellness-coach-secure-key-2024'  # fallback for local
+)
+
+# MySQL (Railway / Production)
+app.config['MYSQL_HOST'] = os.getenv('MYSQLHOST')
+app.config['MYSQL_USER'] = os.getenv('MYSQLUSER', 'root')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_ROOT_PASSWORD')
+app.config['MYSQL_DB'] = os.getenv('MYSQLDATABASE', 'railway')
+app.config['MYSQL_PORT'] = int(os.getenv('MYSQLPORT', 3306))
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+
+
+# Uploads
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+
+# Flask
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-app.config['DEBUG'] = True
+app.config['DEBUG'] = False   # IMPORTANT for production
+
 
 # Initialize extensions
 mysql = MySQL(app)
@@ -132,7 +151,6 @@ class User(UserMixin):
         except Exception as e:
             logger.error(f"Error updating profile: {str(e)}")
             return False, "Error updating profile"
-
 class User:
     def __init__(self, id, username, email, name, user_type, profile_image=None, created_at=None):
         self.id = id
@@ -938,8 +956,15 @@ def save_profile_image(file, user_id):
     
     return filename
 
-
-
+def get_db_connection():
+    return pymysql.connect(
+        host=os.getenv("MYSQL_HOST"),
+        user=os.getenv("MYSQL_USER"),
+        password=os.getenv("MYSQL_PASSWORD"),
+        database=os.getenv("MYSQL_DB"),
+        port=int(os.getenv("MYSQL_PORT")),
+        cursorclass=pymysql.cursors.DictCursor
+    )
 
 def init_database():
     """Initialize database with all required tables and sample data"""
@@ -3235,4 +3260,11 @@ if __name__ == '__main__':
     print("=" * 60 + "\n")
     
     # Run the application
-    app.run(debug=True, host='0.0.0.0', port=5800)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
+
+
+
+
