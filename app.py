@@ -53,6 +53,7 @@ import os
 from flask import Flask
 import pymysql
 import os
+from flask_login import UserMixin
 UPLOAD_FOLDER = 'static/uploads/profile_images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
@@ -119,44 +120,67 @@ login_manager.login_message_category = 'warning'
 
 # ==================== MODELS ====================
 class User(UserMixin):
+    def __init__(self, id, username, email, name, user_type, profile_image=None):
+        self.id = id
+        self.username = username
+        self.email = email
+        self.name = name
+        self.user_type = user_type
+        self.profile_image = profile_image
+
+    @staticmethod
+    def get_by_id(user_id, mysql):
+        cursor = mysql.connection.cursor()
+        cursor.execute(
+            "SELECT id, username, email, name, user_type, profile_image FROM users WHERE id = %s",
+            (user_id,)
+        )
+        row = cursor.fetchone()
+        cursor.close()
+
+        if row:
+            return User(
+                row["id"],
+                row["username"],
+                row["email"],
+                row["name"],
+                row["user_type"],
+                row["profile_image"]
+            )
+        return None
+
     @staticmethod
     def update_profile(user_id, username, email, name, profile_image, mysql):
-        """Update user profile"""
         try:
             cursor = mysql.connection.cursor()
-            
-            # Check if username or email already exists (excluding current user)
+
             cursor.execute(
-                "SELECT id FROM users WHERE (username = %s OR email = %s) AND id != %s",
+                "SELECT id FROM users WHERE (username=%s OR email=%s) AND id!=%s",
                 (username, email, user_id)
             )
-            existing_user = cursor.fetchone()
-            
-            if existing_user:
+            if cursor.fetchone():
+                cursor.close()
                 return False, "Username or email already exists"
-            
-            # Update user profile
+
             if profile_image:
-                cursor.execute(
-                    """UPDATE users 
-                       SET username = %s, email = %s, name = %s, profile_image = %s, updated_at = NOW() 
-                       WHERE id = %s""",
-                    (username, email, name, profile_image, user_id)
-                )
+                cursor.execute("""
+                    UPDATE users
+                    SET username=%s, email=%s, name=%s, profile_image=%s
+                    WHERE id=%s
+                """, (username, email, name, profile_image, user_id))
             else:
-                cursor.execute(
-                    """UPDATE users 
-                       SET username = %s, email = %s, name = %s, updated_at = NOW() 
-                       WHERE id = %s""",
-                    (username, email, name, user_id)
-                )
-            
+                cursor.execute("""
+                    UPDATE users
+                    SET username=%s, email=%s, name=%s
+                    WHERE id=%s
+                """, (username, email, name, user_id))
+
             mysql.connection.commit()
             cursor.close()
             return True, "Profile updated successfully"
-            
+
         except Exception as e:
-            logger.error(f"Error updating profile: {str(e)}")
+            print("PROFILE UPDATE ERROR:", e)
             return False, "Error updating profile"
 class User:
     def __init__(self, id, username, email, name, user_type, profile_image=None, created_at=None):
@@ -3315,6 +3339,7 @@ if __name__ == '__main__':
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
