@@ -84,10 +84,11 @@ app.config['SECRET_KEY'] = os.getenv(
 )
 
 # MySQL (Railway / Production)
+# MySQL (Railway / Production)
 app.config['MYSQL_HOST'] = os.getenv('MYSQLHOST')
-app.config['MYSQL_USER'] = os.getenv('MYSQLUSER', 'root')
-app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_ROOT_PASSWORD')
-app.config['MYSQL_DB'] = os.getenv('MYSQLDATABASE', 'railway')
+app.config['MYSQL_USER'] = os.getenv('MYSQLUSER')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQLPASSWORD')
+app.config['MYSQL_DB'] = os.getenv('MYSQLDATABASE')
 app.config['MYSQL_PORT'] = int(os.getenv('MYSQLPORT', 3306))
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
@@ -1185,6 +1186,7 @@ def init_database():
         logger.error(f"Database initialization error: {e}", exc_info=True)
 
 # ==================== ROUTES ====================
+
 
 @app.route('/')
 def index():
@@ -3262,7 +3264,9 @@ if __name__ == '__main__':
     # Run the application
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
+
 
 
 
