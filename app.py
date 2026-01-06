@@ -3118,6 +3118,10 @@ def api_stats():
     except Exception as e:
         logger.error(f"Error getting stats: {e}")
         return jsonify({'status': 'error', 'message': str(e)}), 500
+        
+@app.errorhandler(500)
+def internal_server_error(error):
+    return render_template("500.html"), 500
 
 # ==================== DEBUG & DIAGNOSTIC ROUTES ====================
 
@@ -3272,6 +3276,7 @@ if __name__ == '__main__':
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
