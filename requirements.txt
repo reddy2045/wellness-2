@@ -5,6 +5,7 @@ Werkzeug==2.3.7
 # Database & MySQL
 Flask-MySQLdb==1.0.1
 mysqlclient==2.2.0
+PyMySQL
 
 # Authentication & Security
 Flask-Login==0.6.2
@@ -14,6 +15,7 @@ email-validator==2.0.0
 
 # PDF Generation
 reportlab==4.0.4
+fpdf==1.7.2
 
 # Image Processing
 Pillow==10.4.0
@@ -23,10 +25,16 @@ secure-smtplib==0.1.1
 
 # Development & Utilities
 python-dotenv==1.0.0
+python-decouple==3.8
 blinker==1.7.0
 click==8.1.7
 itsdangerous==2.1.2
 
-# Optional: For production
+# Production
 gunicorn==21.2.0
-python-decouple==3.8
+
+Flask
+gunicorn
+flask-mysqldb
+mysqlclient
+python-dotenv
