@@ -1,0 +1,32 @@
+# Flask Core
+Flask==2.3.3
+Werkzeug==2.3.7
+
+# Database & MySQL
+Flask-MySQLdb==1.0.1
+mysqlclient==2.2.0
+
+# Authentication & Security
+Flask-Login==0.6.2
+Flask-WTF==1.1.1
+WTForms==3.0.1
+email-validator==2.0.0
+
+# PDF Generation
+reportlab==4.0.4
+
+# Image Processing
+Pillow==10.4.0
+
+# Email Support
+secure-smtplib==0.1.1
+
+# Development & Utilities
+python-dotenv==1.0.0
+blinker==1.7.0
+click==8.1.7
+itsdangerous==2.1.2
+
+# Optional: For production
+gunicorn==21.2.0
+python-decouple==3.8
