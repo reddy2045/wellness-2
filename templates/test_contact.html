@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Contact Form</title>
+    <style>
+        body { font-family: Arial; max-width: 500px; margin: 50px auto; padding: 20px; }
+        input, textarea { width: 100%; padding: 10px; margin: 5px 0 15px; }
+        button { padding: 10px 20px; background: green; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>Test Contact Form</h2>
+    
+    <form method="POST" action="/contact">
+        <div>
+            <label>Name:</label>
+            <input type="text" name="name" required value="Test User">
+        </div>
+        
+        <div>
+            <label>Email:</label>
+            <input type="email" name="email" required value="test@example.com">
+        </div>
+        
+        <div>
+            <label>Phone:</label>
+            <input type="text" name="phone" required value="9876543210">
+        </div>
+        
+        <div>
+            <label>Subject:</label>
+            <input type="text" name="subject" required value="Test Subject">
+        </div>
+        
+        <div>
+            <label>Message:</label>
+            <textarea name="message" rows="4" required>This is a test message.</textarea>
+        </div>
+        
+        <button type="submit">Send Test Message</button>
+    </form>
+    
+    <hr>
+    
+    <h3>Direct Database Test:</h3>
+    <a href="/test-db" target="_blank">Test Database Connection</a><br>
+    <a href="/debug-contact" target="_blank">Debug Contact Route</a>
+</body>
+</html>

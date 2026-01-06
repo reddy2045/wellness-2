@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Wellness Coach</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        :root {
+            --primary: #10B981;
+            --primary-light: #D1FAE5;
+            --secondary: #3B82F6;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 100%);
+            min-height: 100vh;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-gradient {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.98) 100%);
+            backdrop-filter: blur(10px);
+        }
+        
+        .faq-item {
+            transition: all 0.3s ease;
+        }
+        
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .faq-item.active .faq-content {
+            max-height: 500px;
+        }
+        
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .smooth-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="{{ url_for('index') }}" class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-heartbeat text-white text-xl"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-800">Wellness<span class="gradient-text">Coach</span></span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="{{ url_for('login') }}" class="text-gray-600 hover:text-green-600 smooth-transition">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login
+                    </a>
+                    <a href="{{ url_for('register') }}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg smooth-transition">
+                        <i class="fas fa-user-plus mr-2"></i>Sign Up
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto px-4 py-12">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <div class="w-20 h-20 bg-gradient-to-br from-green-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-question-circle text-3xl gradient-text"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Frequently Asked Questions</h1>
+            <p class="text-gray-600 max-w-2xl mx-auto">
+                Find answers to common questions about Wellness Coach. Can't find what you're looking for? 
+                <a href="{{ url_for('contact') }}" class="text-green-600 hover:text-green-700 font-medium">Contact our support team</a>.
+            </p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="mb-8">
+            <div class="relative max-w-xl mx-auto">
+                <input type="text" 
+                       id="faqSearch"
+                       placeholder="Search questions..."
+                       class="w-full px-6 py-4 bg-white rounded-xl shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                <i class="fas fa-search absolute right-5 top-4 text-gray-400"></i>
+            </div>
+        </div>
+
+        <!-- FAQ Categories -->
+        <div class="flex flex-wrap justify-center gap-2 mb-8">
+            <button class="category-btn px-4 py-2 rounded-full bg-green-500 text-white font-medium smooth-transition" data-category="all">
+                All Questions
+            </button>
+            <button class="category-btn px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium smooth-transition" data-category="account">
+                Account & Login
+            </button>
+            <button class="category-btn px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium smooth-transition" data-category="password">
+                Password Reset
+            </button>
+            <button class="category-btn px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium smooth-transition" data-category="features">
+                Features
+            </button>
+            <button class="category-btn px-4 py-2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium smooth-transition" data-category="privacy">
+                Privacy & Security
+            </button>
+        </div>
+
+        <!-- FAQ Accordion -->
+        <div class="space-y-4 mb-12">
+            <!-- Account & Login Questions -->
+            <div class="faq-item account active animate-fadeIn" data-category="account">
+                <div class="card-gradient rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 smooth-transition">
+                        <h3 class="text-lg font-semibold text-gray-800">How do I create an account?</h3>
+                        <span class="faq-toggle smooth-transition">
+                            <i class="fas fa-chevron-down text-green-500"></i>
+                        </span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-6 pb-4 pt-2 border-t border-gray-100">
+                            <p class="text-gray-600 mb-3">
+                                Creating an account is simple! Click the "Sign Up" button in the top navigation or visit our registration page. You'll need to provide:
+                            </p>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-1 mb-4">
+                                <li>Your full name</li>
+                                <li>Email address</li>
+                                <li>Password (minimum 8 characters with letters and numbers)</li>
+                            </ul>
+                            <p class="text-gray-600">
+                                After registration, you'll receive a confirmation email. Click the link to verify your account.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Password Reset Questions -->
+            <div class="faq-item password active animate-fadeIn" data-category="password">
+                <div class="card-gradient rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 smooth-transition">
+                        <h3 class="text-lg font-semibold text-gray-800">I didn't receive the password reset email</h3>
+                        <span class="faq-toggle smooth-transition">
+                            <i class="fas fa-chevron-down text-green-500"></i>
+                        </span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-6 pb-4 pt-2 border-t border-gray-100">
+                            <p class="text-gray-600 mb-3">
+                                If you haven't received the password reset email, try these steps:
+                            </p>
+                            <ol class="list-decimal pl-5 text-gray-600 space-y-2 mb-4">
+                                <li><strong>Check your spam/junk folder</strong> - Sometimes emails get filtered incorrectly</li>
+                                <li><strong>Wait 5 minutes</strong> - Email delivery can sometimes be delayed</li>
+                                <li><strong>Verify your email address</strong> - Make sure you entered the correct email associated with your account</li>
+                                <li><strong>Resend the reset link</strong> - Use the "Resend Email" button on the reset page</li>
+                            </ol>
+                            <p class="text-gray-600">
+                                If you still don't receive the email after 15 minutes, please <a href="{{ url_for('contact') }}" class="text-green-600 hover:text-green-700 font-medium">contact our support team</a>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item password active animate-fadeIn" data-category="password">
+                <div class="card-gradient rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 smooth-transition">
+                        <h3 class="text-lg font-semibold text-gray-800">How long is the password reset link valid?</h3>
+                        <span class="faq-toggle smooth-transition">
+                            <i class="fas fa-chevron-down text-green-500"></i>
+                        </span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-6 pb-4 pt-2 border-t border-gray-100">
+                            <p class="text-gray-600">
+                                For security reasons, password reset links are valid for <strong>1 hour</strong> from the time they are sent. If the link expires, you can request a new one by clicking "Resend Email" on the reset page.
+                            </p>
+                            <div class="mt-4 p-3 bg-yellow-50 border border-yellow-100 rounded-lg">
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-triangle text-yellow-500 mt-0.5 mr-2"></i>
+                                    <p class="text-sm text-yellow-700">
+                                        <strong>Security Tip:</strong> Always use the latest reset link. Old links become invalid once a new one is generated.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Questions -->
+            <div class="faq-item features active animate-fadeIn" data-category="features">
+                <div class="card-gradient rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 smooth-transition">
+                        <h3 class="text-lg font-semibold text-gray-800">What features does Wellness Coach offer?</h3>
+                        <span class="faq-toggle smooth-transition">
+                            <i class="fas fa-chevron-down text-green-500"></i>
+                        </span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-6 pb-4 pt-2 border-t border-gray-100">
+                            <p class="text-gray-600 mb-4">
+                                Wellness Coach offers a comprehensive set of features to support your health journey:
+                            </p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div class="bg-green-50 p-4 rounded-lg">
+                                    <div class="flex items-center mb-2">
+                                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-chart-line text-green-600"></i>
+                                        </div>
+                                        <h4 class="font-medium text-gray-800">Progress Tracking</h4>
+                                    </div>
+                                    <p class="text-sm text-gray-600">Monitor your health metrics over time with detailed charts</p>
+                                </div>
+                                <div class="bg-blue-50 p-4 rounded-lg">
+                                    <div class="flex items-center mb-2">
+                                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-dumbbell text-blue-600"></i>
+                                        </div>
+                                        <h4 class="font-medium text-gray-800">Workout Plans</h4>
+                                    </div>
+                                    <p class="text-sm text-gray-600">Customized exercise routines based on your goals</p>
+                                </div>
+                                <div class="bg-purple-50 p-4 rounded-lg">
+                                    <div class="flex items-center mb-2">
+                                        <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-utensils text-purple-600"></i>
+                                        </div>
+                                        <h4 class="font-medium text-gray-800">Nutrition Guide</h4>
+                                    </div>
+                                    <p class="text-sm text-gray-600">Personalized meal plans and nutrition tracking</p>
+                                </div>
+                                <div class="bg-pink-50 p-4 rounded-lg">
+                                    <div class="flex items-center mb-2">
+                                        <div class="w-8 h-8 bg-pink-100 rounded-full flex items-center justify-center mr-3">
+                                            <i class="fas fa-brain text-pink-600"></i>
+                                        </div>
+                                        <h4 class="font-medium text-gray-800">Mindfulness</h4>
+                                    </div>
+                                    <p class="text-sm text-gray-600">Meditation and stress management exercises</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy & Security Questions -->
+            <div class="faq-item privacy active animate-fadeIn" data-category="privacy">
+                <div class="card-gradient rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 smooth-transition">
+                        <h3 class="text-lg font-semibold text-gray-800">Is my personal information secure?</h3>
+                        <span class="faq-toggle smooth-transition">
+                            <i class="fas fa-chevron-down text-green-500"></i>
+                        </span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-6 pb-4 pt-2 border-t border-gray-100">
+                            <p class="text-gray-600 mb-3">
+                                Yes, your security and privacy are our top priorities. We implement several measures to protect your data:
+                            </p>
+                            <ul class="list-disc pl-5 text-gray-600 space-y-2 mb-4">
+                                <li><strong>End-to-end encryption</strong> for all sensitive data</li>
+                                <li><strong>Secure password storage</strong> using bcrypt hashing</li>
+                                <li><strong>Regular security audits</strong> and vulnerability testing</li>
+                                <li><strong>GDPR compliance</strong> for data protection</li>
+                                <li><strong>Two-factor authentication</strong> (coming soon)</li>
+                            </ul>
+                            <p class="text-gray-600">
+                                We never share your personal information with third parties without your explicit consent. Read our full 
+                                <a href="{{ url_for('privacy') }}" class="text-green-600 hover:text-green-700 font-medium">Privacy Policy</a> for more details.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item privacy active animate-fadeIn" data-category="privacy">
+                <div class="card-gradient rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 smooth-transition">
+                        <h3 class="text-lg font-semibold text-gray-800">Can I delete my account and data?</h3>
+                        <span class="faq-toggle smooth-transition">
+                            <i class="fas fa-chevron-down text-green-500"></i>
+                        </span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-6 pb-4 pt-2 border-t border-gray-100">
+                            <p class="text-gray-600 mb-3">
+                                Yes, you have full control over your data. You can delete your account at any time:
+                            </p>
+                            <ol class="list-decimal pl-5 text-gray-600 space-y-2 mb-4">
+                                <li>Go to your Account Settings</li>
+                                <li>Scroll to the bottom and click "Delete Account"</li>
+                                <li>Confirm your choice by entering your password</li>
+                                <li>All your personal data will be permanently deleted within 30 days</li>
+                            </ol>
+                            <div class="p-3 bg-red-50 border border-red-100 rounded-lg">
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-red-500 mt-0.5 mr-2"></i>
+                                    <p class="text-sm text-red-700">
+                                        <strong>Warning:</strong> Account deletion is permanent and cannot be undone. All your data, progress, and history will be lost.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account & Login -->
+            <div class="faq-item account active animate-fadeIn" data-category="account">
+                <div class="card-gradient rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <button class="faq-question w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 smooth-transition">
+                        <h3 class="text-lg font-semibold text-gray-800">Can I change my email address?</h3>
+                        <span class="faq-toggle smooth-transition">
+                            <i class="fas fa-chevron-down text-green-500"></i>
+                        </span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="px-6 pb-4 pt-2 border-t border-gray-100">
+                            <p class="text-gray-600 mb-3">
+                                Yes, you can change your email address by following these steps:
+                            </p>
+                            <ol class="list-decimal pl-5 text-gray-600 space-y-2 mb-4">
+                                <li>Log in to your account</li>
+                                <li>Go to Account Settings</li>
+                                <li>Click "Edit" next to your email address</li>
+                                <li>Enter your new email address and current password</li>
+                                <li>Check your new email for a verification link</li>
+                                <li>Click the link to confirm the change</li>
+                            </ol>
+                            <p class="text-gray-600">
+                                <strong>Note:</strong> After changing your email, you'll need to use the new email address to log in.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Still Need Help? -->
+        <div class="card-gradient rounded-2xl shadow-lg p-8 text-center mb-8">
+            <div class="w-16 h-16 bg-gradient-to-br from-green-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-headset text-2xl gradient-text"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-3">Still Need Help?</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto mb-6">
+                Can't find the answer you're looking for? Our support team is here to help you.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="{{ url_for('contact') }}" 
+                   class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium py-3 px-6 rounded-lg smooth-transition">
+                    <i class="fas fa-envelope mr-2"></i>Contact Support
+                </a>
+                <a href="mailto:support@wellnesscoach.com" 
+                   class="border-2 border-green-500 text-green-600 hover:bg-green-50 font-medium py-3 px-6 rounded-lg smooth-transition">
+                    <i class="fas fa-at mr-2"></i>Email Us Directly
+                </a>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 text-center">
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-clock text-green-600"></i>
+                </div>
+                <h3 class="font-semibold text-gray-800 mb-2">Response Time</h3>
+                <p class="text-gray-600 text-sm">Typically within 24 hours</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 text-center">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-globe text-blue-600"></i>
+                </div>
+                <h3 class="font-semibold text-gray-800 mb-2">Support Hours</h3>
+                <p class="text-gray-600 text-sm">Mon-Fri, 9AM-6PM EST</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 text-center">
+                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-phone-alt text-purple-600"></i>
+                </div>
+                <h3 class="font-semibold text-gray-800 mb-2">Emergency Contact</h3>
+                <p class="text-gray-600 text-sm">For urgent account issues</p>
+                <a href="tel:+18005551234" class="text-green-600 hover:text-green-700 font-medium mt-2 inline-block">+1 (800) 555-1234</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-heartbeat text-white text-xl"></i>
+                        </div>
+                        <span class="text-xl font-bold">Wellness<span class="gradient-text">Coach</span></span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Your partner in health and wellness since 2023</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="{{ url_for('index') }}" class="text-gray-400 hover:text-white smooth-transition">Home</a>
+                    <a href="{{ url_for('login') }}" class="text-gray-400 hover:text-white smooth-transition">Login</a>
+                    <a href="{{ url_for('register') }}" class="text-gray-400 hover:text-white smooth-transition">Sign Up</a>
+                    <a href="{{ url_for('privacy') }}" class="text-gray-400 hover:text-white smooth-transition">Privacy</a>
+                    <a href="{{ url_for('contact') }}" class="text-gray-400 hover:text-white smooth-transition">Contact</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2023 Wellness Coach. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.closest('.faq-item');
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        // FAQ Search
+        document.getElementById('faqSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question h3').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-content').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                    item.classList.add('animate-fadeIn');
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // Show "no results" message if needed
+            const visibleItems = Array.from(faqItems).filter(item => item.style.display !== 'none');
+            // You could add a "no results" element here if needed
+        });
+
+        // Category Filter
+        document.querySelectorAll('.category-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+                
+                // Update active button
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    btn.classList.remove('bg-green-500', 'text-white');
+                    btn.classList.add('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+                });
+                
+                this.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+                this.classList.add('bg-green-500', 'text-white');
+                
+                // Filter FAQ items
+                const faqItems = document.querySelectorAll('.faq-item');
+                faqItems.forEach(item => {
+                    if (category === 'all' || item.getAttribute('data-category') === category) {
+                        item.style.display = 'block';
+                        item.classList.add('animate-fadeIn');
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Auto-expand FAQ based on URL hash
+        window.addEventListener('load', function() {
+            const hash = window.location.hash.substring(1);
+            if (hash) {
+                const targetFaq = document.querySelector(`[data-category="${hash}"]`);
+                if (targetFaq) {
+                    targetFaq.classList.add('active');
+                    targetFaq.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+            
+            // Expand first FAQ by default on mobile
+            if (window.innerWidth < 768) {
+                const firstFaq = document.querySelector('.faq-item');
+                if (firstFaq) {
+                    firstFaq.classList.add('active');
+                }
+            }
+        });
+
+        // Keyboard navigation for FAQ
+        document.addEventListener('keydown', function(e) {
+            const activeFaq = document.querySelector('.faq-item.active');
+            
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                
+                const allFaqs = Array.from(document.querySelectorAll('.faq-item'));
+                const currentIndex = allFaqs.findIndex(item => item === activeFaq);
+                
+                let nextIndex;
+                if (e.key === 'ArrowDown') {
+                    nextIndex = (currentIndex + 1) % allFaqs.length;
+                } else {
+                    nextIndex = (currentIndex - 1 + allFaqs.length) % allFaqs.length;
+                }
+                
+                // Close current FAQ
+                if (activeFaq) {
+                    activeFaq.classList.remove('active');
+                }
+                
+                // Open next FAQ
+                allFaqs[nextIndex].classList.add('active');
+                allFaqs[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            
+            // Spacebar to toggle current FAQ
+            if (e.key === ' ' && activeFaq) {
+                e.preventDefault();
+                activeFaq.classList.toggle('active');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultation Summary - Wellness Coach</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+        }
+        
+        .print-header {
+            text-align: center;
+            border-bottom: 2px solid #10b981;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .print-header h1 {
+            color: #10b981;
+            margin-bottom: 5px;
+            font-size: 24px;
+        }
+        
+        .print-header .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .consultation-info {
+            margin-bottom: 30px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .info-item {
+            margin-bottom: 10px;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #10b981;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-radius: 6px;
+            border-left: 3px solid #10b981;
+        }
+        
+        .message-section {
+            margin-top: 30px;
+        }
+        
+        .message-content {
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            white-space: pre-wrap;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+        
+        .status-pending { background: #fef3c7; color: #92400e; }
+        .status-reviewed { background: #dbeafe; color: #1e40af; }
+        .status-responded { background: #d1fae5; color: #065f46; }
+        .status-new { background: #f3f4f6; color: #374151; }
+        
+        @media print {
+            body {
+                padding: 10px;
+                font-size: 12pt;
+            }
+            
+            .no-print {
+                display: none;
+            }
+            
+            .print-header {
+                page-break-after: avoid;
+            }
+            
+            .message-section {
+                page-break-inside: avoid;
+            }
+            
+            .footer {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="print-header">
+        <h1>Wellness Coach - Consultation Summary</h1>
+        <div class="subtitle">Reference ID: WC{{ consultation.id }}-{{ consultation.created_at.strftime('%Y%m%d') if consultation.created_at else '' }}</div>
+        <div class="subtitle">Generated on: {{ datetime.now().strftime('%B %d, %Y at %I:%M %p') }}</div>
+    </div>
+    
+    <div class="consultation-info">
+        <div class="info-grid">
+            <div class="info-item">
+                <div class="info-label">Client Name</div>
+                <div class="info-value">{{ consultation.user_name or consultation.name }}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Email</div>
+                <div class="info-value">{{ consultation.user_email or consultation.email }}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Phone</div>
+                <div class="info-value">{{ consultation.phone or 'Not provided' }}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Program/Subject</div>
+                <div class="info-value">{{ consultation.program or consultation.subject }}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Goal/Inquiry</div>
+                <div class="info-value">{{ consultation.goal or consultation.message[:100] + '...' if consultation.message|length > 100 else consultation.message }}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Status</div>
+                <div class="info-value">
+                    <span class="status-badge 
+                        {% if consultation.status == 'new' %}status-new
+                        {% elif consultation.status == 'pending' %}status-pending
+                        {% elif consultation.status == 'reviewed' %}status-reviewed
+                        {% elif consultation.status == 'responded' %}status-responded
+                        {% else %}status-new{% endif %}">
+                        {{ consultation.status|title if consultation.status else 'New' }}
+                    </span>
+                </div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Submitted On</div>
+                <div class="info-value">
+                    {% if consultation.created_at %}
+                        {{ consultation.created_at.strftime('%B %d, %Y at %I:%M %p') }}
+                    {% else %}
+                        {{ consultation.created_at or 'Recently' }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-item">
+            <div class="info-label">Subject</div>
+            <div class="info-value">{{ consultation.subject }}</div>
+        </div>
+    </div>
+    
+    <div class="message-section">
+        <div class="info-label">Detailed Concern & Message</div>
+        <div class="message-content">
+            {{ consultation.message }}
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p><strong>Confidentiality Notice:</strong> This document contains confidential health information. Please handle with care.</p>
+        <p>© {{ datetime.now().strftime('%Y') }} Wellness Coach. All rights reserved.</p>
+    </div>
+    
+    <div class="no-print" style="text-align: center; margin-top: 30px; padding: 20px; background: #f8fafc; border-radius: 8px;">
+        <p style="color: #666; font-size: 14px;">This is a preview. Click the print button above to print this document.</p>
+    </div>
+    
+    <script>
+        // Auto-print after loading (optional)
+        setTimeout(() => {
+            if (window.location.search.includes('autoprint')) {
+                window.print();
+            }
+        }, 500);
+    </script>
+</body>
+</html>

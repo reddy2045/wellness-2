@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Contact - Wellness Coach</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .success-message, .error-message { 
+            display: none;
+            animation: slideDown 0.3s ease-out;
+        }
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .floating-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
+        }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        /* Mobile optimizations */
+        input, select, textarea, button {
+            font-size: 16px !important; /* Prevents iOS zoom on focus */
+        }
+        .touch-target {
+            min-height: 44px; /* Minimum touch target size for mobile */
+        }
+        .mobile-menu {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .slide-up {
+            animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Hide scrollbar for cleaner look */
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Mobile Header (Simplified) -->
+    <header class="sticky top-0 z-50 bg-white shadow-md lg:hidden">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <button onclick="window.history.back()" class="flex items-center text-gray-700 p-2 rounded-lg hover:bg-gray-100 transition touch-target">
+                    <i class="fas fa-arrow-left text-lg"></i>
+                </button>
+                <div class="text-center flex-1">
+                    <h1 class="text-xl font-bold gradient-text">Wellness Coach</h1>
+                    <p class="text-gray-600 text-xs">Contact & Inquiry</p>
+                </div>
+                <button onclick="scrollToForm()" class="gradient-bg text-white p-2 rounded-lg touch-target">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Desktop Header (Hidden on mobile) -->
+    <header class="sticky top-0 z-50 bg-white shadow-md hidden lg:block">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="{{ url_for('index') }}" class="flex items-center text-gray-700 hover:text-green-600 transition p-2 rounded-lg hover:bg-gray-50">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    <span>Back to Home</span>
+                </a>
+                <div class="text-center">
+                    <h1 class="text-2xl font-bold gradient-text">Wellness Coach</h1>
+                    <p class="text-gray-600 text-sm">Contact & Program Inquiry</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="tel:+919876543210" class="gradient-bg text-white px-4 py-2 rounded-lg hover:opacity-90 transition touch-target hidden md:inline-flex items-center">
+                        <i class="fas fa-phone-alt mr-2"></i>
+                        Call Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quick Contact Cards (Mobile Only) -->
+    <div class="lg:hidden bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-3">
+            <div class="grid grid-cols-2 gap-2">
+                <a href="tel:+919876543210" class="bg-green-50 text-green-700 p-3 rounded-lg text-center transition hover:bg-green-100 touch-target">
+                    <i class="fas fa-phone-alt mb-1"></i>
+                    <div class="text-xs font-medium">Call</div>
+                </a>
+                <a href="https://wa.me/7671032580" class="bg-green-50 text-green-700 p-3 rounded-lg text-center transition hover:bg-green-100 touch-target">
+                    <i class="fab fa-whatsapp mb-1"></i>
+                    <div class="text-xs font-medium">WhatsApp</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section class="py-8 lg:py-16 bg-gray-50 slide-up">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                <!-- Contact Info -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-2xl shadow-lg p-6">
+                        <h2 class="text-2xl lg:text-3xl font-bold mb-4 gradient-text">Contact & Programs</h2>
+                        <p class="text-gray-600 mb-6 text-sm lg:text-base">Share your details and goals to receive personalized program suggestions.</p>
+                        
+                        <div class="space-y-4">
+                            <a href="tel:+919876543210" class="flex items-start p-3 rounded-xl hover:bg-gray-50 transition touch-target">
+                                <div class="w-10 h-10 lg:w-12 lg:h-12 gradient-bg rounded-full flex items-center justify-center mr-3 lg:mr-4 flex-shrink-0">
+                                    <i class="fas fa-phone-alt text-white text-sm lg:text-base"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-sm lg:text-base">Phone / WhatsApp</h4>
+                                    <p class="text-green-600 font-medium text-sm lg:text-base">+91 7671032580</p>
+                                    <p class="text-gray-500 text-xs lg:text-sm mt-1">Tap to call directly</p>
+                                </div>
+                            </a>
+                            
+                            <a href="mailto:radhakrishna@wellnesscoach.com" class="flex items-start p-3 rounded-xl hover:bg-gray-50 transition touch-target">
+                                <div class="w-10 h-10 lg:w-12 lg:h-12 gradient-bg rounded-full flex items-center justify-center mr-3 lg:mr-4 flex-shrink-0">
+                                    <i class="fas fa-envelope text-white text-sm lg:text-base"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-sm lg:text-base">Email</h4>
+                                    <p class="text-gray-600 text-sm lg:text-base">radhakrishna@wellnesscoach.com</p>
+                                </div>
+                            </a>
+                            
+                            <div class="flex items-start p-3">
+                                <div class="w-10 h-10 lg:w-12 lg:h-12 gradient-bg rounded-full flex items-center justify-center mr-3 lg:mr-4 flex-shrink-0">
+                                    <i class="fas fa-clock text-white text-sm lg:text-base"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800 text-sm lg:text-base">Working hours</h4>
+                                    <p class="text-gray-600 text-sm lg:text-base">Mon – Sat: 9:00 AM – 7:00 PM</p>
+                                    <p class="text-gray-500 text-xs lg:text-sm mt-1">Sunday closed · Messages accepted 24/7</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quick Response Info -->
+                        <div class="mt-8 p-4 bg-green-50 rounded-xl border border-green-100">
+                            <div class="flex items-center">
+                                <i class="fas fa-bolt text-green-600 mr-2"></i>
+                                <h4 class="font-bold text-green-800 text-sm lg:text-base">Quick Response</h4>
+                            </div>
+                            <p class="text-green-700 text-xs lg:text-sm mt-2">Get personalized program options within 24 hours of submitting your details.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Accordion (Mobile Collapsible) -->
+                    <div class="bg-white rounded-2xl shadow-lg p-6 lg:hidden">
+                        <h3 class="font-bold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-question-circle text-green-600 mr-2"></i>
+                            Common Questions
+                        </h3>
+                        <div class="space-y-3">
+                            <details class="border-b border-gray-100 pb-3">
+                                <summary class="font-medium text-gray-700 text-sm flex items-center justify-between cursor-pointer touch-target">
+                                    <span>How soon will I get a response?</span>
+                                    <i class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                                </summary>
+                                <p class="text-gray-600 text-xs mt-2 pl-4">We respond within 24 hours, usually much sooner during working hours.</p>
+                            </details>
+                            <details class="border-b border-gray-100 pb-3">
+                                <summary class="font-medium text-gray-700 text-sm flex items-center justify-between cursor-pointer touch-target">
+                                    <span>Is there a free consultation?</span>
+                                    <i class="fas fa-chevron-down text-xs transition-transform duration-300"></i>
+                                </summary>
+                                <p class="text-gray-600 text-xs mt-2 pl-4">Yes! We offer a free 15-minute consultation call to discuss your goals.</p>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div>
+                    <div class="bg-white rounded-2xl shadow-xl p-6 lg:p-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <h3 class="text-xl lg:text-2xl font-bold gradient-text">Send Your Details</h3>
+                                <p class="text-gray-600 text-sm lg:text-base">All fields marked * are required.</p>
+                            </div>
+                            <div class="lg:hidden">
+                                <div class="w-10 h-10 gradient-bg rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user-edit text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Progress Indicator (Mobile) -->
+                        <div class="mb-6 lg:hidden">
+                            <div class="flex items-center justify-between text-xs text-gray-500 mb-1">
+                                <span>Form Progress</span>
+                                <span id="progressPercentage">0%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-1.5">
+                                <div id="progressBar" class="gradient-bg h-1.5 rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Success Message -->
+                        <div id="successMessage" class="success-message bg-green-50 border border-green-200 text-green-700 p-4 rounded-lg mb-6">
+                            <div class="flex items-start">
+                                <i class="fas fa-check-circle mr-3 text-green-600 mt-0.5"></i>
+                                <div>
+                                    <div class="font-bold" id="successTitle"></div>
+                                    <div id="successText" class="text-sm"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Error Message -->
+                        <div id="errorMessage" class="error-message bg-red-50 border border-red-200 text-red-700 p-4 rounded-lg mb-6">
+                            <div class="flex items-start">
+                                <i class="fas fa-exclamation-circle mr-3 text-red-600 mt-0.5"></i>
+                                <div>
+                                    <div class="font-bold" id="errorTitle"></div>
+                                    <div id="errorText" class="text-sm"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <form id="contactForm" class="space-y-5 lg:space-y-6">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2 text-sm lg:text-base">
+                                    Full name *
+                                </label>
+                                <input type="text" name="name" required 
+                                       class="w-full px-4 py-3 lg:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent touch-target text-sm lg:text-base"
+                                       placeholder="Enter your full name" 
+                                       value="{% if user_data %}{{ user_data.name }}{% endif %}">
+                            </div>
+                            
+                            <div class="grid grid-cols-1 gap-4 lg:gap-6">
+                                <div>
+                                    <label class="block text-gray-700 font-medium mb-2 text-sm lg:text-base">
+                                        Phone (10-digit) *
+                                    </label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <span class="text-gray-500">+91</span>
+                                        </div>
+                                        <input type="tel" name="phone" required 
+                                               class="w-full pl-12 pr-4 py-3 lg:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent touch-target text-sm lg:text-base"
+                                               placeholder="98765 43210" pattern="[0-9]{10}">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-gray-700 font-medium mb-2 text-sm lg:text-base">
+                                        Email *
+                                    </label>
+                                    <input type="email" name="email" required 
+                                           class="w-full px-4 py-3 lg:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent touch-target text-sm lg:text-base"
+                                           placeholder="your.email@example.com"
+                                           value="{% if user_data %}{{ user_data.email }}{% endif %}">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2 text-sm lg:text-base">
+                                    Interested program *
+                                </label>
+                                <select name="interested_program" required 
+                                        class="w-full px-4 py-3 lg:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent touch-target text-sm lg:text-base appearance-none bg-white">
+                                    <option value="">Select a program</option>
+                                    <option value="Weight Loss">Weight Loss Program</option>
+                                    <option value="Weight Gain">Weight Gain Program</option>
+                                    <option value="Nutrition">Personalized Nutrition</option>
+                                    <option value="Coaching">Coaching Sessions</option>
+                                    <option value="Heart Health">Heart Health Program</option>
+                                    <option value="Diabetes Management">Diabetes Management</option>
+                                    <option value="Mental Wellness">Mental Wellness</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2 text-sm lg:text-base">
+                                    Main goal *
+                                </label>
+                                <select name="main_goal" required 
+                                        class="w-full px-4 py-3 lg:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent touch-target text-sm lg:text-base appearance-none bg-white">
+                                    <option value="">Choose your main goal</option>
+                                    <option value="Lose Weight">Lose Weight</option>
+                                    <option value="Gain Weight">Gain Weight</option>
+                                    <option value="Build Muscle">Build Muscle</option>
+                                    <option value="Improve Health">Improve Overall Health</option>
+                                    <option value="Increase Energy">Increase Energy</option>
+                                    <option value="Manage Disease">Manage Health Condition</option>
+                                    <option value="Reduce Stress">Reduce Stress</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2 text-sm lg:text-base">
+                                    Target timeframe
+                                </label>
+                                <div class="grid grid-cols-3 lg:grid-cols-5 gap-2">
+                                    <button type="button" data-value="Not sure" class="timeframe-btn border border-gray-300 rounded-lg py-2 text-sm lg:text-base hover:border-green-500 hover:bg-green-50 transition touch-target">Not sure</button>
+                                    <button type="button" data-value="1 month" class="timeframe-btn border border-gray-300 rounded-lg py-2 text-sm lg:text-base hover:border-green-500 hover:bg-green-50 transition touch-target">1 month</button>
+                                    <button type="button" data-value="3 months" class="timeframe-btn border border-gray-300 rounded-lg py-2 text-sm lg:text-base hover:border-green-500 hover:bg-green-50 transition touch-target">3 months</button>
+                                    <button type="button" data-value="6 months" class="timeframe-btn border border-gray-300 rounded-lg py-2 text-sm lg:text-base hover:border-green-500 hover:bg-green-50 transition touch-target">6 months</button>
+                                    <button type="button" data-value="1 year" class="timeframe-btn border border-gray-300 rounded-lg py-2 text-sm lg:text-base hover:border-green-500 hover:bg-green-50 transition touch-target">1 year</button>
+                                </div>
+                                <input type="hidden" name="target_timeframe" value="Not sure">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2 text-sm lg:text-base">
+                                    Subject *
+                                </label>
+                                <input type="text" name="subject" required 
+                                       class="w-full px-4 py-3 lg:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent touch-target text-sm lg:text-base"
+                                       placeholder="Enter subject for your inquiry">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2 text-sm lg:text-base">
+                                    Your story & questions *
+                                </label>
+                                <textarea name="message" required rows="4" 
+                                          class="w-full px-4 py-3 lg:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent touch-target text-sm lg:text-base hide-scrollbar"
+                                          placeholder="Share your current weight, challenges, medical history (if any), and what kind of support you are looking for..."></textarea>
+                                <div class="flex justify-between items-center text-gray-500 text-xs lg:text-sm mt-1">
+                                    <span>Minimum 5 characters</span>
+                                    <span><span id="charCount">0</span>/5000</span>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" id="submitBtn"
+                                    class="w-full gradient-bg text-white font-semibold py-4 px-6 rounded-lg hover:opacity-90 transition duration-300 active:scale-95 touch-target text-sm lg:text-base pulse-animation">
+                                <i class="fas fa-paper-plane mr-2"></i>
+                                Send Details & Request Program
+                            </button>
+                            
+                            <p class="text-gray-500 text-xs lg:text-sm text-center">
+                                <i class="fas fa-lock mr-1"></i>
+                                Your details are private. You will get program options within 24 hours.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Action Button (Mobile Only) -->
+    <button onclick="scrollToForm()" class="floating-button lg:hidden gradient-bg text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg touch-target">
+        <i class="fas fa-edit text-lg"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 lg:py-8">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="text-center">
+                <p class="text-gray-400 text-sm lg:text-base">&copy; 2024 Wellness Coach. All rights reserved.</p>
+                <div class="flex justify-center space-x-6 mt-4">
+                    <a href="tel:+919876543210" class="text-gray-400 hover:text-white transition">
+                        <i class="fas fa-phone-alt"></i>
+                    </a>
+                    <a href="mailto:radhakrishna@wellnesscoach.com" class="text-gray-400 hover:text-white transition">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://wa.me/7671032580" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contactForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const successMessage = document.getElementById('successMessage');
+            const successTitle = document.getElementById('successTitle');
+            const successText = document.getElementById('successText');
+            const errorMessage = document.getElementById('errorMessage');
+            const errorTitle = document.getElementById('errorTitle');
+            const errorText = document.getElementById('errorText');
+            const charCount = document.getElementById('charCount');
+            const messageTextarea = contactForm.querySelector('textarea[name="message"]');
+            const progressBar = document.getElementById('progressBar');
+            const progressPercentage = document.getElementById('progressPercentage');
+            const timeframeBtns = document.querySelectorAll('.timeframe-btn');
+            const timeframeInput = contactForm.querySelector('input[name="target_timeframe"]');
+            
+            // Set active timeframe button
+            timeframeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    timeframeBtns.forEach(b => {
+                        b.classList.remove('border-green-500', 'bg-green-50', 'text-green-700');
+                        b.classList.add('border-gray-300');
+                    });
+                    this.classList.remove('border-gray-300');
+                    this.classList.add('border-green-500', 'bg-green-50', 'text-green-700');
+                    timeframeInput.value = this.dataset.value;
+                    updateSubject();
+                    calculateProgress();
+                });
+                
+                // Set initial active button
+                if (btn.dataset.value === timeframeInput.value) {
+                    btn.click();
+                }
+            });
+            
+            // Character counter and progress calculation
+            messageTextarea.addEventListener('input', function() {
+                const length = this.value.length;
+                charCount.textContent = length;
+                calculateProgress();
+            });
+            
+            // Calculate form progress
+            function calculateProgress() {
+                const formElements = contactForm.querySelectorAll('input[required], select[required], textarea[required]');
+                let filled = 0;
+                
+                formElements.forEach(el => {
+                    if (el.type === 'select-one') {
+                        if (el.value !== '') filled++;
+                    } else if (el.type === 'textarea') {
+                        if (el.value.length >= 50) filled++;
+                    } else {
+                        if (el.value !== '') filled++;
+                    }
+                });
+                
+                const progress = Math.round((filled / formElements.length) * 100);
+                progressBar.style.width = `${progress}%`;
+                progressPercentage.textContent = `${progress}%`;
+            }
+            
+            // Auto-generate subject based on program and goal
+            function updateSubject() {
+                const program = contactForm.querySelector('select[name="interested_program"]').value;
+                const goal = contactForm.querySelector('select[name="main_goal"]').value;
+                const timeframe = timeframeInput.value;
+                
+                if (program && goal) {
+                    let subject = `${program} - ${goal}`;
+                    if (timeframe !== 'Not sure') {
+                        subject += ` (${timeframe})`;
+                    }
+                    contactForm.querySelector('input[name="subject"]').value = subject;
+                }
+                calculateProgress();
+            }
+            
+            // Listen for changes in program and goal
+            contactForm.querySelector('select[name="interested_program"]').addEventListener('change', updateSubject);
+            contactForm.querySelector('select[name="main_goal"]').addEventListener('change', updateSubject);
+            
+            // Real-time progress tracking
+            const formInputs = contactForm.querySelectorAll('input, select, textarea');
+            formInputs.forEach(input => {
+                input.addEventListener('change', calculateProgress);
+                input.addEventListener('input', calculateProgress);
+            });
+            
+            // Initialize progress
+            calculateProgress();
+            
+            // Form submission - ACTUAL API CALL
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Hide previous messages
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
+                
+                // Get form data
+                const formData = new FormData(contactForm);
+                const formObject = Object.fromEntries(formData.entries());
+                
+                // Validate required fields
+                const errors = [];
+                
+                if (!formObject.name.trim()) errors.push('Please enter your name');
+                if (!formObject.email.trim()) errors.push('Please enter your email');
+                if (!/^[0-9]{10}$/.test(formObject.phone)) errors.push('Please enter a valid 10-digit phone number');
+                if (!formObject.message.trim() || formObject.message.length < 5) errors.push('Please share at least 5 characters about your story');
+                
+                if (errors.length > 0) {
+                    showError('Form Error', errors.join('<br>'));
+                    return;
+                }
+                
+                // Disable submit button and show loading
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+                submitBtn.disabled = true;
+                submitBtn.classList.remove('pulse-animation');
+                
+                try {
+                    // Send form data to server
+                    const response = await fetch('/submit_contact', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams(formObject)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // Show success message
+                        successTitle.textContent = 'Success!';
+                        successText.innerHTML = result.message;
+                        successMessage.style.display = 'block';
+                        
+                        // Reset form
+                        contactForm.reset();
+                        charCount.textContent = '0';
+                        timeframeBtns[0].click(); // Reset to "Not sure"
+                        calculateProgress();
+                        
+                        // Scroll to success message on mobile
+                        if (window.innerWidth < 1024) {
+                            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                        
+                        // Hide success message after 8 seconds
+                        setTimeout(() => {
+                            successMessage.style.display = 'none';
+                        }, 8000);
+                    } else {
+                        showError('Submission Failed', result.message || 'Failed to send message. Please try again.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showError('Network Error', 'Unable to connect to the server. Please check your connection and try again.');
+                } finally {
+                    // Restore submit button
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                    submitBtn.classList.add('pulse-animation');
+                }
+            });
+            
+            function showError(title, message) {
+                errorTitle.textContent = title;
+                errorText.innerHTML = message;
+                errorMessage.style.display = 'block';
+                
+                // Scroll to error message on mobile
+                if (window.innerWidth < 1024) {
+                    errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                
+                // Hide error after 5 seconds
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 5000);
+            }
+            
+            // Add touch feedback to form elements
+            const touchElements = document.querySelectorAll('.touch-target');
+            touchElements.forEach(el => {
+                el.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                el.addEventListener('touchend', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+            
+            // Prevent form resubmission on refresh
+            if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+            }
+        });
+        
+        function scrollToForm() {
+            const formElement = document.getElementById('contactForm');
+            formElement.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start'
+            });
+            
+            // Add visual feedback
+            formElement.parentElement.style.boxShadow = '0 0 0 3px rgba(16, 185, 129, 0.3)';
+            setTimeout(() => {
+                formElement.parentElement.style.boxShadow = '';
+            }, 1000);
+        }
+        
+        // Handle details element animation
+        document.querySelectorAll('details').forEach(details => {
+            details.addEventListener('toggle', function() {
+                const icon = this.querySelector('i');
+                if (this.open) {
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

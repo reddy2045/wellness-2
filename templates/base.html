@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>Wellness Coach - {% block title %}{% endblock %}</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
+    <!-- Primary Meta Tags -->
+    <meta name="theme-color" content="#10B981">
+    <meta name="description" content="Transform your health with personalized wellness coaching and nutrition plans">
+    
+    <!-- iOS Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Wellness Coach">
+    
+    <!-- CSS Resources -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.3.67/css/materialdesignicons.min.css">
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        wellness: {
+                            primary: '#10B981',
+                            'primary-light': '#D1FAE5',
+                            'primary-dark': '#059669',
+                            secondary: '#3B82F6',
+                            'secondary-light': '#DBEAFE',
+                            'secondary-dark': '#2563EB',
+                            accent: '#8B5CF6',
+                            'accent-light': '#EDE9FE',
+                            'accent-dark': '#7C3AED',
+                            dark: '#1F2937',
+                            light: '#F9FAFB'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-in-out',
+                        'slide-down': 'slideDown 0.3s ease-out',
+                        'slide-up': 'slideUp 0.3s ease-out',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'shimmer': 'shimmer 2s infinite',
+                        'toast-slide-up': 'toastSlideUp 0.3s ease-out',
+                        'toast-slide-down': 'toastSlideDown 0.3s ease-out',
+                        'progress-bar': 'progressBar 5s linear forwards'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideDown: {
+                            '0%': { transform: 'translateY(-20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(0)', opacity: '1' },
+                            '100%': { transform: 'translateY(-20px)', opacity: '0' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-1000px 0' },
+                            '100%': { backgroundPosition: '1000px 0' }
+                        },
+                        toastSlideUp: {
+                            '0%': { transform: 'translate(-50%, 100%)', opacity: '0' },
+                            '100%': { transform: 'translate(-50%, 0)', opacity: '1' }
+                        },
+                        toastSlideDown: {
+                            '0%': { transform: 'translate(-50%, 0)', opacity: '1' },
+                            '100%': { transform: 'translate(-50%, 100%)', opacity: '0' }
+                        },
+                        progressBar: {
+                            '0%': { width: '100%' },
+                            '100%': { width: '0%' }
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        'display': ['Poppins', 'Inter', 'system-ui', '-apple-system', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+        
+        /* Base Styles */
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #10B981;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #059669;
+        }
+        
+        /* Selection Color */
+        ::selection {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #065F46;
+        }
+        
+        /* Focus Styles */
+        .focus-ring {
+            @apply focus:outline-none focus:ring-2 focus:ring-wellness-primary focus:ring-offset-2;
+        }
+        
+        /* Loading States */
+        .loading {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        /* Card Hover Effects */
+        .hover-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Smooth Transitions */
+        .smooth-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Gradient Backgrounds */
+        .gradient-primary {
+            background: linear-gradient(135deg, #10B981 0%, #3B82F6 100%);
+        }
+        
+        .gradient-secondary {
+            background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+        }
+        
+        .gradient-accent {
+            background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+        }
+        
+        /* Glass Morphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Mobile Optimizations */
+        @media (max-width: 640px) {
+            .mobile-optimized {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .mobile-full-width {
+                width: 100vw;
+                position: relative;
+                left: 50%;
+                right: 50%;
+                margin-left: -50vw;
+                margin-right: -50vw;
+            }
+        }
+        
+        /* Prevent Text Size Adjustment on iOS */
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        /* Better Form Styling */
+        input, textarea, select {
+            font-size: 16px !important; /* Prevents iOS zoom on focus */
+            @apply focus:ring-2 focus:ring-wellness-primary focus:border-transparent;
+        }
+        
+        /* Loading Animation */
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+
+        /* Flash Message Mobile Optimizations */
+        .flash-message {
+            transition: all 0.3s ease;
+        }
+
+        /* Ensure proper spacing for mobile devices */
+        @media (max-width: 768px) {
+            body {
+                padding-top: env(safe-area-inset-top);
+            }
+            
+            /* Flash message positioning for mobile */
+            #flash-container {
+                top: auto !important;
+                bottom: 1rem !important;
+                transform: translateX(-50%) !important;
+                animation: toast-slide-up 0.3s ease-out !important;
+            }
+            
+            .flash-message {
+                margin-bottom: 0.5rem;
+            }
+            
+            .flash-message > div {
+                padding: 0.75rem !important;
+                font-size: 0.875rem !important;
+            }
+            
+            /* Larger touch targets for mobile */
+            .flash-close {
+                min-width: 44px !important;
+                min-height: 44px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            
+            /* Ensure navbar doesn't overlap */
+            #main-nav {
+                min-height: 64px;
+            }
+        }
+
+        /* Desktop flash message positioning */
+        @media (min-width: 769px) {
+            #flash-container {
+                top: 5.5rem !important;
+                bottom: auto !important;
+                animation: slide-down 0.3s ease-out !important;
+            }
+        }
+
+        /* Safe area insets for notched phones */
+        @supports (padding: max(0px)) {
+            #flash-container {
+                padding-left: max(1rem, env(safe-area-inset-left));
+                padding-right: max(1rem, env(safe-area-inset-right));
+            }
+        }
+
+        /* Swipe to dismiss for mobile */
+        .swipe-dismiss {
+            touch-action: pan-y;
+        }
+
+        /* Keyboard navigation styles */
+        .user-is-tabbing *:focus {
+            outline: 2px solid #3B82F6;
+            outline-offset: 2px;
+        }
+        
+        /* Performance optimizations */
+        .will-change-transform {
+            will-change: transform;
+        }
+        
+        /* Print styles */
+        @media print {
+            nav, footer, #back-to-top, #progress-bar, #flash-container {
+                display: none !important;
+            }
+            
+            body {
+                background: white !important;
+                color: black !important;
+            }
+        }
+        
+        /* Reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Custom animations for flash messages */
+        @keyframes flash-slide-down {
+            from {
+                transform: translate(-50%, -100%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes flash-slide-up {
+            from {
+                transform: translate(-50%, 100%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        .animate-flash-slide-down {
+            animation: flash-slide-down 0.3s ease-out;
+        }
+
+        .animate-flash-slide-up {
+            animation: flash-slide-up 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-wellness-primary-light min-h-screen flex flex-col">
+    <!-- Skip to Content Link (Accessibility) -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-wellness-primary text-white px-4 py-2 rounded-lg z-50">
+        Skip to main content
+    </a>
+
+    <!-- Progress Bar -->
+    <div id="progress-bar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-wellness-primary to-wellness-secondary z-50" style="width: 0%;"></div>
+
+    <!-- Navigation -->
+    <nav id="main-nav" class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-3">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <a href="{{ url_for('index') }}" class="flex items-center space-x-3 focus-ring rounded-lg p-2">
+                        <div class="relative">
+                            <div class="w-10 h-10 bg-gradient-to-br from-wellness-primary to-wellness-secondary rounded-xl flex items-center justify-center">
+                                <i class="fas fa-heartbeat text-white text-lg"></i>
+                            </div>
+                            <div class="absolute -top-1 -right-1 w-4 h-4 bg-wellness-accent rounded-full border-2 border-white"></div>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-800 font-display">WellnessCoach</h1>
+                            <p class="text-xs text-gray-500">Your Health Journey</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="{{ url_for('index') }}" 
+                       class="nav-link px-4 py-2 rounded-lg text-gray-600 hover:text-wellness-primary hover:bg-wellness-primary-light transition-all duration-200 focus-ring">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                    
+                    {% if current_user.is_authenticated %}
+                        <a href="{{ url_for('profile') }}" 
+                           class="nav-link px-4 py-2 rounded-lg text-gray-600 hover:text-wellness-primary hover:bg-wellness-primary-light transition-all duration-200 focus-ring">
+                            <i class="fas fa-chart-line mr-2"></i>Dashboard
+                        </a>
+                        
+                        <div class="relative group">
+                            <button class="flex items-center px-4 py-2 rounded-lg text-gray-600 hover:text-wellness-primary hover:bg-wellness-primary-light transition-all duration-200 focus-ring">
+                                <i class="fas fa-user-circle mr-2"></i>
+                                <span>{{ current_user.name or current_user.email }}</span>
+                                <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                            </button>
+                            <div class="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                                <div class="p-2">
+                                    <a href="{{ url_for('profile') }}" class="flex items-center px-3 py-2 text-gray-600 hover:text-wellness-primary hover:bg-wellness-primary-light rounded-lg transition-colors mb-1">
+                                        <i class="fas fa-user mr-3 text-gray-400"></i>Profile Settings
+                                    </a>
+                                    {% if current_user.is_admin %}
+                                        <a href="{{ url_for('admin') }}" class="flex items-center px-3 py-2 text-gray-600 hover:text-wellness-primary hover:bg-wellness-primary-light rounded-lg transition-colors mb-1">
+                                            <i class="fas fa-cog mr-3 text-gray-400"></i>Admin Panel
+                                        </a>
+                                    {% endif %}
+                                    <div class="border-t border-gray-100 my-2"></div>
+                                    <a href="{{ url_for('logout') }}" class="flex items-center px-3 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors">
+                                        <i class="fas fa-sign-out-alt mr-3"></i>Logout
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" 
+                           class="px-4 py-2 rounded-lg text-gray-600 hover:text-wellness-primary hover:bg-wellness-primary-light transition-all duration-200 focus-ring">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Login
+                        </a>
+                        <a href="{{ url_for('register') }}" 
+                           class="ml-2 bg-gradient-to-r from-wellness-primary to-wellness-secondary text-white px-6 py-2.5 rounded-lg hover:shadow-lg hover:shadow-wellness-primary/25 transition-all duration-300 transform hover:-translate-y-0.5 focus-ring">
+                            <i class="fas fa-user-plus mr-2"></i>Get Started
+                        </a>
+                    {% endif %}
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="md:hidden w-10 h-10 flex items-center justify-center rounded-lg bg-wellness-primary-light text-wellness-primary hover:bg-wellness-primary hover:text-white transition-colors focus-ring">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-40 opacity-0 invisible transition-all duration-300 md:hidden"></div>
+
+    <!-- Mobile Menu Sidebar -->
+    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 md:hidden">
+        <div class="h-full flex flex-col">
+            <!-- Mobile Menu Header -->
+            <div class="p-6 border-b border-gray-100">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-wellness-primary to-wellness-secondary rounded-xl flex items-center justify-center">
+                            <i class="fas fa-heartbeat text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-bold text-gray-800 font-display">WellnessCoach</h2>
+                            <p class="text-xs text-gray-500">Mobile Menu</p>
+                        </div>
+                    </div>
+                    <button id="close-mobile-menu" class="w-10 h-10 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Content -->
+            <div class="flex-1 overflow-y-auto">
+                <div class="p-4">
+                    {% if current_user.is_authenticated %}
+                        <!-- User Info -->
+                        <div class="mb-6 p-4 bg-gradient-to-r from-wellness-primary-light to-wellness-secondary-light rounded-xl">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-gradient-to-br from-wellness-primary to-wellness-secondary rounded-full flex items-center justify-center text-white font-bold text-lg">
+                                    {{ current_user.name[0] if current_user.name else current_user.email[0]|upper }}
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-800">{{ current_user.name or current_user.email }}</h3>
+                                    <p class="text-sm text-gray-600">{{ current_user.email }}</p>
+                                    {% if current_user.is_admin %}
+                                        <span class="inline-block mt-1 px-2 py-1 bg-blue-100 text-blue-600 text-xs rounded-full">Admin</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- Navigation Links -->
+                    <nav class="space-y-1 mb-6">
+                        <a href="{{ url_for('index') }}" 
+                           class="mobile-nav-link flex items-center px-4 py-3 text-gray-600 hover:text-wellness-primary hover:bg-wellness-primary-light rounded-lg transition-colors active:bg-wellness-primary active:text-white">
+                            <i class="fas fa-home mr-4 text-lg"></i>
+                            <span class="font-medium">Home</span>
+                        </a>
+                        
+                        {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('profile') }}" 
+                               class="mobile-nav-link flex items-center px-4 py-3 text-gray-600 hover:text-wellness-primary hover:bg-wellness-primary-light rounded-lg transition-colors active:bg-wellness-primary active:text-white">
+                                <i class="fas fa-chart-line mr-4 text-lg"></i>
+                                <span class="font-medium">Dashboard</span>
+                            </a>
+                            
+                            <a href="#" 
+                               class="mobile-nav-link flex items-center px-4 py-3 text-gray-600 hover:text-wellness-primary hover:bg-wellness-primary-light rounded-lg transition-colors active:bg-wellness-primary active:text-white">
+                                <i class="fas fa-calendar-alt mr-4 text-lg"></i>
+                                <span class="font-medium">My Plans</span>
+                            </a>
+                            
+                            <a href="#" 
+                               class="mobile-nav-link flex items-center px-4 py-3 text-gray-600 hover:text-wellness-primary hover:bg-wellness-primary-light rounded-lg transition-colors active:bg-wellness-primary active:text-white">
+                                <i class="fas fa-utensils mr-4 text-lg"></i>
+                                <span class="font-medium">Nutrition</span>
+                            </a>
+                            
+                            {% if current_user.is_admin %}
+                                <a href="{{ url_for('admin') }}" 
+                                   class="mobile-nav-link flex items-center px-4 py-3 text-gray-600 hover:text-wellness-primary hover:bg-wellness-primary-light rounded-lg transition-colors active:bg-wellness-primary active:text-white">
+                                    <i class="fas fa-cog mr-4 text-lg"></i>
+                                    <span class="font-medium">Admin Panel</span>
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </nav>
+
+                    <!-- Auth Section -->
+                    <div class="border-t border-gray-100 pt-4">
+                        {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('logout') }}" 
+                               class="flex items-center justify-center w-full px-4 py-3 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg transition-colors active:bg-red-200">
+                                <i class="fas fa-sign-out-alt mr-3"></i>
+                                <span class="font-medium">Logout</span>
+                            </a>
+                        {% else %}
+                            <div class="space-y-3">
+                                <a href="{{ url_for('login') }}" 
+                                   class="block w-full text-center px-4 py-3 bg-wellness-primary text-white rounded-lg hover:bg-wellness-primary-dark transition-colors active:bg-wellness-primary-dark">
+                                    <i class="fas fa-sign-in-alt mr-2"></i>Login
+                                </a>
+                                <a href="{{ url_for('register') }}" 
+                                   class="block w-full text-center px-4 py-3 border-2 border-wellness-primary text-wellness-primary rounded-lg hover:bg-wellness-primary-light transition-colors active:bg-wellness-primary-light">
+                                    <i class="fas fa-user-plus mr-2"></i>Create Account
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Footer -->
+            <div class="p-4 border-t border-gray-100 bg-gray-50">
+                <div class="space-y-2">
+                    <a href="#" class="flex items-center text-sm text-gray-600 hover:text-wellness-primary">
+                        <i class="fas fa-question-circle mr-3"></i>Help & Support
+                    </a>
+                    <a href="#" class="flex items-center text-sm text-gray-600 hover:text-wellness-primary">
+                        <i class="fas fa-shield-alt mr-3"></i>Privacy Policy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flash Messages Container - Fixed for mobile -->
+    <div id="flash-container" class="fixed left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md px-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message mb-3 swipe-dismiss" 
+                         data-category="{{ category }}" 
+                         role="alert"
+                         data-index="{{ loop.index }}">
+                        <div class="bg-white rounded-xl shadow-lg border-l-4 
+                                    {% if category == 'success' %}border-green-500 bg-green-50{% endif %}
+                                    {% if category == 'danger' %}border-red-500 bg-red-50{% endif %}
+                                    {% if category == 'warning' %}border-yellow-500 bg-yellow-50{% endif %}
+                                    {% if category == 'info' %}border-blue-500 bg-blue-50{% endif %}
+                                    overflow-hidden">
+                            <div class="p-4 flex items-start">
+                                <div class="flex-shrink-0 mr-3">
+                                    {% if category == 'success' %}
+                                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-check text-green-500"></i>
+                                        </div>
+                                    {% elif category == 'danger' %}
+                                        <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-exclamation-triangle text-red-500"></i>
+                                        </div>
+                                    {% elif category == 'warning' %}
+                                        <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-exclamation-circle text-yellow-500"></i>
+                                        </div>
+                                    {% else %}
+                                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-info-circle text-blue-500"></i>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-gray-800 font-medium text-sm md:text-base">{{ message }}</p>
+                                </div>
+                                <button class="flash-close ml-3 flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors p-1 rounded-full hover:bg-gray-100 focus-ring">
+                                    <i class="fas fa-times text-lg"></i>
+                                </button>
+                            </div>
+                            <div class="h-1 w-full bg-gray-200">
+                                <div class="flash-progress h-full 
+                                            {% if category == 'success' %}bg-green-500{% endif %}
+                                            {% if category == 'danger' %}bg-red-500{% endif %}
+                                            {% if category == 'warning' %}bg-yellow-500{% endif %}
+                                            {% if category == 'info' %}bg-blue-500{% endif %}
+                                            animate-progress-bar"></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" 
+            class="fixed bottom-6 right-6 md:bottom-8 md:right-8 w-12 h-12 bg-gradient-to-r from-wellness-primary to-wellness-secondary text-white rounded-full shadow-xl z-40 opacity-0 invisible transition-all duration-300 hover:scale-110 active:scale-95 focus-ring"
+            aria-label="Scroll to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Main Content -->
+    <main id="main-content" class="flex-1 pt-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Flash Messages with Mobile Optimization
+        class FlashMessages {
+            constructor() {
+                this.container = document.getElementById('flash-container');
+                this.messages = document.querySelectorAll('.flash-message');
+                this.initialize();
+            }
+
+            initialize() {
+                if (!this.container || this.messages.length === 0) return;
+
+                // Position container based on screen size
+                this.updatePosition();
+                window.addEventListener('resize', this.debounce(() => this.updatePosition(), 100));
+
+                // Set up each flash message
+                this.messages.forEach((message, index) => {
+                    this.setupMessage(message, index);
+                });
+
+                // Set up global keyboard shortcuts
+                this.setupKeyboardShortcuts();
+            }
+
+            setupMessage(message, index) {
+                const closeBtn = message.querySelector('.flash-close');
+                const delay = 5000 + (index * 300); // Staggered dismissal
+
+                // Auto-dismiss after delay
+                const timeoutId = setTimeout(() => {
+                    this.dismiss(message);
+                }, delay);
+
+                // Store timeout ID on message for cleanup
+                message.dataset.timeoutId = timeoutId;
+
+                // Close on button click
+                closeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    clearTimeout(timeoutId);
+                    this.dismiss(message);
+                });
+
+                // Pause auto-dismiss on hover (desktop only)
+                if (!this.isTouchDevice()) {
+                    message.addEventListener('mouseenter', () => {
+                        clearTimeout(timeoutId);
+                        this.pauseProgressBar(message);
+                    });
+
+                    message.addEventListener('mouseleave', () => {
+                        const newTimeoutId = setTimeout(() => {
+                            this.dismiss(message);
+                        }, 3000);
+                        message.dataset.timeoutId = newTimeoutId;
+                        this.resumeProgressBar(message);
+                    });
+                }
+
+                // Swipe to dismiss on mobile
+                if (this.isTouchDevice()) {
+                    this.setupSwipeToDismiss(message, timeoutId);
+                }
+
+                // Keyboard support for close button
+                closeBtn.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        clearTimeout(timeoutId);
+                        this.dismiss(message);
+                    }
+                });
+            }
+
+            updatePosition() {
+                if (!this.container) return;
+
+                const isMobile = window.innerWidth < 768;
+                const navbar = document.getElementById('main-nav');
+                const navbarHeight = navbar ? navbar.offsetHeight : 64;
+
+                if (isMobile) {
+                    // Mobile: Position at bottom with safe margin
+                    this.container.style.top = 'auto';
+                    this.container.style.bottom = '1rem';
+                    this.container.style.transform = 'translateX(-50%)';
+                    this.container.style.width = 'calc(100% - 2rem)';
+                    this.container.style.maxWidth = '28rem';
+                    
+                    // Add mobile animation
+                    this.container.classList.remove('animate-slide-down');
+                    this.container.classList.add('animate-toast-slide-up');
+                } else {
+                    // Desktop: Position below navbar
+                    this.container.style.top = `${navbarHeight + 16}px`;
+                    this.container.style.bottom = 'auto';
+                    this.container.style.transform = 'translateX(-50%)';
+                    this.container.style.width = 'auto';
+                    this.container.style.maxWidth = '28rem';
+                    
+                    // Add desktop animation
+                    this.container.classList.remove('animate-toast-slide-up');
+                    this.container.classList.add('animate-slide-down');
+                }
+            }
+
+            setupSwipeToDismiss(message, timeoutId) {
+                let startX = 0;
+                let currentX = 0;
+                let isSwiping = false;
+
+                message.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].clientX;
+                    isSwiping = true;
+                    message.style.transition = 'none';
+                    clearTimeout(timeoutId);
+                    this.pauseProgressBar(message);
+                }, { passive: true });
+
+                message.addEventListener('touchmove', (e) => {
+                    if (!isSwiping) return;
+
+                    currentX = e.touches[0].clientX;
+                    const deltaX = currentX - startX;
+
+                    // Only allow horizontal swipe with some resistance
+                    if (Math.abs(deltaX) > 10) {
+                        e.preventDefault();
+                        const translateX = Math.max(-100, Math.min(100, deltaX * 0.5));
+                        message.style.transform = `translateX(${translateX}px)`;
+                    }
+                }, { passive: false });
+
+                message.addEventListener('touchend', () => {
+                    if (!isSwiping) return;
+                    isSwiping = false;
+
+                    message.style.transition = 'transform 0.3s ease';
+                    message.style.transform = '';
+
+                    const swipeDistance = currentX - startX;
+                    if (Math.abs(swipeDistance) > 60) {
+                        this.dismiss(message);
+                    } else {
+                        // Resume auto-dismiss if not swiped far enough
+                        const newTimeoutId = setTimeout(() => {
+                            this.dismiss(message);
+                        }, 2000);
+                        message.dataset.timeoutId = newTimeoutId;
+                        this.resumeProgressBar(message);
+                    }
+                }, { passive: true });
+            }
+
+            pauseProgressBar(message) {
+                const progressBar = message.querySelector('.flash-progress');
+                if (progressBar) {
+                    progressBar.style.animationPlayState = 'paused';
+                }
+            }
+
+            resumeProgressBar(message) {
+                const progressBar = message.querySelector('.flash-progress');
+                if (progressBar) {
+                    progressBar.style.animationPlayState = 'running';
+                }
+            }
+
+            dismiss(message) {
+                // Clear timeout if exists
+                if (message.dataset.timeoutId) {
+                    clearTimeout(parseInt(message.dataset.timeoutId));
+                }
+
+                // Add dismiss animation based on device
+                const isMobile = window.innerWidth < 768;
+                if (isMobile) {
+                    message.style.animation = 'toast-slide-down 0.3s ease forwards';
+                } else {
+                    message.style.animation = 'slide-up 0.3s ease forwards';
+                }
+
+                // Remove after animation
+                setTimeout(() => {
+                    if (message.parentNode) {
+                        message.remove();
+                    }
+
+                    // Remove container if no messages left
+                    const remainingMessages = document.querySelectorAll('.flash-message');
+                    if (remainingMessages.length === 0 && this.container) {
+                        this.container.remove();
+                    }
+                }, 300);
+            }
+
+            setupKeyboardShortcuts() {
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        this.dismissAll();
+                    }
+                });
+            }
+
+            dismissAll() {
+                this.messages.forEach(message => {
+                    if (message.dataset.timeoutId) {
+                        clearTimeout(parseInt(message.dataset.timeoutId));
+                    }
+                    this.dismiss(message);
+                });
+            }
+
+            isTouchDevice() {
+                return 'ontouchstart' in window || 
+                       navigator.maxTouchPoints > 0 || 
+                       navigator.msMaxTouchPoints > 0;
+            }
+
+            debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize flash messages
+            new FlashMessages();
+
+            // Progress Bar Animation
+            window.addEventListener('scroll', function() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                const progressBar = document.getElementById('progress-bar');
+                if (progressBar) {
+                    progressBar.style.width = scrolled + '%';
+                }
+            });
+
+            // Back to Top Button
+            const backToTopBtn = document.getElementById('back-to-top');
+            if (backToTopBtn) {
+                window.addEventListener('scroll', function() {
+                    if (window.pageYOffset > 300) {
+                        backToTopBtn.classList.remove('opacity-0', 'invisible');
+                        backToTopBtn.classList.add('opacity-100', 'visible');
+                    } else {
+                        backToTopBtn.classList.remove('opacity-100', 'visible');
+                        backToTopBtn.classList.add('opacity-0', 'invisible');
+                    }
+                });
+
+                backToTopBtn.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+
+            // Mobile Menu Functionality
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const closeMobileMenuButton = document.getElementById('close-mobile-menu');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+            function openMobileMenu() {
+                mobileMenu.classList.remove('translate-x-full');
+                mobileMenuOverlay.classList.remove('opacity-0', 'invisible');
+                mobileMenuOverlay.classList.add('opacity-100', 'visible');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMobileMenu() {
+                mobileMenu.classList.add('translate-x-full');
+                mobileMenuOverlay.classList.remove('opacity-100', 'visible');
+                mobileMenuOverlay.classList.add('opacity-0', 'invisible');
+                document.body.style.overflow = '';
+            }
+
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', openMobileMenu);
+            }
+            if (closeMobileMenuButton) {
+                closeMobileMenuButton.addEventListener('click', closeMobileMenu);
+            }
+            if (mobileMenuOverlay) {
+                mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+            }
+
+            // Close mobile menu with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeMobileMenu();
+            });
+
+            // Active Navigation Link
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('text-wellness-primary', 'bg-wellness-primary-light');
+                }
+            });
+
+            // Smooth Scroll for Anchor Links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        const headerOffset = 80;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Navbar scroll effect
+            const navbar = document.getElementById('main-nav');
+            let lastScroll = 0;
+            
+            if (navbar) {
+                window.addEventListener('scroll', function() {
+                    const currentScroll = window.pageYOffset;
+                    
+                    // Hide/show navbar on scroll
+                    if (currentScroll > lastScroll && currentScroll > 100) {
+                        navbar.style.transform = 'translateY(-100%)';
+                    } else {
+                        navbar.style.transform = 'translateY(0)';
+                    }
+                    
+                    // Add shadow when scrolled
+                    if (currentScroll > 10) {
+                        navbar.classList.add('shadow-lg');
+                    } else {
+                        navbar.classList.remove('shadow-lg');
+                    }
+                    
+                    lastScroll = currentScroll;
+                });
+            }
+
+            // Prefetch links on hover
+            document.querySelectorAll('a').forEach(link => {
+                link.addEventListener('mouseenter', function() {
+                    const href = this.getAttribute('href');
+                    if (href && href.startsWith('/')) {
+                        const prefetchLink = document.createElement('link');
+                        prefetchLink.rel = 'prefetch';
+                        prefetchLink.href = href;
+                        document.head.appendChild(prefetchLink);
+                    }
+                });
+            });
+
+            // Touch feedback for buttons
+            document.querySelectorAll('button, a').forEach(element => {
+                element.addEventListener('touchstart', function() {
+                    this.classList.add('active:scale-95');
+                }, { passive: true });
+                
+                element.addEventListener('touchend', function() {
+                    this.classList.remove('active:scale-95');
+                }, { passive: true });
+            });
+
+            // Lazy loading for images
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src;
+                            img.classList.remove('loading');
+                            observer.unobserve(img);
+                        }
+                    });
+                });
+
+                document.querySelectorAll('img[data-src]').forEach(img => {
+                    imageObserver.observe(img);
+                    img.classList.add('loading');
+                });
+            }
+
+            // Service Worker for PWA (optional)
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/service-worker.js').then(
+                        function(registration) {
+                            console.log('ServiceWorker registration successful');
+                        },
+                        function(err) {
+                            console.log('ServiceWorker registration failed: ', err);
+                        }
+                    );
+                });
+            }
+
+            // Performance monitoring
+            window.addEventListener('load', function() {
+                const loadTime = performance.timing.domContentLoadedEventEnd - performance.timing.navigationStart;
+                console.log(`Page loaded in ${loadTime}ms`);
+                
+                // Send to analytics (example)
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'timing_complete', {
+                        'name': 'load',
+                        'value': loadTime,
+                        'event_category': 'Load Time'
+                    });
+                }
+            });
+
+            // Add keyboard navigation support
+            document.addEventListener('keydown', function(e) {
+                // Tab navigation
+                if (e.key === 'Tab') {
+                    document.body.classList.add('user-is-tabbing');
+                }
+            });
+
+            // Remove focus ring when mouse is used
+            document.addEventListener('mousedown', function() {
+                document.body.classList.remove('user-is-tabbing');
+            });
+
+            console.log('Wellness Coach application initialized successfully');
+        });
+
+        // Clean up on page unload
+        window.addEventListener('beforeunload', function() {
+            // Clear all flash message timeouts
+            document.querySelectorAll('.flash-message').forEach(message => {
+                if (message.dataset.timeoutId) {
+                    clearTimeout(parseInt(message.dataset.timeoutId));
+                }
+            });
+        });
+    </script>
+
+    <!-- Analytics (optional) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX-Y"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-XXXXX-Y');
+    </script>
+
+    <!-- Error tracking (optional) -->
+    <script>
+        window.addEventListener('error', function(e) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'exception', {
+                    'description': e.error.toString(),
+                    'fatal': false
+                });
+            }
+        });
+    </script>
+</body> 
+</html>

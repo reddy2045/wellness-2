@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Management - Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
+            --warning-gradient: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            --danger-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .stat-card-total::before { background: var(--primary-gradient); }
+        .stat-card-pending::before { background: var(--warning-gradient); }
+        .stat-card-approved::before { background: var(--success-gradient); }
+        .stat-card-rejected::before { background: var(--danger-gradient); }
+
+        .rating-bar {
+            background: linear-gradient(90deg, #fbbf24 0%, #f59e0b 100%);
+            height: 8px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .review-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .review-card:hover {
+            transform: translateX(5px);
+        }
+
+        .review-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .review-card.pending::before { background: var(--warning-gradient); }
+        .review-card.approved::before { background: var(--success-gradient); }
+        .review-card.rejected::before { background: var(--danger-gradient); }
+
+        .badge-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        .modal-glass {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+        }
+
+        .modal-content-glass {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .star-pulse {
+            animation: starPulse 2s infinite;
+        }
+
+        @keyframes starPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .floating-action {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Floating Action Buttons -->
+    <div class="fixed bottom-8 right-8 z-50 flex flex-col gap-3">
+        <button onclick="exportReviews()" class="floating-action bg-gradient-to-r from-blue-500 to-purple-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 tooltip" title="Export Reviews">
+            <i class="fas fa-file-export"></i>
+        </button>
+        <button onclick="showBulkActions()" class="floating-action bg-gradient-to-r from-green-500 to-teal-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 tooltip" title="Bulk Actions">
+            <i class="fas fa-layer-group"></i>
+        </button>
+        <button onclick="refreshPage()" class="floating-action bg-gradient-to-r from-amber-500 to-orange-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 tooltip" title="Refresh">
+            <i class="fas fa-sync-alt"></i>
+        </button>
+    </div>
+
+    <!-- Bulk Actions Modal -->
+    <div id="bulkModal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-50 modal-glass"></div>
+        <div class="relative w-full max-w-md mx-4 modal-content-glass rounded-2xl p-6 animate-slide-up">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-semibold">Bulk Actions</h3>
+                <button onclick="closeBulkModal()" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <button onclick="bulkApprove()" class="w-full py-3 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Approve Selected</span>
+                </button>
+                <button onclick="bulkReject()" class="w-full py-3 bg-gradient-to-r from-red-500 to-pink-600 rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+                    <i class="fas fa-times-circle"></i>
+                    <span>Reject Selected</span>
+                </button>
+                <button onclick="bulkDelete()" class="w-full py-3 bg-gradient-to-r from-gray-600 to-gray-800 rounded-xl flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>Delete Selected</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="min-h-screen flex">
+        <!-- Sidebar -->
+        <div class="w-64 glass-effect hidden lg:flex flex-col">
+            <div class="p-6 border-b border-gray-800">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-purple-600 to-blue-500 flex items-center justify-center">
+                        <i class="fas fa-heartbeat text-white"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold bg-gradient-to-r from-purple-400 to-blue-300 bg-clip-text text-transparent">Wellness Admin</h2>
+                        <p class="text-xs text-gray-400">Review Management</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="flex-1 p-4">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="{{ url_for('admin') }}" class="flex items-center gap-3 p-3 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+                            <i class="fas fa-tachometer-alt w-5"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin_users') }}" class="flex items-center gap-3 p-3 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+                            <i class="fas fa-users w-5"></i>
+                            <span>Users</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin_reviews') }}" class="flex items-center gap-3 p-3 rounded-xl text-white bg-gradient-to-r from-purple-600/20 to-blue-500/20 border border-purple-500/30">
+                            <i class="fas fa-star w-5"></i>
+                            <span>Reviews</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin_messages') }}" class="flex items-center gap-3 p-3 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+                            <i class="fas fa-envelope w-5"></i>
+                            <span>Messages</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin_stories') }}" class="flex items-center gap-3 p-3 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all duration-200">
+                            <i class="fas fa-trophy w-5"></i>
+                            <span>Success Stories</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="mt-8 p-4 bg-gradient-to-r from-purple-600/10 to-blue-500/10 rounded-xl border border-purple-500/20">
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-r from-purple-600 to-blue-500 flex items-center justify-center mb-3">
+                            <span class="text-white font-bold text-xl">
+                                {{ current_user.name[0] if current_user.name else 'A' }}
+                            </span>
+                        </div>
+                        <h4 class="font-semibold">{{ current_user.name }}</h4>
+                        <p class="text-sm text-gray-400">{{ current_user.email }}</p>
+                        <a href="{{ url_for('logout') }}" class="mt-3 inline-flex items-center gap-2 text-sm text-red-400 hover:text-red-300 transition-colors">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1">
+            <!-- Top Bar -->
+            <div class="glass-effect p-6 border-b border-gray-800">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                    <div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Review Management</h1>
+                        <p class="text-gray-400">Manage and moderate user reviews</p>
+                    </div>
+                    
+                    <div class="flex items-center gap-4">
+                        <div class="relative">
+                            <input type="text" 
+                                   id="searchInput" 
+                                   placeholder="Search reviews..." 
+                                   class="bg-gray-900/50 border border-gray-700 rounded-xl pl-10 pr-4 py-2 w-full lg:w-64 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all duration-200">
+                            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
+                        
+                        <div class="relative">
+                            <button onclick="toggleFilter()" class="bg-gray-900/50 border border-gray-700 rounded-xl px-4 py-2 flex items-center gap-2 hover:bg-gray-800 transition-colors">
+                                <i class="fas fa-filter"></i>
+                                <span>Filter</span>
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                            <div id="filterDropdown" class="absolute right-0 mt-2 w-48 bg-gray-900 border border-gray-700 rounded-xl shadow-xl hidden z-10">
+                                <div class="p-3 space-y-2">
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" class="form-checkbox text-purple-500" checked>
+                                        <span>All Status</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" class="form-checkbox text-yellow-500" checked>
+                                        <span>Pending</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" class="form-checkbox text-green-500" checked>
+                                        <span>Approved</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" class="form-checkbox text-red-500" checked>
+                                        <span>Rejected</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="p-6">
+                        {% for category, message in messages %}
+                            <div class="animate-fade-in mb-3 p-4 rounded-xl border {% if category == 'success' %}bg-green-500/10 border-green-500/30 text-green-400{% elif category == 'error' %}bg-red-500/10 border-red-500/30 text-red-400{% else %}bg-blue-500/10 border-blue-500/30 text-blue-400{% endif %}">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'error' %}exclamation-circle{% else %}info-circle{% endif %}"></i>
+                                    <span>{{ message }}</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <!-- Stats Overview -->
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Total Reviews -->
+                    <div class="glass-card stat-card stat-card-total rounded-2xl p-6 animate-fade-in">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-gray-400 text-sm mb-2">Total Reviews</p>
+                                <p class="text-3xl font-bold">{{ review_stats.get('total_reviews', 0) if review_stats else 0 }}</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-r from-purple-600/20 to-blue-500/20 flex items-center justify-center">
+                                <i class="fas fa-star text-purple-400 star-pulse"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-center gap-2 text-sm">
+                            <i class="fas fa-arrow-up text-green-400"></i>
+                            <span class="text-gray-400">Last 30 days</span>
+                        </div>
+                    </div>
+
+                    <!-- Pending Reviews -->
+                    <div class="glass-card stat-card stat-card-pending rounded-2xl p-6 animate-fade-in" style="animation-delay: 0.1s">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-gray-400 text-sm mb-2">Pending</p>
+                                <p class="text-3xl font-bold">{{ review_stats.get('pending_reviews', 0) if review_stats else 0 }}</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-r from-amber-600/20 to-orange-500/20 flex items-center justify-center">
+                                <i class="fas fa-clock text-amber-400"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between text-sm mb-1">
+                                <span class="text-gray-400">Action Required</span>
+                                <span class="font-semibold">
+                                    {% if review_stats and review_stats.get('total_reviews', 0) > 0 %}
+                                        {{ ((review_stats.get('pending_reviews', 0) / review_stats.get('total_reviews', 1)) * 100)|round(1) }}
+                                    {% else %}
+                                        0
+                                    {% endif %}%
+                                </span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-amber-500 to-orange-600" 
+                                     style="width: {% if review_stats and review_stats.get('total_reviews', 0) > 0 %}{{ ((review_stats.get('pending_reviews', 0) / review_stats.get('total_reviews', 1)) * 100)|round(1) }}{% else %}0{% endif %}%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Approved Reviews -->
+                    <div class="glass-card stat-card stat-card-approved rounded-2xl p-6 animate-fade-in" style="animation-delay: 0.2s">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-gray-400 text-sm mb-2">Approved</p>
+                                <p class="text-3xl font-bold">{{ review_stats.get('approved_reviews', 0) if review_stats else 0 }}</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-r from-green-600/20 to-emerald-500/20 flex items-center justify-center">
+                                <i class="fas fa-check-circle text-green-400"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between text-sm mb-1">
+                                <span class="text-gray-400">Success Rate</span>
+                                <span class="font-semibold">
+                                    {% if review_stats and review_stats.get('total_reviews', 0) > 0 %}
+                                        {{ ((review_stats.get('approved_reviews', 0) / review_stats.get('total_reviews', 1)) * 100)|round(1) }}
+                                    {% else %}
+                                        0
+                                    {% endif %}%
+                                </span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-green-500 to-emerald-600" 
+                                     style="width: {% if review_stats and review_stats.get('total_reviews', 0) > 0 %}{{ ((review_stats.get('approved_reviews', 0) / review_stats.get('total_reviews', 1)) * 100)|round(1) }}{% else %}0{% endif %}%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rejected Reviews -->
+                    <div class="glass-card stat-card stat-card-rejected rounded-2xl p-6 animate-fade-in" style="animation-delay: 0.3s">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-gray-400 text-sm mb-2">Rejected</p>
+                                <p class="text-3xl font-bold">{{ review_stats.get('rejected_reviews', 0) if review_stats else 0 }}</p>
+                            </div>
+                            <div class="w-12 h-12 rounded-lg bg-gradient-to-r from-red-600/20 to-pink-500/20 flex items-center justify-center">
+                                <i class="fas fa-times-circle text-red-400"></i>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between text-sm mb-1">
+                                <span class="text-gray-400">Rejection Rate</span>
+                                <span class="font-semibold">
+                                    {% if review_stats and review_stats.get('total_reviews', 0) > 0 %}
+                                        {{ ((review_stats.get('rejected_reviews', 0) / review_stats.get('total_reviews', 1)) * 100)|round(1) }}
+                                    {% else %}
+                                        0
+                                    {% endif %}%
+                                </span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-red-500 to-pink-600" 
+                                     style="width: {% if review_stats and review_stats.get('total_reviews', 0) > 0 %}{{ ((review_stats.get('rejected_reviews', 0) / review_stats.get('total_reviews', 1)) * 100)|round(1) }}{% else %}0{% endif %}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rating Distribution -->
+            <div class="px-6">
+                <div class="glass-card rounded-2xl p-6 animate-fade-in" style="animation-delay: 0.4s">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h3 class="text-lg font-semibold">Rating Distribution</h3>
+                            <p class="text-gray-400 text-sm">Breakdown of all ratings</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="text-center">
+                                <p class="text-2xl font-bold">
+                                    {{ review_stats.get('average_rating', 0)|round(1) if review_stats else '0.0' }}
+                                </p>
+                                <p class="text-xs text-gray-400">Avg Rating</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        {% for i in range(5, 0, -1) %}
+                        <div class="flex items-center gap-4">
+                            <div class="w-20 flex items-center gap-2">
+                                <div class="star-rating flex">
+                                    {% for j in range(1, 6) %}
+                                        <i class="fas fa-star text-{% if j <= i %}yellow-400{% else %}gray-700{% endif %} text-sm"></i>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="flex-1">
+                                {% set total_reviews = review_stats.get('total_reviews', 1) %}
+                                {% set star_count = review_stats.get(i ~ '_star', 0) if review_stats else 0 %}
+                                {% set percentage = (star_count / total_reviews * 100) if total_reviews > 0 else 0 %}
+                                <div class="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
+                                    <div class="rating-bar h-full rounded-full" style="width: {{ percentage }}%"></div>
+                                </div>
+                            </div>
+                            <div class="w-16 text-right">
+                                <span class="font-semibold">{{ star_count }}</span>
+                                <span class="text-gray-400 text-sm ml-1">({{ percentage|round(1) }}%)</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews Table -->
+            <div class="p-6">
+                <div class="glass-card rounded-2xl overflow-hidden animate-fade-in" style="animation-delay: 0.5s">
+                    <!-- Table Header -->
+                    <div class="p-6 border-b border-gray-800">
+                        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                            <div>
+                                <h3 class="text-lg font-semibold">All Reviews</h3>
+                                <p class="text-gray-400 text-sm">{{ reviews|length }} reviews found</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" id="selectAll" class="form-checkbox text-purple-500" onchange="toggleSelectAll(this)">
+                                    <span class="text-sm">Select All</span>
+                                </label>
+                                <div class="flex gap-2">
+                                    <button onclick="approveSelected()" class="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
+                                        <i class="fas fa-check mr-2"></i>Approve
+                                    </button>
+                                    <button onclick="rejectSelected()" class="px-4 py-2 bg-gradient-to-r from-red-500 to-pink-600 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
+                                        <i class="fas fa-times mr-2"></i>Reject
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reviews List -->
+                    <div class="scrollbar-thin max-h-[500px] overflow-y-auto">
+                        {% for review in reviews %}
+                        <div class="review-card {{ review.status }} p-6 border-b border-gray-800 hover:bg-white/5 transition-all duration-200" data-review-id="{{ review.id }}">
+                            <div class="flex flex-col lg:flex-row lg:items-start gap-4">
+                                <!-- Checkbox -->
+                                <div class="flex items-start">
+                                    <input type="checkbox" class="review-checkbox form-checkbox text-purple-500 mt-1" value="{{ review.id }}" onchange="updateSelectAll()">
+                                </div>
+
+                                <!-- Review Content -->
+                                <div class="flex-1">
+                                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 mb-3">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 flex items-center justify-center text-white font-semibold">
+                                                {{ review.user_name[0] if review.user_name else 'A' }}
+                                            </div>
+                                            <div>
+                                                <h4 class="font-semibold">{{ review.user_name or 'Anonymous' }}</h4>
+                                                <p class="text-sm text-gray-400">{{ review.user_email or 'No email' }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-3">
+                                            <div class="flex items-center gap-2">
+                                                {% for i in range(1, 6) %}
+                                                    <i class="fas fa-star text-{% if i <= review.rating %}yellow-400{% else %}gray-600{% endif %}"></i>
+                                                {% endfor %}
+                                                <span class="text-gray-400 ml-2">{{ review.rating }}/5</span>
+                                            </div>
+                                            <span class="px-3 py-1 rounded-full text-xs font-medium 
+                                                {% if review.status == 'pending' %}bg-yellow-500/20 text-yellow-400 border border-yellow-500/30
+                                                {% elif review.status == 'approved' %}bg-green-500/20 text-green-400 border border-green-500/30
+                                                {% else %}bg-red-500/20 text-red-400 border border-red-500/30{% endif %}">
+                                                {{ review.status|title }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Review Text -->
+                                    <div class="mb-4">
+                                        <p class="text-gray-300">{{ review.review_text }}</p>
+                                    </div>
+
+                                    <!-- Review Footer -->
+                                    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+                                        <div class="flex items-center gap-4 text-sm text-gray-400">
+                                            <span class="flex items-center gap-2">
+                                                <i class="far fa-clock"></i>
+                                                {{ review.created_at.strftime('%B %d, %Y %I:%M %p') if review.created_at else 'N/A' }}
+                                            </span>
+                                        </div>
+                                        
+                                        <!-- Action Buttons -->
+                                        <div class="flex items-center gap-2">
+                                            {% if review.status == 'pending' %}
+                                                <button onclick="approveSingleReview({{ review.id }})" class="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity flex items-center gap-2">
+                                                    <i class="fas fa-check"></i> Approve
+                                                </button>
+                                                <button onclick="rejectSingleReview({{ review.id }})" class="px-4 py-2 bg-gradient-to-r from-red-500 to-pink-600 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity flex items-center gap-2">
+                                                    <i class="fas fa-times"></i> Reject
+                                                </button>
+                                            {% elif review.status == 'approved' %}
+                                                <button onclick="rejectSingleReview({{ review.id }})" class="px-4 py-2 bg-gradient-to-r from-red-500 to-pink-600 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity flex items-center gap-2">
+                                                    <i class="fas fa-times"></i> Reject
+                                                </button>
+                                            {% else %}
+                                                <button onclick="approveSingleReview({{ review.id }})" class="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity flex items-center gap-2">
+                                                    <i class="fas fa-check"></i> Approve
+                                                </button>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="p-12 text-center">
+                            <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gray-800 flex items-center justify-center">
+                                <i class="fas fa-star text-gray-600 text-2xl"></i>
+                            </div>
+                            <h4 class="text-xl font-semibold mb-2">No Reviews Found</h4>
+                            <p class="text-gray-400 mb-6">There are no reviews to display at the moment.</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const reviewCards = document.querySelectorAll('.review-card');
+            reviewCards.forEach((card, index) => {
+                card.style.animationDelay = `${0.1 * index}s`;
+            });
+        });
+
+        // Filter toggle
+        function toggleFilter() {
+            const dropdown = document.getElementById('filterDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Close filter dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const filterBtn = event.target.closest('button[onclick="toggleFilter()"]');
+            const dropdown = document.getElementById('filterDropdown');
+            
+            if (!filterBtn && dropdown && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Toggle select all checkboxes
+        function toggleSelectAll(selectAllCheckbox) {
+            const checkboxes = document.querySelectorAll('.review-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+        }
+
+        // Update select all checkbox state
+        function updateSelectAll() {
+            const checkboxes = document.querySelectorAll('.review-checkbox');
+            const selectAllCheckbox = document.getElementById('selectAll');
+            const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+            
+            selectAllCheckbox.checked = checkedCount === checkboxes.length;
+            selectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < checkboxes.length;
+        }
+
+        // Get selected review IDs
+        function getSelectedReviewIds() {
+            const checkboxes = document.querySelectorAll('.review-checkbox:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        // Single review actions
+        function approveSingleReview(reviewId) {
+            if (confirm('Are you sure you want to approve this review?')) {
+                window.location.href = `/admin/approve_review/${reviewId}`;
+            }
+        }
+
+        function rejectSingleReview(reviewId) {
+            if (confirm('Are you sure you want to reject this review?')) {
+                window.location.href = `/admin/reject_review/${reviewId}`;
+            }
+        }
+
+        // Bulk review actions
+        function approveSelected() {
+            const selectedIds = getSelectedReviewIds();
+            if (selectedIds.length === 0) {
+                alert('Please select at least one review to approve.');
+                return;
+            }
+            
+            if (confirm(`Are you sure you want to approve ${selectedIds.length} review(s)?`)) {
+                fetch('/admin/bulk_approve_reviews', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ review_ids: selectedIds })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        location.reload();
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message);
+                });
+            }
+        }
+
+        function rejectSelected() {
+            const selectedIds = getSelectedReviewIds();
+            if (selectedIds.length === 0) {
+                alert('Please select at least one review to reject.');
+                return;
+            }
+            
+            if (confirm(`Are you sure you want to reject ${selectedIds.length} review(s)?`)) {
+                fetch('/admin/bulk_reject_reviews', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ review_ids: selectedIds })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        location.reload();
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message);
+                });
+            }
+        }
+
+        // Show bulk actions modal
+        function showBulkActions() {
+            document.getElementById('bulkModal').classList.remove('hidden');
+        }
+
+        // Close bulk modal
+        function closeBulkModal() {
+            document.getElementById('bulkModal').classList.add('hidden');
+        }
+
+        // Bulk approve from modal
+        function bulkApprove() {
+            approveSelected();
+            closeBulkModal();
+        }
+
+        // Bulk reject from modal
+        function bulkReject() {
+            rejectSelected();
+            closeBulkModal();
+        }
+
+        // Bulk delete
+        function bulkDelete() {
+            const selectedIds = getSelectedReviewIds();
+            if (selectedIds.length === 0) {
+                alert('Please select at least one review to delete.');
+                closeBulkModal();
+                return;
+            }
+            
+            if (confirm(`Are you sure you want to permanently delete ${selectedIds.length} review(s)? This action cannot be undone.`)) {
+                fetch('/admin/bulk_delete_reviews', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ review_ids: selectedIds })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        location.reload();
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                    closeBulkModal();
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message);
+                    closeBulkModal();
+                });
+            } else {
+                closeBulkModal();
+            }
+        }
+
+        // Export reviews
+        function exportReviews() {
+            alert('Export functionality would be implemented here. Exporting reviews to CSV/PDF.');
+        }
+
+        // Refresh page
+        function refreshPage() {
+            location.reload();
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const reviewCards = document.querySelectorAll('.review-card');
+            
+            reviewCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + F to focus search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                e.preventDefault();
+                document.getElementById('searchInput').focus();
+            }
+            
+            // Ctrl/Cmd + A to select all
+            if ((e.ctrlKey || e.metaKey) && e.key === 'a') {
+                e.preventDefault();
+                const selectAll = document.getElementById('selectAll');
+                if (selectAll) {
+                    selectAll.checked = !selectAll.checked;
+                    toggleSelectAll(selectAll);
+                }
+            }
+            
+            // Escape to close modals
+            if (e.key === 'Escape') {
+                closeBulkModal();
+                const filterDropdown = document.getElementById('filterDropdown');
+                if (filterDropdown) {
+                    filterDropdown.classList.add('hidden');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

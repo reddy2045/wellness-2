@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Wellness Coach</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Inter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-green: #10b981;
+            --light-green: #d1fae5;
+            --dark-green: #059669;
+            --teal: #0d9488;
+            --soft-green: #f0fdf4;
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-2xl: 32px;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 18px 45px rgba(15, 118, 110, 0.15);
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f0f9ff 0%, #ecfeff 50%, #f0fdf4 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--gray-700);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: 16px;
+            position: relative;
+        }
+
+        @media (max-width: 767px) {
+            body {
+                padding: 12px;
+                font-size: 15px;
+            }
+        }
+
+        /* Floating Back Button */
+        .floating-back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--white);
+            color: var(--primary-green);
+            border: 2px solid var(--primary-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            text-decoration: none;
+        }
+
+        .floating-back-btn:hover {
+            transform: translateX(-5px);
+            background: var(--primary-green);
+            color: var(--white);
+            box-shadow: var(--shadow-lg);
+        }
+
+        @media (max-width: 767px) {
+            .floating-back-btn {
+                top: 15px;
+                left: 15px;
+                width: 44px;
+                height: 44px;
+                font-size: 1.1rem;
+            }
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 8px;
+            position: relative;
+        }
+
+        /* Wellness Card - Main Container */
+        .wellness-card {
+            background: var(--white);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: auto;
+            position: relative;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+            animation: cardFadeIn 0.6s ease-out;
+        }
+
+        @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .wellness-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px rgba(15, 118, 110, 0.2);
+        }
+
+        /* Left Panel - Benefits Section */
+        .left-panel {
+            background: linear-gradient(160deg, #10b981 0%, #0d9488 40%, #047857 100%);
+            padding: 32px 24px;
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+            min-height: 500px;
+        }
+
+        .left-panel::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .left-panel::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .left-main, .left-bottom-card {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 32px;
+        }
+
+        .logo-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.6rem;
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform var(--transition-fast);
+        }
+
+        .logo:hover .logo-icon {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(90deg, #ffffff, #e2e8f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Title & Subtitle */
+        .wellness-title {
+            font-size: clamp(2rem, 4.5vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        .wellness-subtitle {
+            font-size: 1.05rem;
+            opacity: 0.95;
+            margin-bottom: 32px;
+            line-height: 1.7;
+            max-width: 500px;
+        }
+
+        /* Benefits Carousel with 3-dot Navigation */
+        .benefits-carousel-container {
+            margin: 24px 0 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefits-carousel {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            width: 100%;
+        }
+
+        .benefit-slide {
+            flex: 0 0 100%;
+            padding: 8px 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin-bottom: 12px;
+            transition: all var(--transition-fast);
+        }
+
+        .benefit-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .benefit-item i {
+            background: rgba(255, 255, 255, 0.2);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .benefit-text {
+            flex: 1;
+            font-size: 0.98rem;
+            line-height: 1.6;
+        }
+
+        /* 3-Dot Navigation */
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            padding: 0;
+            position: relative;
+        }
+
+        .carousel-dot:hover {
+            background: rgba(255, 255, 255, 0.7);
+            transform: scale(1.2);
+        }
+
+        .carousel-dot.active {
+            background: var(--white);
+            transform: scale(1.3);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+        }
+
+        .carousel-dot.active::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Left Bottom Card */
+        .left-bottom-card {
+            margin-top: 32px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            padding: 24px;
+            border-radius: var(--radius-xl);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-bottom-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #10b981, #0d9488);
+        }
+
+        .left-bottom-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .left-bottom-card p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .btn-outline-light-soft {
+            background: transparent;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            padding: 14px 24px;
+            color: var(--white);
+            font-size: 1rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all var(--transition-normal);
+            text-decoration: none;
+            width: fit-content;
+        }
+
+        .btn-outline-light-soft:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Right Panel - Registration Form */
+        .right-panel {
+            padding: 36px 28px;
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-inner {
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Register Header */
+        .register-header {
+            text-align: left;
+            margin-bottom: 32px;
+        }
+
+        .register-header h2 {
+            color: var(--gray-800);
+            font-weight: 800;
+            margin-bottom: 10px;
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        .register-header p {
+            color: var(--gray-600);
+            font-size: 1.05rem;
+            max-width: 400px;
+        }
+
+        /* Step Indicator */
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 36px;
+            position: relative;
+        }
+
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 22px;
+            left: 20px;
+            right: 20px;
+            height: 3px;
+            background: var(--gray-200);
+            z-index: 1;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-number {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--white);
+            border: 3px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--gray-400);
+            margin-bottom: 12px;
+            font-size: 1rem;
+            transition: all var(--transition-normal);
+            position: relative;
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .step.active .step-number {
+            background: var(--primary-green);
+            border-color: var(--primary-green);
+            color: white;
+            box-shadow: 0 0 0 6px rgba(16, 185, 129, 0.2);
+        }
+
+        .step.active .step-label {
+            color: var(--primary-green);
+            font-weight: 700;
+        }
+
+        .step.completed .step-number {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .step.completed .step-number::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+        }
+
+        /* Form Elements */
+        .form-label {
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+        }
+
+        .form-label .required {
+            color: var(--error);
+            margin-left: 4px;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid var(--gray-300);
+            border-radius: var(--radius-lg);
+            padding: 16px 20px 16px 52px;
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+            background: var(--white);
+            min-height: 56px;
+            width: 100%;
+            color: var(--gray-800);
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+            outline: none;
+        }
+
+        .form-control.is-valid {
+            border-color: var(--success);
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2310b981' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 20px 20px;
+            padding-right: 60px;
+        }
+
+        .form-control.is-invalid {
+            border-color: var(--error);
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23ef4444'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23ef4444' stroke='none'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 20px 20px;
+            padding-right: 60px;
+        }
+
+        .input-group-custom {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.1rem;
+            color: var(--gray-500);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray-500);
+            cursor: pointer;
+            z-index: 3;
+            padding: 10px;
+            font-size: 1.1rem;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+        }
+
+        .password-toggle:hover {
+            background-color: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .password-toggle:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .form-feedback {
+            font-size: 0.9rem;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .form-feedback.valid {
+            color: var(--success);
+            display: block;
+        }
+
+        .form-feedback.invalid {
+            color: var(--error);
+            display: block;
+        }
+
+        /* Password Strength */
+        .progress-container {
+            margin: 20px 0 12px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+            background: var(--gray-200);
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--primary-green), var(--teal));
+            transition: width 0.4s ease;
+            border-radius: 5px;
+        }
+
+        .password-strength {
+            font-size: 0.85rem;
+            color: var(--gray-500);
+            margin-top: 6px;
+            min-height: 1.2em;
+        }
+
+        /* Password Requirements */
+        .requirements {
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--gray-700);
+            border: 1px solid var(--gray-200);
+        }
+
+        .requirements h6 {
+            margin-bottom: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--gray-800);
+        }
+
+        .requirements ul {
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none;
+        }
+
+        .requirements li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 28px;
+            display: flex;
+            align-items: center;
+        }
+
+        .requirements li::before {
+            content: '○';
+            position: absolute;
+            left: 0;
+            color: var(--gray-400);
+            font-size: 1.2rem;
+        }
+
+        .requirements li.valid::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .requirements li.invalid::before {
+            content: '○';
+            color: var(--gray-400);
+        }
+
+        /* Terms Checkbox */
+        .terms-check {
+            margin: 28px 0 20px;
+            font-size: 0.95rem;
+        }
+
+        .terms-check .form-check {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 12px 16px;
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--gray-200);
+            transition: all var(--transition-fast);
+        }
+
+        .terms-check .form-check:hover {
+            background: var(--gray-100);
+            border-color: var(--gray-300);
+        }
+
+        .terms-check .form-check-input {
+            width: 22px;
+            height: 22px;
+            margin-top: 3px;
+            flex-shrink: 0;
+            border: 2px solid var(--gray-400);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .terms-check .form-check-input:checked {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+        }
+
+        .terms-check .form-check-input:focus {
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+        }
+
+        .terms-check .form-check-label {
+            color: var(--gray-700);
+            cursor: pointer;
+            line-height: 1.6;
+        }
+
+        .terms-check a {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color var(--transition-fast);
+        }
+
+        .terms-check a:hover {
+            color: var(--dark-green);
+            text-decoration: underline;
+        }
+
+        /* Register Button */
+        .btn-register {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--teal) 100%);
+            color: var(--white);
+            border: none;
+            padding: 18px 28px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            width: 100%;
+            transition: all var(--transition-normal);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            min-height: 60px;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-register::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .btn-register:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.5);
+        }
+
+        .btn-register:hover::before {
+            left: 100%;
+        }
+
+        .btn-register:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        .btn-register:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 36px 0;
+            color: var(--gray-500);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--gray-300);
+        }
+
+        .divider span {
+            padding: 0 20px;
+            background: var(--white);
+        }
+
+        /* Social Login */
+        .social-login {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 16px;
+            border: 2px solid var(--gray-300);
+            border-radius: 50px;
+            background: var(--white);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            color: var(--gray-800);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            min-height: 56px;
+        }
+
+        .social-btn:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-400);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .social-btn:active {
+            transform: translateY(0);
+        }
+
+        .social-btn i {
+            font-size: 1.3rem;
+        }
+
+        /* Login Link */
+        .login-link {
+            text-align: center;
+            margin-top: 28px;
+            color: var(--gray-600);
+            font-size: 1rem;
+        }
+
+        .login-link a {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 700;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+
+        .login-link a:hover {
+            color: var(--dark-green);
+            text-decoration: underline;
+        }
+
+        .login-link a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-green);
+            transition: width var(--transition-normal);
+        }
+
+        .login-link a:hover::after {
+            width: 100%;
+        }
+
+        /* Alert Styling */
+        .alert {
+            border-radius: var(--radius-lg);
+            border: none;
+            padding: 18px 20px;
+            margin-bottom: 28px;
+            font-size: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            animation: slideInDown 0.4s ease;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-danger {
+            background: #fee2e2;
+            color: #b91c1c;
+            border-left: 5px solid #b91c1c;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            color: #047857;
+            border-left: 5px solid #047857;
+        }
+
+        .alert .btn-close {
+            padding: 12px;
+            margin-left: auto;
+        }
+
+        /* Spinner for loading */
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Focus styles for accessibility */
+        .form-control:focus-visible,
+        .btn-register:focus-visible,
+        .social-btn:focus-visible,
+        .password-toggle:focus-visible {
+            outline: 3px solid var(--primary-green);
+            outline-offset: 2px;
+        }
+
+        /* Responsive Design - Mobile First */
+        @media (max-width: 767px) {
+            .register-container {
+                padding: 4px;
+            }
+            
+            .wellness-card {
+                border-radius: var(--radius-xl);
+                flex-direction: column;
+            }
+            
+            .left-panel, .right-panel {
+                width: 100%;
+            }
+            
+            .left-panel {
+                padding: 28px 20px;
+                min-height: auto;
+                order: 1;
+            }
+            
+            .right-panel {
+                padding: 28px 20px;
+                order: 2;
+            }
+            
+            .logo {
+                margin-bottom: 24px;
+            }
+            
+            .logo-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 1.4rem;
+            }
+            
+            .logo-text {
+                font-size: 1.6rem;
+            }
+            
+            .wellness-title {
+                font-size: 1.8rem;
+            }
+            
+            .wellness-subtitle {
+                font-size: 1rem;
+                margin-bottom: 24px;
+            }
+            
+            .benefits-carousel-container {
+                margin: 20px 0 28px;
+            }
+            
+            .benefit-item {
+                padding: 14px;
+            }
+            
+            .benefit-item i {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+            }
+            
+            .benefit-text {
+                font-size: 0.95rem;
+            }
+            
+            .carousel-dots {
+                margin-top: 20px;
+            }
+            
+            .left-bottom-card {
+                margin-top: 24px;
+                padding: 20px;
+            }
+            
+            .btn-outline-light-soft {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .register-header {
+                margin-bottom: 24px;
+            }
+            
+            .register-header h2 {
+                font-size: 1.7rem;
+            }
+            
+            .register-header p {
+                font-size: 1rem;
+            }
+            
+            .step-indicator {
+                margin-bottom: 28px;
+            }
+            
+            .step-number {
+                width: 40px;
+                height: 40px;
+                font-size: 0.95rem;
+            }
+            
+            .step-label {
+                font-size: 0.8rem;
+            }
+            
+            .form-control, .form-select {
+                padding: 14px 18px 14px 48px;
+                min-height: 52px;
+                font-size: 1rem;
+            }
+            
+            .input-icon {
+                left: 18px;
+                font-size: 1rem;
+            }
+            
+            .password-toggle {
+                right: 14px;
+                width: 44px;
+                height: 44px;
+            }
+            
+            .btn-register {
+                min-height: 56px;
+                padding: 16px 24px;
+                font-size: 1.05rem;
+            }
+            
+            .social-login {
+                flex-direction: column;
+                gap: 14px;
+            }
+            
+            .social-btn {
+                min-height: 52px;
+            }
+            
+            .divider {
+                margin: 30px 0;
+            }
+        }
+
+        /* Tablet */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .wellness-card {
+                flex-direction: row;
+                min-height: 680px;
+            }
+            
+            .left-panel, .right-panel {
+                flex: 1;
+            }
+            
+            .left-panel {
+                padding: 32px 28px;
+            }
+            
+            .right-panel {
+                padding: 32px 28px;
+            }
+        }
+
+        /* Desktop */
+        @media (min-width: 1024px) {
+            .wellness-card {
+                flex-direction: row;
+                min-height: 720px;
+            }
+            
+            .left-panel, .right-panel {
+                flex: 1;
+            }
+            
+            .left-panel {
+                padding: 40px 36px;
+            }
+            
+            .right-panel {
+                padding: 40px 36px;
+            }
+            
+            .wellness-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Small phones */
+        @media (max-width: 375px) {
+            .wellness-card {
+                border-radius: 20px;
+            }
+            
+            .left-panel, .right-panel {
+                padding: 24px 16px;
+            }
+            
+            .logo {
+                margin-bottom: 20px;
+            }
+            
+            .logo-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+            }
+            
+            .logo-text {
+                font-size: 1.4rem;
+            }
+            
+            .wellness-title {
+                font-size: 1.6rem;
+            }
+            
+            .wellness-subtitle {
+                font-size: 0.95rem;
+            }
+            
+            .benefit-item {
+                padding: 12px;
+                gap: 12px;
+            }
+            
+            .benefit-item i {
+                width: 30px;
+                height: 30px;
+                font-size: 0.85rem;
+            }
+            
+            .benefit-text {
+                font-size: 0.9rem;
+            }
+            
+            .step-number {
+                width: 36px;
+                height: 36px;
+                font-size: 0.9rem;
+            }
+            
+            .step-label {
+                font-size: 0.75rem;
+            }
+            
+            .form-control, .form-select {
+                padding: 12px 16px 12px 44px;
+                min-height: 48px;
+                font-size: 0.95rem;
+            }
+            
+            .input-icon {
+                left: 16px;
+                font-size: 0.9rem;
+            }
+            
+            .password-toggle {
+                right: 12px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .btn-register {
+                min-height: 52px;
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
+            
+            .floating-back-btn {
+                top: 10px;
+                left: 10px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .wellness-card {
+                box-shadow: none;
+                border: 1px solid var(--gray-300);
+            }
+            
+            .btn-register,
+            .social-login,
+            .password-toggle,
+            .btn-outline-light-soft,
+            .carousel-dots,
+            .floating-back-btn {
+                display: none;
+            }
+        }
+
+        /* Smooth scrolling for anchor links */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-100);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-400);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-500);
+        }
+
+        /* Selection color */
+        ::selection {
+            background-color: rgba(16, 185, 129, 0.3);
+            color: var(--gray-800);
+        }
+
+        /* Loading animation for form */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mb-3 {
+            margin-bottom: 24px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Staggered animation for form fields */
+        .mb-3:nth-child(1) { animation-delay: 0.1s; }
+        .mb-3:nth-child(2) { animation-delay: 0.2s; }
+        .mb-3:nth-child(3) { animation-delay: 0.3s; }
+        .mb-3:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .btn-register,
+            .social-btn,
+            .benefit-item,
+            .btn-outline-light-soft {
+                min-height: 60px !important;
+            }
+            
+            .form-control,
+            .form-select {
+                font-size: 16px !important; /* Prevents iOS zoom */
+            }
+            
+            .password-toggle {
+                min-width: 50px;
+                min-height: 50px;
+            }
+        }
+
+        /* Reduce motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Back Button -->
+    <a href="{{ url_for('index') }}" class="floating-back-btn" aria-label="Go back to home page">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <div class="register-container">
+        <main class="wellness-card" role="main" aria-labelledby="pageTitle">
+            <!-- Left Panel - Benefits with 3-dot Carousel -->
+            <section class="left-panel" aria-label="Wellness Coach benefits">
+                <div class="left-main">
+                    <div class="logo">
+                        <div class="logo-icon" aria-hidden="true">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="logo-text">Wellness Coach</div>
+                    </div>
+                    <h1 id="pageTitle" class="wellness-title">Join a healthier, happier you</h1>
+                    <p class="wellness-subtitle">
+                        Build sustainable habits with personalized plans, 1-on-1 coaching, and a supportive community that keeps you accountable every step of the way.
+                    </p>
+                    
+                    <!-- Benefits Carousel with 3-dot Navigation -->
+                    <div class="benefits-carousel-container">
+                        <div class="benefits-carousel" id="benefitsCarousel">
+                            <!-- Slide 1 -->
+                            <div class="benefit-slide">
+                                <div class="benefit-item">
+                                    <i class="fas fa-apple-alt" aria-hidden="true"></i>
+                                    <div class="benefit-text">Smart nutrition plans built around your routine</div>
+                                </div>
+                                <div class="benefit-item">
+                                    <i class="fas fa-users" aria-hidden="true"></i>
+                                    <div class="benefit-text">1-on-1 coaching and weekly check-ins</div>
+                                </div>
+                            </div>
+                            <!-- Slide 2 -->
+                            <div class="benefit-slide">
+                                <div class="benefit-item">
+                                    <i class="fas fa-chart-line" aria-hidden="true"></i>
+                                    <div class="benefit-text">Intuitive progress and habit tracking</div>
+                                </div>
+                                <div class="benefit-item">
+                                    <i class="fas fa-comments" aria-hidden="true"></i>
+                                    <div class="benefit-text">Private community and support circles</div>
+                                </div>
+                            </div>
+                            <!-- Slide 3 -->
+                            <div class="benefit-slide">
+                                <div class="benefit-item">
+                                    <i class="fas fa-trophy" aria-hidden="true"></i>
+                                    <div class="benefit-text">Fun weekly challenges and rewards</div>
+                                </div>
+                                <div class="benefit-item">
+                                    <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+                                    <div class="benefit-text">Mobile app with offline access</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 3-Dot Navigation -->
+                        <div class="carousel-dots" id="carouselDots">
+                            <button class="carousel-dot active" aria-label="View benefit slide 1"></button>
+                            <button class="carousel-dot" aria-label="View benefit slide 2"></button>
+                            <button class="carousel-dot" aria-label="View benefit slide 3"></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="left-bottom-card" aria-label="Sign in section">
+                    <h4>Already part of the community?</h4>
+                    <p>Jump back into your dashboard to continue your wellness journey.</p>
+                    <a href="{{ url_for('login') }}" class="btn-outline-light-soft">
+                        <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                        <span>Sign in to your account</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Right Panel - Registration Form -->
+            <section class="right-panel" aria-label="Registration form">
+                <div class="right-inner">
+                    <header class="register-header">
+                        <h2>Create your account</h2>
+                        <p>Sign up in less than a minute. You can always complete your health profile later.</p>
+                    </header>
+
+                    <div class="step-indicator" aria-label="Registration progress">
+                        <div class="step active">
+                            <div class="step-number">1</div>
+                            <div class="step-label">Account</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-label">Health</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-label">Start</div>
+                        </div>
+                    </div>
+
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                                    <i class="fas fa-{{ 'exclamation-circle' if category == 'error' else 'check-circle' }} me-2" aria-hidden="true"></i>
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <form method="POST" action="{{ url_for('register') }}" id="registerForm" novalidate aria-describedby="formDescription">
+                        <p id="formDescription" class="visually-hidden">
+                            All fields marked with an asterisk are required. Password strength and errors will be announced as you type.
+                        </p>
+
+                        <!-- Username -->
+                        <div class="mb-3">
+                            <label for="username" class="form-label">
+                                <i class="fas fa-user" aria-hidden="true"></i> Username <span class="required">*</span>
+                            </label>
+                            <div class="input-group-custom">
+                                <span class="input-icon" aria-hidden="true">
+                                    <i class="fas fa-at"></i>
+                                </span>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Choose a username" required minlength="3" autocomplete="username" aria-describedby="usernameFeedback">
+                            </div>
+                            <div class="form-feedback" id="usernameFeedback" role="status" aria-live="polite"></div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">
+                                <i class="fas fa-envelope" aria-hidden="true"></i> Email address <span class="required">*</span>
+                            </label>
+                            <div class="input-group-custom">
+                                <span class="input-icon" aria-hidden="true">
+                                    <i class="far fa-envelope"></i>
+                                </span>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required autocomplete="email" inputmode="email" aria-describedby="emailFeedback">
+                            </div>
+                            <div class="form-feedback" id="emailFeedback" role="status" aria-live="polite"></div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">
+                                <i class="fas fa-lock" aria-hidden="true"></i> Password <span class="required">*</span>
+                            </label>
+                            <div class="input-group-custom">
+                                <span class="input-icon" aria-hidden="true">
+                                    <i class="fas fa-key"></i>
+                                </span>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Create a strong password" required minlength="6" autocomplete="new-password" aria-describedby="strengthText reqLength reqUpper reqLower reqNumber">
+                                <button type="button" class="password-toggle" id="togglePassword" aria-label="Show password" aria-pressed="false">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="progress-container" aria-hidden="true">
+                                <div class="progress-label">
+                                    <span>Password strength</span>
+                                    <span id="strengthText">Weak</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" id="passwordStrength" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <p class="password-strength" aria-live="polite" id="passwordStrengthLive"></p>
+                            <div class="requirements" aria-label="Password requirements">
+                                <h6>Password must contain:</h6>
+                                <ul>
+                                    <li id="reqLength">At least 6 characters</li>
+                                    <li id="reqUpper">One uppercase letter</li>
+                                    <li id="reqLower">One lowercase letter</li>
+                                    <li id="reqNumber">One number</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Confirm password (CORRECTED FIELD NAME) -->
+                        <div class="mb-3">
+                            <label for="confirmpassword" class="form-label">
+                                <i class="fas fa-lock" aria-hidden="true"></i> Confirm password <span class="required">*</span>
+                            </label>
+                            <div class="input-group-custom">
+                                <span class="input-icon" aria-hidden="true">
+                                    <i class="fas fa-check-circle"></i>
+                                </span>
+                                <input type="password" class="form-control" id="confirmpassword" name="confirm_password" placeholder="Reenter your password" required minlength="6" autocomplete="new-password" aria-describedby="confirmFeedback">
+                                <button type="button" class="password-toggle" id="toggleConfirmPassword" aria-label="Show confirm password" aria-pressed="false">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="form-feedback" id="confirmFeedback" role="status" aria-live="polite"></div>
+                        </div>
+
+                        <!-- Terms -->
+                        <div class="terms-check">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="terms" name="terms" required aria-required="true">
+                                <label class="form-check-label" for="terms">
+                                    I agree to the
+                                    <a href="#" target="_blank" rel="noopener">Terms of Service</a> and
+                                    <a href="#" target="_blank" rel="noopener">Privacy Policy</a>.
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-register" id="submitBtn">
+                            <i class="fas fa-user-plus" aria-hidden="true"></i>
+                            <span>Create my wellness account</span>
+                            <div class="spinner" id="loadingSpinner"></div>
+                        </button>
+                    </form>
+
+                    <div class="divider">
+                        <span>Or continue with</span>
+                    </div>
+
+                    <div class="social-login" aria-label="Social sign up options">
+                        <button type="button" class="social-btn">
+                            <i class="fab fa-google" style="color: #DB4437" aria-hidden="true"></i>
+                            <span>Google</span>
+                        </button>
+                        <button type="button" class="social-btn">
+                            <i class="fab fa-apple" style="color: #000" aria-hidden="true"></i>
+                            <span>Apple</span>
+                        </button>
+                    </div>
+
+                    <div class="login-link">
+                        Already have an account? <a href="{{ url_for('login') }}">Sign in</a>
+                    </div>
+
+                    <!-- Removed duplicate back home link to avoid confusion -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ========== BENEFITS CAROUSEL WITH 3-DOT NAVIGATION ==========
+            const carousel = document.getElementById('benefitsCarousel');
+            const dots = document.querySelectorAll('.carousel-dot');
+            const slides = document.querySelectorAll('.benefit-slide');
+            let currentSlide = 0;
+            let slideInterval;
+            const slideCount = slides.length;
+            
+            // Initialize dots
+            function updateDots() {
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
+            
+            // Move to specific slide
+            function goToSlide(index) {
+                currentSlide = (index + slideCount) % slideCount;
+                carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+                updateDots();
+            }
+            
+            // Next slide
+            function nextSlide() {
+                goToSlide(currentSlide + 1);
+            }
+            
+            // Auto-rotate carousel
+            function startCarousel() {
+                slideInterval = setInterval(nextSlide, 5000);
+            }
+            
+            // Stop auto-rotation
+            function stopCarousel() {
+                clearInterval(slideInterval);
+            }
+            
+            // Add click event to dots
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    stopCarousel();
+                    goToSlide(index);
+                    startCarousel();
+                });
+                
+                // Keyboard navigation for dots
+                dot.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        stopCarousel();
+                        goToSlide(index);
+                        startCarousel();
+                    }
+                });
+            });
+            
+            // Touch/swipe support for mobile
+            let startX = 0;
+            let endX = 0;
+            
+            carousel.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                stopCarousel();
+            });
+            
+            carousel.addEventListener('touchmove', (e) => {
+                endX = e.touches[0].clientX;
+            });
+            
+            carousel.addEventListener('touchend', () => {
+                const threshold = 50;
+                if (startX - endX > threshold) {
+                    // Swipe left - next slide
+                    nextSlide();
+                } else if (endX - startX > threshold) {
+                    // Swipe right - previous slide
+                    goToSlide(currentSlide - 1);
+                }
+                startCarousel();
+            });
+            
+            // Start carousel
+            startCarousel();
+            
+            // Pause carousel on hover
+            carousel.addEventListener('mouseenter', stopCarousel);
+            carousel.addEventListener('mouseleave', startCarousel);
+            
+            // ========== PASSWORD VISIBILITY TOGGLE ==========
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordField = document.getElementById('password');
+            const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+            const confirmPasswordField = document.getElementById('confirmpassword');
+            
+            function toggleVisibility(button, field) {
+                const isPassword = field.getAttribute('type') === 'password';
+                field.setAttribute('type', isPassword ? 'text' : 'password');
+                button.innerHTML = isPassword ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+                button.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+                button.setAttribute('aria-pressed', isPassword);
+            }
+            
+            togglePassword.addEventListener('click', function() {
+                toggleVisibility(this, passwordField);
+            });
+            
+            toggleConfirmPassword.addEventListener('click', function() {
+                toggleVisibility(this, confirmPasswordField);
+            });
+            
+            // ========== PASSWORD STRENGTH CHECKER ==========
+            const strengthBar = document.getElementById('passwordStrength');
+            const strengthText = document.getElementById('strengthText');
+            const strengthLive = document.getElementById('passwordStrengthLive');
+            const requirements = {
+                length: document.getElementById('reqLength'),
+                upper: document.getElementById('reqUpper'),
+                lower: document.getElementById('reqLower'),
+                number: document.getElementById('reqNumber')
+            };
+            
+            function checkPasswordStrength(value) {
+                let strength = 0;
+                const hasLength = value.length >= 6;
+                const hasUpper = /[A-Z]/.test(value);
+                const hasLower = /[a-z]/.test(value);
+                const hasNumber = /\d/.test(value);
+                
+                // Update requirement indicators
+                requirements.length.className = hasLength ? 'valid' : 'invalid';
+                requirements.upper.className = hasUpper ? 'valid' : 'invalid';
+                requirements.lower.className = hasLower ? 'valid' : 'invalid';
+                requirements.number.className = hasNumber ? 'valid' : 'invalid';
+                
+                // Calculate strength (0-100)
+                if (hasLength) strength += 25;
+                if (hasUpper) strength += 25;
+                if (hasLower) strength += 25;
+                if (hasNumber) strength += 25;
+                
+                // Cap at 100
+                strength = Math.min(strength, 100);
+                strengthBar.style.width = strength + '%';
+                
+                // Set strength text and color
+                let label = 'Weak';
+                let color = '#ef4444';
+                
+                if (strength >= 100) {
+                    label = 'Strong';
+                    color = '#10b981';
+                } else if (strength >= 75) {
+                    label = 'Good';
+                    color = '#22c55e';
+                } else if (strength >= 50) {
+                    label = 'Fair';
+                    color = '#f59e0b';
+                } else {
+                    label = 'Weak';
+                    color = '#ef4444';
+                }
+                
+                strengthText.textContent = label;
+                strengthBar.style.background = color;
+                strengthLive.textContent = value.length ? `Password strength: ${label}` : '';
+                strengthLive.setAttribute('aria-live', 'polite');
+            }
+            
+            passwordField.addEventListener('input', function() {
+                checkPasswordStrength(this.value);
+            });
+            
+            // ========== CONFIRM PASSWORD VALIDATION ==========
+            const confirmFeedback = document.getElementById('confirmFeedback');
+            
+            function validateConfirm() {
+                const password = passwordField.value;
+                const confirmPassword = confirmPasswordField.value;
+                
+                if (!confirmPassword) {
+                    confirmPasswordField.classList.remove('is-invalid', 'is-valid');
+                    confirmFeedback.textContent = '';
+                    confirmFeedback.className = 'form-feedback';
+                    return;
+                }
+                
+                if (confirmPassword !== password) {
+                    confirmPasswordField.classList.add('is-invalid');
+                    confirmPasswordField.classList.remove('is-valid');
+                    confirmFeedback.textContent = 'Passwords do not match';
+                    confirmFeedback.className = 'form-feedback invalid';
+                } else {
+                    confirmPasswordField.classList.add('is-valid');
+                    confirmPasswordField.classList.remove('is-invalid');
+                    confirmFeedback.textContent = 'Passwords match';
+                    confirmFeedback.className = 'form-feedback valid';
+                }
+            }
+            
+            confirmPasswordField.addEventListener('input', validateConfirm);
+            passwordField.addEventListener('input', validateConfirm);
+            
+            // ========== USERNAME VALIDATION ==========
+            const username = document.getElementById('username');
+            const usernameFeedback = document.getElementById('usernameFeedback');
+            
+            username.addEventListener('input', function() {
+                const value = this.value.trim();
+                
+                if (!value) {
+                    this.classList.remove('is-invalid', 'is-valid');
+                    usernameFeedback.textContent = '';
+                    usernameFeedback.className = 'form-feedback';
+                    return;
+                }
+                
+                if (value.length < 3) {
+                    this.classList.add('is-invalid');
+                    this.classList.remove('is-valid');
+                    usernameFeedback.textContent = 'Username must be at least 3 characters';
+                    usernameFeedback.className = 'form-feedback invalid';
+                } else if (!/^[a-zA-Z0-9_]+$/.test(value)) {
+                    this.classList.add('is-invalid');
+                    this.classList.remove('is-valid');
+                    usernameFeedback.textContent = 'Only letters, numbers, and underscores allowed';
+                    usernameFeedback.className = 'form-feedback invalid';
+                } else {
+                    this.classList.add('is-valid');
+                    this.classList.remove('is-invalid');
+                    usernameFeedback.textContent = 'Username available';
+                    usernameFeedback.className = 'form-feedback valid';
+                }
+            });
+            
+            // ========== EMAIL VALIDATION ==========
+            const email = document.getElementById('email');
+            const emailFeedback = document.getElementById('emailFeedback');
+            
+            email.addEventListener('input', function() {
+                const value = this.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                
+                if (!value) {
+                    this.classList.remove('is-invalid', 'is-valid');
+                    emailFeedback.textContent = '';
+                    emailFeedback.className = 'form-feedback';
+                    return;
+                }
+                
+                if (!emailRegex.test(value)) {
+                    this.classList.add('is-invalid');
+                    this.classList.remove('is-valid');
+                    emailFeedback.textContent = 'Please enter a valid email address';
+                    emailFeedback.className = 'form-feedback invalid';
+                } else {
+                    this.classList.add('is-valid');
+                    this.classList.remove('is-invalid');
+                    emailFeedback.textContent = 'Email format looks good';
+                    emailFeedback.className = 'form-feedback valid';
+                }
+            });
+            
+            // ========== FORM SUBMISSION ==========
+            const form = document.getElementById('registerForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            
+            form.addEventListener('submit', function(e) {
+                // Prevent default only for validation
+                let hasError = false;
+                
+                // Validate all fields
+                const fields = [
+                    { element: username, minLength: 3 },
+                    { element: email, type: 'email' },
+                    { element: passwordField, minLength: 6 },
+                    { element: confirmPasswordField }
+                ];
+                
+                fields.forEach(field => {
+                    if (!field.element.value.trim()) {
+                        field.element.classList.add('is-invalid');
+                        if (!hasError) {
+                            field.element.focus();
+                            hasError = true;
+                        }
+                    }
+                });
+                
+                // Check password match
+                if (passwordField.value !== confirmPasswordField.value) {
+                    confirmPasswordField.classList.add('is-invalid');
+                    if (!hasError) {
+                        confirmPasswordField.focus();
+                        hasError = true;
+                    }
+                }
+                
+                // Check terms
+                const termsCheckbox = document.getElementById('terms');
+                if (!termsCheckbox.checked) {
+                    hasError = true;
+                    showAlert('Please agree to the Terms of Service and Privacy Policy', 'error');
+                    termsCheckbox.focus();
+                }
+                
+                if (hasError) {
+                    e.preventDefault();
+                    showAlert('Please fill in all required fields correctly', 'error');
+                    return;
+                }
+                
+                // If all valid, show loading state and allow form submission
+                submitBtn.disabled = true;
+                submitBtn.querySelector('span').textContent = 'Creating account...';
+                loadingSpinner.style.display = 'block';
+                
+                // Form will submit naturally to Flask backend
+            });
+            
+            // ========== ALERT FUNCTION ==========
+            function showAlert(message, type) {
+                // Remove existing alerts
+                const existingAlerts = document.querySelectorAll('.alert-inline-error, .alert-inline-success');
+                existingAlerts.forEach(alert => alert.remove());
+                
+                // Create new alert
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `alert alert-${type === 'error' ? 'danger' : 'success'} alert-dismissible fade show alert-inline-${type}`;
+                alertDiv.setAttribute('role', 'alert');
+                alertDiv.innerHTML = `
+                    <i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'} me-2" aria-hidden="true"></i>
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                
+                const stepIndicator = document.querySelector('.step-indicator');
+                stepIndicator.parentNode.insertBefore(alertDiv, stepIndicator.nextSibling);
+                
+                // Auto-dismiss success alerts after 5 seconds
+                if (type === 'success') {
+                    setTimeout(() => {
+                        if (alertDiv.parentNode) {
+                            alertDiv.remove();
+                        }
+                    }, 5000);
+                }
+            }
+            
+            // ========== SOCIAL LOGIN BUTTONS ==========
+            const socialButtons = document.querySelectorAll('.social-btn');
+            socialButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const provider = this.querySelector('span').textContent;
+                    showAlert(`${provider} sign up will be available soon!`, 'error');
+                });
+            });
+            
+            // ========== INITIALIZE FORM VALIDATION ==========
+            [username, email, passwordField, confirmPasswordField].forEach(field => {
+                if (field.value) {
+                    field.dispatchEvent(new Event('input'));
+                }
+            });
+            
+            // ========== MOBILE TOUCH OPTIMIZATIONS ==========
+            if ('ontouchstart' in window) {
+                // Increase touch targets for mobile
+                document.querySelectorAll('button, .form-control, .carousel-dot').forEach(el => {
+                    el.style.minHeight = '44px';
+                    el.style.touchAction = 'manipulation';
+                });
+                
+                // Prevent double-tap zoom
+                let lastTouchEnd = 0;
+                document.addEventListener('touchend', function(event) {
+                    const now = Date.now();
+                    if (now - lastTouchEnd <= 300) {
+                        event.preventDefault();
+                    }
+                    lastTouchEnd = now;
+                }, false);
+            }
+            
+            // ========== ENTRANCE ANIMATION ==========
+            const card = document.querySelector('.wellness-card');
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100);
+            
+            // ========== AUTO-FOCUS FIRST FIELD ON DESKTOP ==========
+            if (window.innerWidth >= 768) {
+                setTimeout(() => {
+                    username.focus();
+                }, 600);
+            }
+            
+            // ========== REDUCED MOTION PREFERENCE ==========
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            
+            if (prefersReducedMotion.matches) {
+                // Disable animations
+                card.style.transition = 'none';
+                strengthBar.style.transition = 'none';
+                stopCarousel();
+            }
+        });
+    </script>
+</body>
+</html>

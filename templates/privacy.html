@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Wellness Coach</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        :root {
+            --primary: #10B981;
+            --secondary: #3B82F6;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 100%);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-gradient {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.98) 100%);
+            backdrop-filter: blur(10px);
+        }
+        
+        .smooth-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .section-highlight {
+            position: relative;
+            padding-left: 1rem;
+        }
+        
+        .section-highlight::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="{{ url_for('index') }}" class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-heartbeat text-white text-xl"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-800">Wellness<span class="gradient-text">Coach</span></span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="{{ url_for('index') }}" class="text-gray-600 hover:text-green-600 smooth-transition">Home</a>
+                    <a href="{{ url_for('login') }}" class="text-gray-600 hover:text-green-600 smooth-transition">Login</a>
+                    <a href="{{ url_for('register') }}" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg smooth-transition">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto px-4 py-12">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <div class="w-20 h-20 bg-gradient-to-br from-green-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-shield-alt text-3xl gradient-text"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Privacy Policy</h1>
+            <p class="text-gray-600">Last updated: <span id="current-date"></span></p>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="card-gradient rounded-2xl shadow-lg p-6 mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <i class="fas fa-list mr-2 text-green-500"></i>
+                Table of Contents
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <a href="#information-collection" class="flex items-center text-gray-600 hover:text-green-600 smooth-transition">
+                    <i class="fas fa-chevron-right text-xs mr-2 text-green-500"></i>
+                    <span>Information We Collect</span>
+                </a>
+                <a href="#data-usage" class="flex items-center text-gray-600 hover:text-green-600 smooth-transition">
+                    <i class="fas fa-chevron-right text-xs mr-2 text-green-500"></i>
+                    <span>How We Use Your Data</span>
+                </a>
+                <a href="#data-sharing" class="flex items-center text-gray-600 hover:text-green-600 smooth-transition">
+                    <i class="fas fa-chevron-right text-xs mr-2 text-green-500"></i>
+                    <span>Data Sharing</span>
+                </a>
+                <a href="#data-security" class="flex items-center text-gray-600 hover:text-green-600 smooth-transition">
+                    <i class="fas fa-chevron-right text-xs mr-2 text-green-500"></i>
+                    <span>Data Security</span>
+                </a>
+                <a href="#your-rights" class="flex items-center text-gray-600 hover:text-green-600 smooth-transition">
+                    <i class="fas fa-chevron-right text-xs mr-2 text-green-500"></i>
+                    <span>Your Rights</span>
+                </a>
+                <a href="#cookies" class="flex items-center text-gray-600 hover:text-green-600 smooth-transition">
+                    <i class="fas fa-chevron-right text-xs mr-2 text-green-500"></i>
+                    <span>Cookies</span>
+                </a>
+                <a href="#children" class="flex items-center text-gray-600 hover:text-green-600 smooth-transition">
+                    <i class="fas fa-chevron-right text-xs mr-2 text-green-500"></i>
+                    <span>Children's Privacy</span>
+                </a>
+                <a href="#changes" class="flex items-center text-gray-600 hover:text-green-600 smooth-transition">
+                    <i class="fas fa-chevron-right text-xs mr-2 text-green-500"></i>
+                    <span>Policy Changes</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Privacy Policy Content -->
+        <div class="space-y-8">
+            <!-- Information Collection -->
+            <section id="information-collection" class="section-highlight bg-white rounded-xl shadow-sm p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Information We Collect</h2>
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-700 mb-2">Personal Information</h3>
+                        <p class="text-gray-600 mb-3">
+                            When you create an account with Wellness Coach, we collect the following personal information:
+                        </p>
+                        <ul class="list-disc pl-5 text-gray-600 space-y-2">
+                            <li><strong>Account Information:</strong> Name, email address, password (encrypted)</li>
+                            <li><strong>Profile Information:</strong> Profile picture, age, gender, fitness goals</li>
+                            <li><strong>Health Data:</strong> Height, weight, medical conditions (optional)</li>
+                            <li><strong>Contact Information:</strong> Email address for communication</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-700 mb-2">Usage Information</h3>
+                        <p class="text-gray-600">
+                            We automatically collect information about how you interact with our service:
+                        </p>
+                        <ul class="list-disc pl-5 text-gray-600 space-y-2 mt-2">
+                            <li>Device information (type, operating system)</li>
+                            <li>Log data (IP address, browser type)</li>
+                            <li>Usage patterns (features used, time spent)</li>
+                            <li>Cookies and similar tracking technologies</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Usage -->
+            <section id="data-usage" class="section-highlight bg-white rounded-xl shadow-sm p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">How We Use Your Data</h2>
+                <div class="space-y-4">
+                    <div class="p-4 bg-green-50 rounded-lg">
+                        <div class="flex items-center mb-2">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user text-green-600"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-700">Service Provision</h3>
+                        </div>
+                        <p class="text-gray-600">
+                            We use your information to create and maintain your account, provide personalized wellness plans, and deliver the services you request.
+                        </p>
+                    </div>
+                    
+                    <div class="p-4 bg-blue-50 rounded-lg">
+                        <div class="flex items-center mb-2">
+                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-chart-line text-blue-600"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-700">Improvement & Analytics</h3>
+                        </div>
+                        <p class="text-gray-600">
+                            We analyze usage patterns to improve our services, develop new features, and enhance user experience.
+                        </p>
+                    </div>
+                    
+                    <div class="p-4 bg-purple-50 rounded-lg">
+                        <div class="flex items-center mb-2">
+                            <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-envelope text-purple-600"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-700">Communication</h3>
+                        </div>
+                        <p class="text-gray-600">
+                            We may send you service-related announcements, updates, and support messages. You can opt-out of marketing emails at any time.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Sharing -->
+            <section id="data-sharing" class="section-highlight bg-white rounded-xl shadow-sm p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Data Sharing and Disclosure</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-700 mb-3">We do not sell your personal data</h3>
+                        <p class="text-gray-600 mb-4">
+                            Wellness Coach is committed to protecting your privacy. We do not sell, rent, or trade your personal information to third parties.
+                        </p>
+                        
+                        <div class="p-4 bg-red-50 border border-red-100 rounded-lg">
+                            <div class="flex items-start">
+                                <i class="fas fa-exclamation-triangle text-red-500 mt-0.5 mr-2"></i>
+                                <p class="text-red-700 text-sm">
+                                    <strong>Important:</strong> We only share your information in the following limited circumstances:
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 border border-gray-200 rounded-lg">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-gavel text-gray-600"></i>
+                                </div>
+                                <h4 class="font-semibold text-gray-700">Legal Requirements</h4>
+                            </div>
+                            <p class="text-gray-600 text-sm">
+                                When required by law or to respond to legal processes
+                            </p>
+                        </div>
+                        
+                        <div class="p-4 border border-gray-200 rounded-lg">
+                            <div class="flex items-center mb-3">
+                                <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-shield-alt text-gray-600"></i>
+                                </div>
+                                <h4 class="font-semibold text-gray-700">Service Providers</h4>
+                            </div>
+                            <p class="text-gray-600 text-sm">
+                                Trusted third parties who assist in providing our services (with strict data protection agreements)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Security -->
+            <section id="data-security" class="section-highlight bg-white rounded-xl shadow-sm p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Data Security</h2>
+                <div class="space-y-4">
+                    <p class="text-gray-600">
+                        We implement industry-standard security measures to protect your personal information:
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="text-center p-4">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-lock text-green-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-gray-700 mb-2">Encryption</h4>
+                            <p class="text-gray-600 text-sm">All data transmitted is encrypted using SSL/TLS</p>
+                        </div>
+                        
+                        <div class="text-center p-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-database text-blue-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-gray-700 mb-2">Secure Storage</h4>
+                            <p class="text-gray-600 text-sm">Data stored in secure, access-controlled databases</p>
+                        </div>
+                        
+                        <div class="text-center p-4">
+                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-user-shield text-purple-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-gray-700 mb-2">Access Control</h4>
+                            <p class="text-gray-600 text-sm">Strict access controls and authentication</p>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 bg-yellow-50 border border-yellow-100 rounded-lg mt-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-lightbulb text-yellow-500 mt-0.5 mr-2"></i>
+                            <div>
+                                <h4 class="font-semibold text-yellow-700 mb-1">Your Role in Security</h4>
+                                <p class="text-yellow-700 text-sm">
+                                    Use a strong password, enable two-factor authentication when available, and never share your login credentials.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Your Rights -->
+            <section id="your-rights" class="section-highlight bg-white rounded-xl shadow-sm p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Your Privacy Rights</h2>
+                <div class="space-y-4">
+                    <p class="text-gray-600">
+                        Depending on your location, you may have certain rights regarding your personal information:
+                    </p>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                <i class="fas fa-check text-green-600 text-xs"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700">Access & Portability</h4>
+                                <p class="text-gray-600 text-sm">Request a copy of your personal data</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                <i class="fas fa-check text-green-600 text-xs"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700">Correction</h4>
+                                <p class="text-gray-600 text-sm">Update or correct inaccurate information</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                <i class="fas fa-check text-green-600 text-xs"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700">Deletion</h4>
+                                <p class="text-gray-600 text-sm">Request deletion of your personal data</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                <i class="fas fa-check text-green-600 text-xs"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-700">Opt-Out</h4>
+                                <p class="text-gray-600 text-sm">Opt-out of marketing communications</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                        <p class="text-gray-600 text-sm">
+                            To exercise any of these rights, please contact us at 
+                            <a href="mailto:privacy@wellnesscoach.com" class="text-green-600 hover:text-green-700 font-medium">privacy@wellnesscoach.com</a>.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Additional Sections (simplified) -->
+            <section id="cookies" class="section-highlight bg-white rounded-xl shadow-sm p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Cookies and Tracking Technologies</h2>
+                <p class="text-gray-600 mb-4">
+                    We use cookies and similar technologies to enhance your experience, analyze usage, and personalize content.
+                </p>
+                <div class="p-4 bg-gray-50 rounded-lg">
+                    <p class="text-gray-600 text-sm">
+                        You can control cookie settings through your browser. Note that disabling cookies may affect some features of our service.
+                    </p>
+                </div>
+            </section>
+
+            <section id="children" class="section-highlight bg-white rounded-xl shadow-sm p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Children's Privacy</h2>
+                <p class="text-gray-600">
+                    Our services are not intended for children under 16 years of age. We do not knowingly collect personal information from children under 16.
+                </p>
+            </section>
+
+            <section id="changes" class="section-highlight bg-white rounded-xl shadow-sm p-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Changes to This Policy</h2>
+                <p class="text-gray-600 mb-4">
+                    We may update this Privacy Policy periodically. We will notify you of any material changes by posting the new policy on this page and updating the "Last updated" date.
+                </p>
+                <div class="p-4 bg-blue-50 rounded-lg">
+                    <p class="text-blue-700 text-sm">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        We encourage you to review this Privacy Policy regularly for any changes.
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="mt-12 card-gradient rounded-2xl shadow-lg p-8 text-center">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Questions About Our Privacy Policy?</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto mb-6">
+                If you have any questions or concerns about our Privacy Policy or how we handle your data, please contact our Privacy Team.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+                <a href="mailto:privacy@wellnesscoach.com" 
+                   class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium py-3 px-6 rounded-lg smooth-transition">
+                    <i class="fas fa-envelope mr-2"></i>Email Privacy Team
+                </a>
+                <a href="{{ url_for('contact') }}" 
+                   class="border-2 border-green-500 text-green-600 hover:bg-green-50 font-medium py-3 px-6 rounded-lg smooth-transition">
+                    <i class="fas fa-headset mr-2"></i>Contact Support
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top w-12 h-12 bg-green-500 text-white rounded-full shadow-lg hover:shadow-xl hover:scale-110 smooth-transition">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-heartbeat text-white text-xl"></i>
+                        </div>
+                        <span class="text-xl font-bold">Wellness<span class="gradient-text">Coach</span></span>
+                    </div>
+                    <p class="text-gray-400 text-sm">Protecting your privacy is our priority</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="{{ url_for('index') }}" class="text-gray-400 hover:text-white smooth-transition">Home</a>
+                    <a href="{{ url_for('login') }}" class="text-gray-400 hover:text-white smooth-transition">Login</a>
+                    <a href="{{ url_for('faq') }}" class="text-gray-400 hover:text-white smooth-transition">FAQ</a>
+                    <a href="{{ url_for('contact') }}" class="text-gray-400 hover:text-white smooth-transition">Contact</a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2023 Wellness Coach. All rights reserved. | <a href="{{ url_for('privacy') }}" class="text-green-400 hover:text-green-300">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set current date
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Back to Top Button
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Table of Contents smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Highlight current section in view
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -70% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // You could add highlighting logic here
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section[id]').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Print friendly version
+        const printBtn = document.createElement('button');
+        printBtn.innerHTML = '<i class="fas fa-print mr-2"></i>Print Policy';
+        printBtn.className = 'fixed bottom-20 right-6 bg-white text-gray-700 px-4 py-2 rounded-full shadow-lg hover:shadow-xl smooth-transition hidden md:flex items-center';
+        printBtn.addEventListener('click', () => window.print());
+        document.body.appendChild(printBtn);
+    </script>
+</body>
+</html>
