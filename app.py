@@ -1256,41 +1256,80 @@ def index():
             stats={'programs': 0, 'users': 0, 'success_rate': 0, 'reviews': 0}
         )
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route("/register", methods=["GET", "POST"])
 def register():
-    """User registration"""
+    # Already logged in
     if current_user.is_authenticated:
-        flash('You are already logged in!', 'info')
-        return redirect(url_for('index'))
-    
-    if request.method == 'POST':
-        username = request.form.get('username', '').strip()
-        email = request.form.get('email', '').strip().lower()
-        password = request.form.get('password', '')
-        confirm_password = request.form.get('confirm_password', '')
-        name = request.form.get('name', '').strip() or username
-        
-        # Validation
-        if not all([username, email, password, confirm_password]):
-            flash('All fields are required!', 'error')
-        elif len(password) < 6:
-            flash('Password must be at least 6 characters long!', 'error')
-        elif password != confirm_password:
-            flash('Passwords do not match!', 'error')
-        elif len(username) < 3:
-            flash('Username must be at least 3 characters long!', 'error')
-        elif '@' not in email or '.' not in email:
-            flash('Please enter a valid email address!', 'error')
-        else:
-            user, message = User.create(username, email, password, name, 'user', mysql)
-            if user:
-                login_user(user, remember=True)
-                flash(f'Welcome {user.name}! Your account has been created successfully.', 'success')
-                return redirect(url_for('index'))
-            else:
-                flash(message, 'error')
-    
-    return render_template('register.html')
+        return redirect(url_for("index"))
+
+    if request.method == "POST":
+        try:
+            username = request.form.get("username", "").strip()
+            email = request.form.get("email", "").strip().lower()
+            name = request.form.get("name", "").strip() or username
+            password = request.form.get("password", "")
+            confirm_password = request.form.get("confirm_password", "")
+
+            # ---------- VALIDATION ----------
+            if not username or not email or not password or not confirm_password:
+                flash("All fields are required", "error")
+                return redirect(url_for("register"))
+
+            if len(username) < 3:
+                flash("Username must be at least 3 characters", "error")
+                return redirect(url_for("register"))
+
+            if "@" not in email or "." not in email:
+                flash("Invalid email address", "error")
+                return redirect(url_for("register"))
+
+            if len(password) < 6:
+                flash("Password must be at least 6 characters", "error")
+                return redirect(url_for("register"))
+
+            if password != confirm_password:
+                flash("Passwords do not match", "error")
+                return redirect(url_for("register"))
+
+            # ---------- DATABASE ----------
+            cur = mysql.connection.cursor()
+
+            # Check existing user
+            cur.execute(
+                "SELECT id FROM users WHERE email=%s OR username=%s",
+                (email, username)
+            )
+            if cur.fetchone():
+                cur.close()
+                flash("Email or Username already exists", "error")
+                return redirect(url_for("register"))
+
+            hashed_password = generate_password_hash(password)
+
+            # Insert user
+            cur.execute("""
+                INSERT INTO users (username, email, name, password, user_type)
+                VALUES (%s, %s, %s, %s, 'user')
+            """, (username, email, name, hashed_password))
+
+            mysql.connection.commit()
+
+            user_id = cur.lastrowid
+            cur.close()
+
+            # ---------- LOGIN USER ----------
+            user = User(user_id, username, email, name, "user")
+            login_user(user)
+
+            flash("Registration successful! Welcome 🎉", "success")
+            return redirect(url_for("index"))
+
+        except Exception as e:
+            print("REGISTER ERROR:", e)
+            flash("Something went wrong. Please try again.", "error")
+            return redirect(url_for("register"))
+
+    return render_template("register.html")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -3276,6 +3315,7 @@ if __name__ == '__main__':
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
