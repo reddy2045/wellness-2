@@ -1282,7 +1282,6 @@ def index():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    # Already logged in
     if current_user.is_authenticated:
         return redirect(url_for("index"))
 
@@ -1330,14 +1329,14 @@ def register():
 
             hashed_password = generate_password_hash(password)
 
-            # Insert user
-            cur.execute("""
-                INSERT INTO users (username, email, name, password, user_type)
-                VALUES (%s, %s, %s, %s, 'user')
-            """, (username, email, name, hashed_password))
+            # INSERT USER (name included – IMPORTANT)
+            cur.execute(
+                "INSERT INTO users (username, email, name, password, user_type) "
+                "VALUES (%s, %s, %s, %s, %s)",
+                (username, email, name, hashed_password, "user")
+            )
 
             mysql.connection.commit()
-
             user_id = cur.lastrowid
             cur.close()
 
@@ -1350,10 +1349,11 @@ def register():
 
         except Exception as e:
             print("REGISTER ERROR:", e)
-            flash("Something went wrong. Please try again.", "error")
+            flash(str(e), "error")   # TEMP → shows real error
             return redirect(url_for("register"))
 
     return render_template("register.html")
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -3339,6 +3339,7 @@ if __name__ == '__main__':
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
