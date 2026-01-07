@@ -54,6 +54,7 @@ from flask import Flask
 import pymysql
 import os
 from flask_login import UserMixin
+from config import Config
 UPLOAD_FOLDER = 'static/uploads/profile_images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
@@ -3339,6 +3340,7 @@ if __name__ == '__main__':
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
