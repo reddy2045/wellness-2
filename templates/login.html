@@ -30,6 +30,14 @@
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 100%);
             min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Mobile-specific optimizations */
+        @media (max-width: 640px) {
+            body {
+                background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+            }
         }
         
         .gradient-text {
@@ -39,123 +47,191 @@
             background-clip: text;
         }
         
-        .gradient-border {
+        /* Mobile-friendly form container */
+        .mobile-form-container {
             position: relative;
             background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.1);
         }
         
-        .gradient-border::before {
-            content: '';
-            position: absolute;
+        @media (max-width: 640px) {
+            .mobile-form-container {
+                border-radius: 20px;
+                margin: 0 16px;
+                padding: 0;
+                box-shadow: 0 4px 24px rgba(16, 185, 129, 0.08);
+            }
+        }
+        
+        /* Mobile-optimized inputs */
+        .mobile-input {
+            width: 100%;
+            padding: 20px 20px 20px 52px;
+            border: 2px solid #E5E7EB;
+            border-radius: 16px;
+            font-size: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            -webkit-appearance: none;
+            min-height: 56px;
+        }
+        
+        .mobile-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        @media (max-width: 640px) {
+            .mobile-input {
+                padding: 18px 18px 18px 48px;
+                min-height: 52px;
+                font-size: 16px;
+            }
+        }
+        
+        /* Mobile-friendly button */
+        .mobile-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .mobile-btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        @media (max-width: 640px) {
+            .mobile-btn {
+                min-height: 56px;
+                padding: 18px;
+                font-size: 17px;
+            }
+        }
+        
+        /* Mobile navigation */
+        .mobile-nav {
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            border-radius: 1rem;
-            padding: 2px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
         }
         
-        .input-focus:focus {
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        @media (min-width: 641px) {
+            .mobile-nav {
+                display: none;
+            }
         }
         
-        .password-toggle {
-            cursor: pointer;
-            transition: all 0.3s ease;
+        /* Bottom safe area for mobile */
+        .safe-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
         }
         
-        .password-toggle:hover {
-            transform: scale(1.1);
+        /* Mobile swipe gestures indicator */
+        .swipe-indicator {
+            width: 40px;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+            margin: 12px auto;
         }
         
-        .social-btn {
-            transition: all 0.3s ease;
-            border: 1px solid #e5e7eb;
+        /* Haptic feedback simulation */
+        .haptic-feedback:active {
+            background: rgba(0, 0, 0, 0.05);
         }
         
-        .social-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        /* Mobile-optimized checkboxes */
+        .mobile-checkbox {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            border: 2px solid #D1D5DB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
         }
         
-        .form-group {
-            position: relative;
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-label {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            background: white;
-            padding: 0 0.5rem;
-            color: #6b7280;
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-        
-        .form-input:focus + .form-label,
-        .form-input:not(:placeholder-shown) + .form-label {
-            top: 0;
-            font-size: 0.75rem;
-            color: var(--primary);
-        }
-        
-        .checkbox-custom {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid #d1d5db;
-            border-radius: 4px;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-        
-        .checkbox-custom:checked {
-            background-color: var(--primary);
+        .mobile-checkbox.checked {
+            background: var(--primary);
             border-color: var(--primary);
         }
         
-        .checkbox-custom:checked::after {
+        .mobile-checkbox.checked:after {
             content: '✓';
-            position: absolute;
             color: white;
             font-size: 14px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            font-weight: bold;
         }
         
-        .loading-spinner {
+        /* Mobile loading animation */
+        .mobile-loader {
             display: none;
-        }
-        
-        .form-loading .loading-spinner {
-            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
             animation: spin 1s linear infinite;
         }
         
-        .form-loading .submit-text {
-            display: none;
-        }
-        
         @keyframes spin {
-            from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
         
-        @keyframes slideIn {
+        /* Mobile floating action button */
+        .mobile-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+            z-index: 40;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-fab:active {
+            transform: scale(0.95);
+        }
+        
+        /* Mobile slide-up animation */
+        @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(40px);
             }
             to {
                 opacity: 1;
@@ -163,294 +239,494 @@
             }
         }
         
-        .animate-slide-in {
-            animation: slideIn 0.5s ease-out;
+        .slide-up {
+            animation: slideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        /* Mobile-optimized card */
+        .mobile-card {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+            margin: 8px;
         }
         
-        .animate-float {
-            animation: float 3s ease-in-out infinite;
+        /* Touch-friendly spacing */
+        .touch-target {
+            min-height: 44px;
+            min-width: 44px;
         }
         
-        /* Mobile optimizations */
-        @media (max-width: 640px) {
-            .login-container {
-                padding: 1rem;
+        /* Status bar spacing */
+        .status-bar-spacing {
+            height: env(safe-area-inset-top);
+            background: transparent;
+        }
+        
+        /* Mobile keyboard adjustments */
+        @media (max-height: 600px) and (orientation: portrait) {
+            .keyboard-open {
+                padding-bottom: 200px;
             }
-            
-            .login-card {
-                padding: 2rem 1.5rem;
-            }
         }
         
-        /* Accessibility */
-        .focus-ring:focus {
-            outline: none;
-            ring: 2px solid var(--primary);
-            ring-offset: 2px;
+        /* Swipe to refresh indicator */
+        .pull-to-refresh {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
         
-        /* Smooth transitions */
-        .smooth-transition {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .pulling .pull-to-refresh {
+            opacity: 1;
+        }
+        
+        /* Mobile-optimized typography */
+        .mobile-h1 {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .mobile-h2 {
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        .mobile-body {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        .mobile-small {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        /* Vibration feedback class */
+        .vibrate:active {
+            animation: vibrate 0.1s linear;
+        }
+        
+        @keyframes vibrate {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-1px); }
+            75% { transform: translateX(1px); }
+        }
+        
+        /* Mobile menu animation */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        /* Backdrop blur for modals */
+        .backdrop-blur {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        
+        /* Mobile grid system */
+        .mobile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+        }
+        
+        /* Toggle switch for mobile */
+        .mobile-toggle {
+            width: 52px;
+            height: 28px;
+            background: #D1D5DB;
+            border-radius: 14px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .mobile-toggle.active {
+            background: var(--primary);
+        }
+        
+        .mobile-toggle:after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .mobile-toggle.active:after {
+            transform: translateX(24px);
+        }
+        
+        /* Mobile optimized select */
+        .mobile-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236B7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 20px;
+            padding-right: 48px;
+        }
+        
+        /* Hide scrollbar but keep functionality */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
-    <!-- Background Elements -->
-    <div class="fixed inset-0 overflow-hidden pointer-events-none">
-        <div class="absolute top-10 left-10 w-64 h-64 bg-gradient-to-br from-green-100 to-blue-100 rounded-full blur-3xl opacity-50 animate-float"></div>
-        <div class="absolute bottom-10 right-10 w-80 h-80 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full blur-3xl opacity-50 animate-float" style="animation-delay: 1s;"></div>
-        <div class="absolute top-1/2 left-1/3 w-48 h-48 bg-gradient-to-br from-green-50 to-teal-100 rounded-full blur-3xl opacity-30 animate-float" style="animation-delay: 2s;"></div>
-    </div>
-
-    <!-- Back to Home Button -->
-    <a href="{{ url_for('index') }}" 
-       class="fixed top-6 left-6 md:top-8 md:left-8 z-10 group focus-ring"
-       aria-label="Go back to home">
-        <div class="flex items-center space-x-2 text-gray-600 hover:text-green-600 smooth-transition">
-            <div class="w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center group-hover:shadow-lg group-hover:scale-110 smooth-transition">
-                <i class="fas fa-arrow-left text-lg"></i>
+<body class="min-h-screen flex flex-col safe-bottom">
+    <!-- Mobile Status Bar Spacing -->
+    <div class="status-bar-spacing"></div>
+    
+    <!-- Mobile Navigation Bar -->
+    <nav class="mobile-nav lg:hidden">
+        <button onclick="window.history.back()" class="touch-target w-10 h-10 flex items-center justify-center rounded-full vibrate haptic-feedback" aria-label="Go back">
+            <i class="fas fa-arrow-left text-gray-600 text-lg"></i>
+        </button>
+        <div class="flex-1 flex justify-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-heartbeat text-white text-sm"></i>
+                </div>
+                <span class="font-bold text-gray-800 text-lg">Wellness<span class="gradient-text">Coach</span></span>
             </div>
-            <span class="hidden md:inline font-medium group-hover:translate-x-1 smooth-transition">Back to Home</span>
         </div>
-    </a>
-
-    <div class="max-w-6xl w-full login-container">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <!-- Left Column - Illustration & Info -->
-            <div class="hidden lg:flex flex-col items-center justify-center p-8 animate-slide-in">
-                <div class="max-w-md">
-                    <!-- Logo -->
-                    <div class="flex items-center space-x-3 mb-8">
-                        <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
-                            <i class="fas fa-heartbeat text-white text-2xl"></i>
+        <button onclick="toggleMenu()" class="touch-target w-10 h-10 flex items-center justify-center rounded-full vibrate haptic-feedback" aria-label="Menu">
+            <i class="fas fa-ellipsis-v text-gray-600"></i>
+        </button>
+    </nav>
+    
+    <!-- Mobile Menu (Hidden by default) -->
+    <div class="mobile-menu fixed inset-0 z-50 bg-white lg:hidden" id="mobileMenu">
+        <div class="h-full flex flex-col">
+            <div class="p-6 border-b">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-heartbeat text-white text-xl"></i>
                         </div>
                         <div>
-                            <h1 class="text-3xl font-bold text-gray-800">Wellness<span class="gradient-text">Coach</span></h1>
-                            <p class="text-gray-600">Your Health Journey</p>
+                            <h2 class="font-bold text-gray-800 text-xl">WellnessCoach</h2>
+                            <p class="text-gray-600 text-sm">Your Health Journey</p>
                         </div>
                     </div>
-
-                    <!-- Welcome Message -->
-                    <div class="mb-10">
-                        <h2 class="text-4xl font-bold text-gray-800 mb-4 leading-tight">
-                            Welcome Back to Your<br>
-                            <span class="gradient-text">Wellness Journey</span>
-                        </h2>
-                        <p class="text-gray-600 text-lg leading-relaxed">
-                            Access personalized nutrition plans, track your progress, and continue your transformation with expert guidance.
-                        </p>
-                    </div>
-
-                    <!-- Features List -->
-                    <div class="space-y-4">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-chart-line text-green-600"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-800">Progress Tracking</h4>
-                                <p class="text-gray-600 text-sm">Monitor your health journey</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-utensils text-blue-600"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-800">Personalized Plans</h4>
-                                <p class="text-gray-600 text-sm">Custom nutrition & fitness plans</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                                <i class="fas fa-user-md text-purple-600"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-800">Expert Guidance</h4>
-                                <p class="text-gray-600 text-sm">24/7 support from wellness coaches</p>
-                            </div>
-                        </div>
-                    </div>
+                    <button onclick="toggleMenu()" class="touch-target w-10 h-10 flex items-center justify-center rounded-full vibrate">
+                        <i class="fas fa-times text-gray-600 text-xl"></i>
+                    </button>
                 </div>
             </div>
-
-            <!-- Right Column - Login Form -->
-            <div class="animate-slide-in" style="animation-delay: 0.2s;">
-                <div class="gradient-border login-card bg-white rounded-2xl p-8 md:p-10 shadow-2xl">
-                    <!-- Mobile Logo -->
-                    <div class="lg:hidden flex justify-center mb-8">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
-                                <i class="fas fa-heartbeat text-white text-xl"></i>
+            <div class="flex-1 p-6">
+                <div class="space-y-1">
+                    <a href="{{ url_for('index') }}" class="flex items-center space-x-3 p-3 rounded-xl hover:bg-gray-50 vibrate">
+                        <i class="fas fa-home text-gray-600 w-6"></i>
+                        <span class="text-gray-800 font-medium">Home</span>
+                    </a>
+                    <a href="{{ url_for('register') }}" class="flex items-center space-x-3 p-3 rounded-xl hover:bg-gray-50 vibrate">
+                        <i class="fas fa-user-plus text-gray-600 w-6"></i>
+                        <span class="text-gray-800 font-medium">Create Account</span>
+                    </a>
+                    <a href="{{ url_for('forgot_password') }}" class="flex items-center space-x-3 p-3 rounded-xl hover:bg-gray-50 vibrate">
+                        <i class="fas fa-key text-gray-600 w-6"></i>
+                        <span class="text-gray-800 font-medium">Reset Password</span>
+                    </a>
+                    <div class="border-t my-4"></div>
+                    <div class="p-3">
+                        <h3 class="font-semibold text-gray-800 mb-2">Quick Access</h3>
+                        <div class="mobile-grid">
+                            <div class="bg-green-50 rounded-xl p-3 text-center">
+                                <i class="fas fa-utensils text-green-600 text-lg mb-1"></i>
+                                <p class="text-xs text-gray-700">Nutrition</p>
                             </div>
-                            <div>
-                                <h1 class="text-2xl font-bold text-gray-800">Wellness<span class="gradient-text">Coach</span></h1>
-                                <p class="text-gray-600 text-sm">Your Health Journey</p>
+                            <div class="bg-blue-50 rounded-xl p-3 text-center">
+                                <i class="fas fa-running text-blue-600 text-lg mb-1"></i>
+                                <p class="text-xs text-gray-700">Fitness</p>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Header -->
-                    <div class="text-center mb-8">
-                        <h2 class="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h2>
-                        <p class="text-gray-600">Sign in to access your wellness dashboard</p>
-                    </div>
-
-                    <!-- Flash Messages -->
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                            <div class="mb-6 space-y-3">
-                                {% for category, message in messages %}
-                                    <div class="p-4 rounded-xl {% if category == 'error' %}bg-red-50 border-l-4 border-red-500{% elif category == 'success' %}bg-green-50 border-l-4 border-green-500{% else %}bg-blue-50 border-l-4 border-blue-500{% endif %}">
-                                        <div class="flex items-start">
-                                            <i class="fas {% if category == 'error' %}fa-exclamation-circle text-red-500{% elif category == 'success' %}fa-check-circle text-green-500{% else %}fa-info-circle text-blue-500{% endif %} mt-0.5 mr-3"></i>
-                                            <div class="flex-1">
-                                                <p class="font-medium {% if category == 'error' %}text-red-700{% elif category == 'success' %}text-green-700{% else %}text-blue-700{% endif %}">
-                                                    {{ message }}
-                                                </p>
-                                            </div>
-                                            <button onclick="this.parentElement.remove()" class="text-gray-400 hover:text-gray-600 ml-2">
-                                                <i class="fas fa-times"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    {% endwith %}
-
-                    <!-- Social Login (Optional) -->
-                    <div class="mb-8">
-                        <div class="grid grid-cols-2 gap-3">
-                            <button type="button" class="social-btn bg-white rounded-xl py-3 px-4 flex items-center justify-center space-x-2 hover:bg-gray-50">
-                                <i class="fab fa-google text-red-500"></i>
-                                <span class="font-medium text-gray-700">Google</span>
-                            </button>
-                            <button type="button" class="social-btn bg-white rounded-xl py-3 px-4 flex items-center justify-center space-x-2 hover:bg-gray-50">
-                                <i class="fab fa-apple text-gray-800"></i>
-                                <span class="font-medium text-gray-700">Apple</span>
-                            </button>
-                        </div>
-                        <div class="flex items-center my-6">
-                            <div class="flex-1 border-t border-gray-200"></div>
-                            <span class="mx-4 text-gray-500 text-sm">Or continue with email</span>
-                            <div class="flex-1 border-t border-gray-200"></div>
-                        </div>
-                    </div>
-
-                    <!-- Login Form -->
-                    <form id="loginForm" method="POST" action="{{ url_for('login') }}">
-                        <!-- Email Field -->
-                        <div class="form-group">
-                            <input type="email" 
-                                   id="email" 
-                                   name="email" 
-                                   required
-                                   class="form-input w-full px-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:border-green-500 smooth-transition input-focus"
-                                   placeholder=" "
-                                   value="{{ request.form.email if request.form else '' }}"
-                                   autocomplete="email">
-                            <label for="email" class="form-label">Email Address</label>
-                            <div class="absolute right-3 top-3.5">
-                                <i class="fas fa-envelope text-gray-400"></i>
+                            <div class="bg-purple-50 rounded-xl p-3 text-center">
+                                <i class="fas fa-chart-line text-purple-600 text-lg mb-1"></i>
+                                <p class="text-xs text-gray-700">Progress</p>
                             </div>
                         </div>
-
-                        <!-- Password Field -->
-                        <div class="form-group">
-                            <input type="password" 
-                                   id="password" 
-                                   name="password" 
-                                   required
-                                   class="form-input w-full px-4 py-3.5 border border-gray-200 rounded-xl focus:outline-none focus:border-green-500 smooth-transition input-focus pr-12"
-                                   placeholder=" "
-                                   autocomplete="current-password">
-                            <label for="password" class="form-label">Password</label>
-                            <button type="button" 
-                                    onclick="togglePassword()" 
-                                    class="password-toggle absolute right-3 top-3.5 text-gray-400 hover:text-green-600">
-                                <i class="fas fa-eye" id="toggleIcon"></i>
-                            </button>
-                        </div>
-
-                        <!-- Remember Me & Forgot Password -->
-                        <div class="flex items-center justify-between mb-8">
-                            <label class="flex items-center space-x-2 cursor-pointer">
-                                <input type="checkbox" 
-                                       name="remember_me" 
-                                       class="checkbox-custom">
-                                <span class="text-gray-700 select-none">Remember me</span>
-                            </label>
-                            <a href="{{ url_for('forgot_password') }}" class="text-green-600 hover:text-green-700 font-medium smooth-transition">
-                                Forgot password?
-                            </a>
-
-                        </div>
-
-                        <!-- Submit Button -->
-                        <button type="submit" 
-                                id="submitBtn"
-                                class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl smooth-transition transform hover:-translate-y-0.5 focus-ring">
-                            <i class="fas fa-sign-in-alt mr-2"></i>
-                            <span class="submit-text">Sign In</span>
-                            <i class="fas fa-spinner loading-spinner ml-2"></i>
-                        </button>
-
-                        <!-- Register Link -->
-                        <div class="mt-8 text-center">
-                            <p class="text-gray-600">
-                                Don't have an account?
-                                <a href="{{ url_for('register') }}" 
-                                   class="ml-2 text-green-600 hover:text-green-700 font-semibold smooth-transition inline-flex items-center group">
-                                    Create Account
-                                    <i class="fas fa-arrow-right ml-1 group-hover:translate-x-1 smooth-transition"></i>
-                                </a>
-                            </p>
-                        </div>
-                    </form>
-
-                    <!-- Security Note -->
-                    <div class="mt-10 pt-8 border-t border-gray-100">
-                        <div class="flex items-center justify-center space-x-2 text-gray-500 text-sm">
-                            <i class="fas fa-shield-alt"></i>
-                            <span>Your data is secured with 256-bit SSL encryption</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Mobile Features -->
-                <div class="lg:hidden mt-8 grid grid-cols-2 gap-4">
-                    <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 text-center border border-gray-100">
-                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                            <i class="fas fa-chart-line text-green-600"></i>
-                        </div>
-                        <p class="text-sm font-medium text-gray-700">Progress Tracking</p>
-                    </div>
-                    <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 text-center border border-gray-100">
-                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                            <i class="fas fa-utensils text-blue-600"></i>
-                        </div>
-                        <p class="text-sm font-medium text-gray-700">Personalized Plans</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    
+    <!-- Backdrop for mobile menu -->
+    <div class="fixed inset-0 bg-black/50 backdrop-blur z-40 hidden" id="backdrop"></div>
+    
+    <!-- Swipe Indicator -->
+    <div class="lg:hidden swipe-indicator"></div>
+    
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col lg:flex-row lg:items-center lg:justify-center p-4 lg:p-8">
+        <!-- Left Column - Hidden on mobile, shown on desktop -->
+        <div class="hidden lg:flex flex-col items-center justify-center flex-1 p-8">
+            <div class="max-w-md">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3 mb-8">
+                    <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
+                        <i class="fas fa-heartbeat text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-800">Wellness<span class="gradient-text">Coach</span></h1>
+                        <p class="text-gray-600">Your Health Journey</p>
+                    </div>
+                </div>
+                
+                <!-- Welcome Message -->
+                <div class="mb-10">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-4 leading-tight">
+                        Welcome Back to Your<br>
+                        <span class="gradient-text">Wellness Journey</span>
+                    </h2>
+                    <p class="text-gray-600 text-lg leading-relaxed">
+                        Access personalized nutrition plans, track your progress, and continue your transformation with expert guidance.
+                    </p>
+                </div>
+                
+                <!-- Features List -->
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-green-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Progress Tracking</h4>
+                            <p class="text-gray-600 text-sm">Monitor your health journey</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-utensils text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Personalized Plans</h4>
+                            <p class="text-gray-600 text-sm">Custom nutrition & fitness plans</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-user-md text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800">Expert Guidance</h4>
+                            <p class="text-gray-600 text-sm">24/7 support from wellness coaches</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Column - Login Form -->
+        <div class="flex-1 flex items-center justify-center">
+            <div class="mobile-form-container w-full max-w-md p-8 lg:p-10 slide-up">
+                <!-- Mobile Welcome Header -->
+                <div class="lg:hidden mb-8 text-center">
+                    <h1 class="mobile-h1 text-gray-800 mb-2">Welcome Back</h1>
+                    <p class="text-gray-600 mobile-body">Sign in to continue your wellness journey</p>
+                </div>
+                
+                <!-- Desktop Header -->
+                <div class="hidden lg:block text-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h2>
+                    <p class="text-gray-600">Sign in to access your wellness dashboard</p>
+                </div>
+                
+                <!-- Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="mb-6 space-y-3">
+                            {% for category, message in messages %}
+                                <div class="p-4 rounded-xl vibrate {% if category == 'error' %}bg-red-50 border-l-4 border-red-500{% elif category == 'success' %}bg-green-50 border-l-4 border-green-500{% else %}bg-blue-50 border-l-4 border-blue-500{% endif %}">
+                                    <div class="flex items-start">
+                                        <i class="fas {% if category == 'error' %}fa-exclamation-circle text-red-500{% elif category == 'success' %}fa-check-circle text-green-500{% else %}fa-info-circle text-blue-500{% endif %} mt-0.5 mr-3"></i>
+                                        <div class="flex-1">
+                                            <p class="font-medium {% if category == 'error' %}text-red-700{% elif category == 'success' %}text-green-700{% else %}text-blue-700{% endif %} mobile-small">
+                                                {{ message }}
+                                            </p>
+                                        </div>
+                                        <button onclick="this.parentElement.parentElement.remove()" class="touch-target w-8 h-8 flex items-center justify-center rounded-full vibrate">
+                                            <i class="fas fa-times text-gray-400"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                
+                <!-- Quick Login Options (Mobile Optimized) -->
+                <div class="mb-6 lg:mb-8">
+                    <div class="flex space-x-3 mb-4">
+                        <button type="button" class="flex-1 social-btn mobile-card flex items-center justify-center space-x-2 vibrate haptic-feedback">
+                            <i class="fab fa-google text-red-500"></i>
+                            <span class="font-medium text-gray-700 mobile-small">Google</span>
+                        </button>
+                        <button type="button" class="flex-1 social-btn mobile-card flex items-center justify-center space-x-2 vibrate haptic-feedback">
+                            <i class="fab fa-apple text-gray-800"></i>
+                            <span class="font-medium text-gray-700 mobile-small">Apple</span>
+                        </button>
+                    </div>
+                    <div class="relative flex items-center justify-center my-4">
+                        <div class="flex-1 border-t border-gray-200"></div>
+                        <span class="mx-4 text-gray-500 text-sm mobile-small">Or with email</span>
+                        <div class="flex-1 border-t border-gray-200"></div>
+                    </div>
+                </div>
+                
+                <!-- Login Form -->
+                <form id="loginForm" method="POST" action="{{ url_for('login') }}" class="space-y-6">
+                    <!-- Email Field -->
+                    <div class="relative">
+                        <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <input type="email" 
+                               id="email" 
+                               name="email" 
+                               required
+                               class="mobile-input vibrate"
+                               placeholder="Email Address"
+                               value="{{ request.form.email if request.form else '' }}"
+                               autocomplete="email"
+                               inputmode="email">
+                    </div>
+                    
+                    <!-- Password Field -->
+                    <div class="relative">
+                        <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <input type="password" 
+                               id="password" 
+                               name="password" 
+                               required
+                               class="mobile-input vibrate pr-12"
+                               placeholder="Password"
+                               autocomplete="current-password">
+                        <button type="button" 
+                                onclick="togglePassword()" 
+                                class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 touch-target w-10 h-10 flex items-center justify-center vibrate">
+                            <i class="fas fa-eye" id="toggleIcon"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Remember Me & Forgot Password -->
+                    <div class="flex items-center justify-between mb-4">
+                        <label class="flex items-center space-x-3 cursor-pointer vibrate">
+                            <div class="mobile-checkbox" id="rememberCheckbox"></div>
+                            <input type="hidden" name="remember_me" id="rememberHidden" value="false">
+                            <span class="text-gray-700 select-none mobile-small">Remember me</span>
+                        </label>
+                        <a href="{{ url_for('forgot_password') }}" class="text-green-600 hover:text-green-700 font-medium mobile-small vibrate">
+                            Forgot password?
+                        </a>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <button type="submit" 
+                            id="submitBtn"
+                            class="mobile-btn vibrate haptic-feedback">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span class="submit-text">Sign In</span>
+                        <div class="mobile-loader" id="submitLoader"></div>
+                    </button>
+                    
+                    <!-- Register Link -->
+                    <div class="mt-8 text-center">
+                        <p class="text-gray-600 mobile-small">
+                            Don't have an account?
+                            <a href="{{ url_for('register') }}" 
+                               class="ml-1 text-green-600 hover:text-green-700 font-semibold vibrate">
+                                Create Account
+                                <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </p>
+                    </div>
+                </form>
+                
+                <!-- Security Note -->
+                <div class="mt-8 pt-6 border-t border-gray-100">
+                    <div class="flex items-center justify-center space-x-2 text-gray-500 text-xs">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>256-bit SSL encryption • Your data is secure</span>
+                    </div>
+                </div>
+                
+                <!-- Mobile Features Preview -->
+                <div class="lg:hidden mt-8 mobile-grid">
+                    <div class="bg-green-50 rounded-xl p-4 text-center">
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                            <i class="fas fa-chart-line text-green-600"></i>
+                        </div>
+                        <p class="text-sm font-medium text-gray-700">Track Progress</p>
+                    </div>
+                    <div class="bg-blue-50 rounded-xl p-4 text-center">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                            <i class="fas fa-utensils text-blue-600"></i>
+                        </div>
+                        <p class="text-sm font-medium text-gray-700">Meal Plans</p>
+                    </div>
+                    <div class="bg-purple-50 rounded-xl p-4 text-center">
+                        <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-2">
+                            <i class="fas fa-user-md text-purple-600"></i>
+                        </div>
+                        <p class="text-sm font-medium text-gray-700">Expert Advice</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Mobile FAB (Floating Action Button) -->
+    <button class="mobile-fab lg:hidden vibrate" onclick="scrollToTop()" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- Pull to Refresh Indicator -->
+    <div class="pull-to-refresh">
+        <div class="w-8 h-8 border-2 border-gray-300 border-t-green-500 rounded-full animate-spin"></div>
+    </div>
+    
     <script>
-                                    
-const loginUrl = "{{ url_for('login') }}";
-const loginLink = document.querySelector(`a[href="${loginUrl}"]`);
-
-        // Password Toggle Functionality
+        // Mobile menu functionality
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const backdrop = document.getElementById('backdrop');
+            menu.classList.toggle('open');
+            backdrop.classList.toggle('hidden');
+            document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+        }
+        
+        // Close menu when clicking backdrop
+        document.getElementById('backdrop').addEventListener('click', toggleMenu);
+        
+        // Password toggle
         function togglePassword() {
             const passwordInput = document.getElementById('password');
             const icon = document.getElementById('toggleIcon');
@@ -459,170 +735,220 @@ const loginLink = document.querySelector(`a[href="${loginUrl}"]`);
                 passwordInput.type = 'text';
                 icon.classList.remove('fa-eye');
                 icon.classList.add('fa-eye-slash');
+                icon.style.color = '#10B981';
             } else {
                 passwordInput.type = 'password';
                 icon.classList.remove('fa-eye-slash');
                 icon.classList.add('fa-eye');
+                icon.style.color = '';
             }
             
-            // Add visual feedback
-            icon.classList.add('text-green-600');
-            setTimeout(() => icon.classList.remove('text-green-600'), 500);
+            // Add haptic feedback on mobile
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
         }
-
-        // Form Submission Handler
+        
+        // Remember me checkbox
+        document.querySelector('#rememberCheckbox').addEventListener('click', function() {
+            const checkbox = this;
+            const hiddenInput = document.getElementById('rememberHidden');
+            
+            checkbox.classList.toggle('checked');
+            hiddenInput.value = checkbox.classList.contains('checked') ? 'true' : 'false';
+            
+            // Haptic feedback
+            if (navigator.vibrate) {
+                navigator.vibrate(30);
+            }
+        });
+        
+        // Form submission with loading state
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             const submitBtn = document.getElementById('submitBtn');
-            submitBtn.classList.add('form-loading');
+            const loader = document.getElementById('submitLoader');
+            const submitText = submitBtn.querySelector('.submit-text');
+            
+            // Show loader
+            submitText.style.display = 'none';
+            loader.style.display = 'block';
             submitBtn.disabled = true;
             
-            // Simulate loading state (remove this in production)
+            // Simulate loading (remove in production)
             setTimeout(() => {
-                submitBtn.classList.remove('form-loading');
+                submitText.style.display = 'block';
+                loader.style.display = 'none';
                 submitBtn.disabled = false;
             }, 2000);
         });
-
-        // Auto-focus email field with smooth animation
+        
+        // Auto-focus email on mobile with keyboard optimization
         window.addEventListener('load', function() {
             const emailInput = document.getElementById('email');
-            emailInput.focus();
             
-            // Add visual focus effect
-            emailInput.parentElement.classList.add('border-green-500');
+            // Focus after a short delay for better mobile UX
             setTimeout(() => {
-                emailInput.parentElement.classList.remove('border-green-500');
-            }, 1000);
+                emailInput.focus();
+                
+                // Scroll input into view on mobile
+                if (window.innerWidth < 768) {
+                    emailInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 300);
         });
-
-        // Input Field Animations
-        document.querySelectorAll('.form-input').forEach(input => {
-            input.addEventListener('focus', function() {
-                this.parentElement.classList.add('border-green-500');
-                this.parentElement.querySelector('.form-label').classList.add('text-green-600');
+        
+        // Keyboard adjustments
+        let isKeyboardOpen = false;
+        window.addEventListener('resize', function() {
+            const visualViewport = window.visualViewport;
+            if (visualViewport) {
+                const newKeyboardState = (window.innerHeight - visualViewport.height) > 100;
+                if (newKeyboardState !== isKeyboardOpen) {
+                    isKeyboardOpen = newKeyboardState;
+                    document.body.classList.toggle('keyboard-open', isKeyboardOpen);
+                    
+                    if (!isKeyboardOpen) {
+                        // Reset scroll position when keyboard closes
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                }
+            }
+        });
+        
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Haptic feedback
+            if (navigator.vibrate) {
+                navigator.vibrate(50);
+            }
+        }
+        
+        // Pull to refresh simulation
+        let startY = 0;
+        let pulling = false;
+        
+        document.addEventListener('touchstart', function(e) {
+            if (window.scrollY === 0) {
+                startY = e.touches[0].pageY;
+                pulling = true;
+            }
+        }, { passive: true });
+        
+        document.addEventListener('touchmove', function(e) {
+            if (!pulling) return;
+            
+            const y = e.touches[0].pageY;
+            if (y > startY) {
+                const pullDistance = y - startY;
+                if (pullDistance > 80) {
+                    document.body.classList.add('pulling');
+                }
+            }
+        }, { passive: true });
+        
+        document.addEventListener('touchend', function() {
+            if (document.body.classList.contains('pulling')) {
+                // Simulate refresh
+                setTimeout(() => {
+                    document.body.classList.remove('pulling');
+                    // In a real app, you would reload data here
+                    console.log('Refreshing data...');
+                }, 1000);
+            }
+            pulling = false;
+        }, { passive: true });
+        
+        // Add vibration to all buttons
+        document.querySelectorAll('button, a').forEach(element => {
+            element.addEventListener('click', function() {
+                if (navigator.vibrate && window.innerWidth < 768) {
+                    navigator.vibrate(30);
+                }
+            });
+        });
+        
+        // Handle mobile back button
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !document.getElementById('mobileMenu').classList.contains('hidden')) {
+                toggleMenu();
+            }
+        });
+        
+        // Optimize for mobile performance
+        let lastScrollTop = 0;
+        const fab = document.querySelector('.mobile-fab');
+        
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Hide/show FAB based on scroll direction
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                fab.style.transform = 'translateY(100px)';
+            } else {
+                fab.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = scrollTop;
+        }, { passive: true });
+        
+        // Handle iOS Safari 100vh issue
+        function setVH() {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        
+        setVH();
+        window.addEventListener('resize', setVH);
+        
+        // Prevent zoom on double-tap
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+        
+        // Handle orientation changes
+        window.addEventListener('orientationchange', function() {
+            // Wait for orientation change to complete
+            setTimeout(() => {
+                document.activeElement.blur();
+                setVH();
+            }, 300);
+        });
+        
+        // Auto-dismiss success messages after 5 seconds
+        setTimeout(() => {
+            document.querySelectorAll('[class*="bg-green-50"]').forEach(msg => {
+                setTimeout(() => {
+                    msg.style.opacity = '0';
+                    setTimeout(() => msg.remove(), 300);
+                }, 5000);
+            });
+        }, 1000);
+        
+        // Add input validation feedback
+        document.querySelectorAll('.mobile-input').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.validity.valid) {
+                    this.style.borderColor = '#10B981';
+                    this.style.backgroundColor = '#F0FDF4';
+                } else {
+                    this.style.borderColor = '#EF4444';
+                    this.style.backgroundColor = '#FEF2F2';
+                }
             });
             
             input.addEventListener('blur', function() {
                 if (!this.value) {
-                    this.parentElement.classList.remove('border-green-500');
-                    this.parentElement.querySelector('.form-label').classList.remove('text-green-600');
+                    this.style.borderColor = '#E5E7EB';
+                    this.style.backgroundColor = 'white';
                 }
             });
-            
-            // Trigger animation on page load if there's existing value
-            if (input.value) {
-                input.parentElement.querySelector('.form-label').classList.add('top-0', 'text-sm', 'text-green-600');
-            }
-        });
-
-        // Remember Me Checkbox Animation
-        document.querySelector('.checkbox-custom').addEventListener('change', function() {
-            if (this.checked) {
-                this.style.transform = 'scale(1.1)';
-                setTimeout(() => {
-                    this.style.transform = 'scale(1)';
-                }, 300);
-            }
-        });
-
-        // Keyboard Shortcuts
-        document.addEventListener('keydown', function(e) {
-            // Ctrl + / to focus password field
-            if (e.ctrlKey && e.key === '/') {
-                e.preventDefault();
-                document.getElementById('password').focus();
-            }
-            
-            // Enter to submit form
-            if (e.key === 'Enter' && !e.ctrlKey && !e.shiftKey) {
-                const focused = document.activeElement;
-                if (focused.tagName === 'INPUT' && focused.type !== 'submit') {
-                    // Let the form handle it naturally
-                }
-            }
-        });
-
-        // Touch Device Optimization
-        if ('ontouchstart' in window) {
-            // Increase tap targets on touch devices
-            document.querySelectorAll('button, a, input[type="checkbox"]').forEach(el => {
-                el.style.minHeight = '44px';
-                el.style.minWidth = '44px';
-            });
-            
-            // Prevent double-tap zoom
-            let lastTouchEnd = 0;
-            document.addEventListener('touchend', function(event) {
-                const now = (new Date()).getTime();
-                if (now - lastTouchEnd <= 300) {
-                    event.preventDefault();
-                }
-                lastTouchEnd = now;
-            }, false);
-        }
-
-        // Add floating label animation on input
-        document.querySelectorAll('.form-input').forEach(input => {
-            input.addEventListener('input', function() {
-                const label = this.nextElementSibling;
-                if (this.value) {
-                    label.classList.add('top-0', 'text-sm', 'text-green-600');
-                } else {
-                    label.classList.remove('top-0', 'text-sm', 'text-green-600');
-                }
-            });
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Performance optimization: Lazy load images (if any)
-        if ('IntersectionObserver' in window) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        if (img.dataset.src) {
-                            img.src = img.dataset.src;
-                        }
-                        observer.unobserve(img);
-                    }
-                });
-            });
-
-            document.querySelectorAll('img[data-src]').forEach(img => {
-                observer.observe(img);
-            });
-        }
-    </script>
-
-    <!-- Optional: Add a loading indicator for better perceived performance -->
-    <div id="loading-indicator" class="fixed inset-0 bg-white/90 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="text-center">
-            <div class="w-16 h-16 border-4 border-green-200 border-t-green-500 rounded-full animate-spin mx-auto mb-4"></div>
-            <p class="text-gray-600">Loading your wellness journey...</p>
-        </div>
-    </div>
-
-    <script>
-        // Show loading indicator when navigating away
-        document.querySelectorAll('a').forEach(link => {
-            if (link.href && !link.href.includes('#') && link.href !== window.location.href) {
-                link.addEventListener('click', () => {
-                    document.getElementById('loading-indicator').classList.remove('opacity-0', 'pointer-events-none');
-                });
-            }
         });
     </script>
 </body>
