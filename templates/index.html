@@ -546,16 +546,42 @@ body.sidebar-open {
                 </div>
             </div>
             
-            <div class="flex flex-wrap gap-3 justify-center md:justify-start">
-                {% if not current_user.is_authenticated %}
-                <a href="{{ url_for('register') }}" class="cta-button bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl text-sm md:text-base">
-                    <i class="fas fa-rocket mr-2"></i>Get Started
-                </a>
-                {% endif %}
-                <a href="#services" class="border-2 border-green-500 text-green-500 hover:bg-green-50 active:bg-green-100 px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 text-sm md:text-base">
-                    <i class="fas fa-arrow-down mr-2"></i>Learn More
-                </a>
-            </div>
+<div class="flex flex-wrap gap-4 justify-center md:justify-start">
+
+    {% if not current_user.is_authenticated %}
+    <a href="{{ url_for('register') }}"
+       class="bg-gradient-to-r from-green-500 to-green-600 
+              hover:from-green-600 hover:to-green-700 
+              text-white px-6 py-3 rounded-full font-medium 
+              transition-all duration-300 transform hover:scale-105 
+              shadow-lg text-sm md:text-base">
+        <i class="fas fa-rocket mr-2"></i>
+        Get Started
+    </a>
+    {% endif %}
+
+    <a href="#services"
+       class="border-2 border-green-500 text-green-500 
+              hover:bg-green-50 px-6 py-3 rounded-full 
+              font-medium transition-all duration-300 
+              transform hover:scale-105 text-sm md:text-base">
+        <i class="fas fa-arrow-down mr-2"></i>
+        Learn More
+    </a>
+
+    <a href="{{ url_for('contact') }}"
+       class="inline-flex items-center 
+              bg-gradient-to-r from-green-500 to-green-600 
+              hover:from-green-600 hover:to-green-700 
+              text-white px-6 py-3 rounded-full font-medium 
+              transition-all duration-300 transform hover:scale-105 
+              shadow-lg text-sm md:text-base">
+        <i class="fas fa-calendar-check mr-2"></i>
+        Book a Free Consultation
+    </a>
+
+</div>
+
         </div>
         <div class="md:w-1/2 flex justify-center mt-8 md:mt-0" data-aos="fade-left">
             <div class="relative">
@@ -611,7 +637,7 @@ body.sidebar-open {
         </div>
     </div>
 </section>
-
+               
 <!-- Services Section - Better grid for tablet -->
 <section id="services" class="py-12 md:py-16 px-4 bg-white relative overflow-hidden">
     <!-- Background Pattern -->
@@ -1231,35 +1257,40 @@ body.sidebar-open {
             <div class="lg:w-2/5 mb-8 lg:mb-0 flex justify-center" data-aos="fade-right">
                 <div class="relative">
                     <!-- Profile Image Container -->
-                    <div class="relative w-64 h-64 md:w-80 md:h-80 bg-gradient-to-br from-green-100 via-blue-100 to-green-50 rounded-full flex items-center justify-center overflow-hidden shadow-2xl">
-                        <!-- Decorative Circles -->
-                        <div class="absolute inset-0 rounded-full border-8 border-green-100/50"></div>
-                        <div class="absolute inset-8 rounded-full border-4 border-blue-100/50"></div>
-                        
-                        <!-- Main Profile Icon -->
-                        <div class="relative z-10">
-                            <i class="fas fa-user-md text-6xl md:text-7xl text-green-500 animate-pulse-slow"></i>
-                        </div>
-                        
-                        <!-- Floating Certification Badge -->
-                        <div class="absolute bottom-6 right-6 md:bottom-8 md:right-8 bg-green-500 text-white p-3 md:p-4 rounded-xl shadow-lg animate-float-delayed group hover:scale-110 transition-transform duration-300">
-                            <div class="flex items-center">
-                                <i class="fas fa-award text-lg md:text-xl mr-2"></i>
-                                <div>
-                                    <p class="font-bold text-sm md:text-base">Certified</p>
-                                    <p class="text-xs md:text-sm">Wellness Coach</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Experience Badge -->
-                        <div class="absolute top-6 left-6 md:top-8 md:left-8 bg-blue-500 text-white p-2 md:p-3 rounded-lg shadow-lg animate-float-reverse group hover:scale-110 transition-transform duration-300">
-                            <div class="text-center">
-                                <p class="font-bold text-lg md:text-xl">5+</p>
-                                <p class="text-xs">Years</p>
-                            </div>
-                        </div>
-                    </div>
+                   <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl 
+            bg-gradient-to-br from-green-100 via-blue-100 to-green-50 
+            flex items-center justify-center">
+
+    <!-- Profile Image -->
+    <img
+        src="{{ url_for('static', filename='uploads/profile_6_abb0bc90.jpg') }}"
+        alt="Profile Image"
+        class="w-[85%] h-[85%] rounded-full object-cover border-4 border-blue-100"
+    />
+
+    <!-- Certified Badge -->
+    <div class="absolute bottom-6 right-6 bg-green-500 text-white p-3 md:p-4 rounded-xl 
+                shadow-lg hover:scale-110 transition-transform duration-300">
+        <div class="flex items-center">
+            <i class="fas fa-award text-lg md:text-xl mr-2"></i>
+            <div>
+                <p class="font-bold text-sm md:text-base">Certified</p>
+                <p class="text-xs md:text-sm">Wellness Coach</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Experience Badge -->
+    <div class="absolute top-6 left-6 bg-blue-500 text-white p-2 md:p-3 rounded-lg 
+                shadow-lg hover:scale-110 transition-transform duration-300">
+        <div class="text-center">
+            <p class="font-bold text-lg md:text-xl">5+</p>
+            <p class="text-xs">Years</p>
+        </div>
+    </div>
+
+</div>
+
                     
                     <!-- Stats Circles -->
                     <div class="absolute -bottom-4 -left-4 w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center border-4 border-white">
@@ -1353,204 +1384,13 @@ body.sidebar-open {
                 </div>
                 
                 <!-- Call to Action -->
-                <div class="mt-8">
-                    <a href="#contact" class="inline-flex items-center bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl">
-                        <i class="fas fa-calendar-check mr-2"></i>
-                        Book a Free Consultation
-                    </a>
-                </div>
+
             </div>
         </div>
     </div>
 </section>
 
 <!-- Products Section - Better mobile grid -->
-<section id="products" class="py-12 md:py-16 px-4 bg-gradient-to-b from-gray-50 to-white">
-    <div class="container mx-auto">
-        <div class="text-center mb-8 md:mb-12" data-aos="fade-up">
-            <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-600 rounded-full text-xs font-medium mb-4">AVAILABLE PROGRAMS</span>
-            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 section-title">Wellness Programs & Products</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">Explore our wellness programs available for both online and offline purchase.</p>
-        </div>
-        
-        <!-- Product Tabs -->
-        <div class="mb-6 md:mb-8">
-            <div class="flex flex-wrap justify-center gap-2">
-                <button class="product-tab px-4 py-2 bg-green-500 text-white rounded-full text-sm font-medium active" data-tab="all">
-                    All Products
-                </button>
-                <button class="product-tab px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200" data-tab="online">
-                    Online Programs
-                </button>
-                <button class="product-tab px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200" data-tab="offline">
-                    Offline Products
-                </button>
-                <button class="product-tab px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200" data-tab="bundles">
-                    Bundles
-                </button>
-            </div>
-        </div>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            <!-- Product 1 -->
-            <div class="product-card product-item bg-white rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6 border border-gray-100 hover-card active:scale-95 group" data-category="online" data-aos="zoom-in">
-                <div class="relative">
-                    <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-green-100 to-green-200 rounded-full flex items-center justify-center text-green-500 mx-auto mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-weight text-2xl md:text-3xl"></i>
-                    </div>
-                    <div class="absolute top-0 right-0">
-                        <span class="px-2 py-1 bg-green-100 text-green-600 text-xs font-medium rounded-full">Online</span>
-                    </div>
-                </div>
-                <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-3 text-center">Weight Loss Program</h3>
-                <p class="text-gray-600 text-center mb-4 text-sm md:text-base">Complete 12-week weight loss transformation with daily guidance</p>
-                
-                <div class="mb-4">
-                    <div class="flex justify-between text-sm text-gray-500 mb-2">
-                        <span>Duration:</span>
-                        <span class="font-medium">12 weeks</span>
-                    </div>
-                    <div class="flex justify-between text-sm text-gray-500 mb-2">
-                        <span>Format:</span>
-                        <span class="font-medium">Online Coaching</span>
-                    </div>
-                    <div class="flex justify-between text-sm text-gray-500">
-                        <span>Support:</span>
-                        <span class="font-medium">24/7 Access</span>
-                    </div>
-                </div>
-                
-                <div class="text-center mb-4">
-                    <span class="text-2xl md:text-3xl font-bold text-green-600">₹2,999</span>
-                    <span class="text-gray-400 line-through text-sm ml-2">₹4,999</span>
-                </div>
-                
-                <button class="product-buy-btn w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg text-sm md:text-base">
-                    <i class="fas fa-shopping-cart mr-2"></i>CONTACT TO BUY
-                </button>
-            </div>
-            
-            <!-- Product 2 -->
-            <div class="product-card product-item bg-white rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6 border border-gray-100 hover-card active:scale-95 group" data-category="online" data-aos="zoom-in" data-aos-delay="100">
-                <div class="relative">
-                    <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center text-blue-500 mx-auto mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-dumbbell text-2xl md:text-3xl"></i>
-                    </div>
-                    <div class="absolute top-0 right-0">
-                        <span class="px-2 py-1 bg-blue-100 text-blue-600 text-xs font-medium rounded-full">Online</span>
-                    </div>
-                </div>
-                <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-3 text-center">Muscle Building Program</h3>
-                <p class="text-gray-600 text-center mb-4 text-sm md:text-base">8-week muscle gain program with workout plans</p>
-                
-                <div class="mb-4">
-                    <div class="flex justify-between text-sm text-gray-500 mb-2">
-                        <span>Duration:</span>
-                        <span class="font-medium">8 weeks</span>
-                    </div>
-                    <div class="flex justify-between text-sm text-gray-500 mb-2">
-                        <span>Format:</span>
-                        <span class="font-medium">Online + Videos</span>
-                    </div>
-                    <div class="flex justify-between text-sm text-gray-500">
-                        <span>Support:</span>
-                        <span class="font-medium">Weekly Check-ins</span>
-                    </div>
-                </div>
-                
-                <div class="text-center mb-4">
-                    <span class="text-2xl md:text-3xl font-bold text-green-600">₹3,499</span>
-                </div>
-                
-                <button class="product-buy-btn w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg text-sm md:text-base">
-                    <i class="fas fa-shopping-cart mr-2"></i>CONTACT TO BUY
-                </button>
-            </div>
-            
-            <!-- Product 3 -->
-            <div class="product-card product-item bg-white rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6 border border-gray-100 hover-card active:scale-95 group" data-category="offline" data-aos="zoom-in" data-aos-delay="200">
-                <div class="relative">
-                    <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center text-purple-500 mx-auto mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-heartbeat text-2xl md:text-3xl"></i>
-                    </div>
-                    <div class="absolute top-0 right-0">
-                        <span class="px-2 py-1 bg-purple-100 text-purple-600 text-xs font-medium rounded-full">Offline</span>
-                    </div>
-                </div>
-                <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-3 text-center">Heart Health Program</h3>
-                <p class="text-gray-600 text-center mb-4 text-sm md:text-base">Cardiovascular wellness program with diet plans</p>
-                
-                <div class="mb-4">
-                    <div class="flex justify-between text-sm text-gray-500 mb-2">
-                        <span>Duration:</span>
-                        <span class="font-medium">6 weeks</span>
-                    </div>
-                    <div class="flex justify-between text-sm text-gray-500 mb-2">
-                        <span>Format:</span>
-                        <span class="font-medium">In-person</span>
-                    </div>
-                    <div class="flex justify-between text-sm text-gray-500">
-                        <span>Support:</span>
-                        <span class="font-medium">Personal Coach</span>
-                    </div>
-                </div>
-                
-                <div class="text-center mb-4">
-                    <span class="text-2xl md:text-3xl font-bold text-green-600">₹2,499</span>
-                </div>
-                
-                <button class="product-buy-btn w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg text-sm md:text-base">
-                    <i class="fas fa-shopping-cart mr-2"></i>CONTACT TO BUY
-                </button>
-            </div>
-            
-            <!-- Product 4 -->
-            <div class="product-card product-item bg-white rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6 border border-gray-100 hover-card active:scale-95 group" data-category="bundles" data-aos="zoom-in" data-aos-delay="300">
-                <div class="relative">
-                    <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-full flex items-center justify-center text-yellow-500 mx-auto mb-4 shadow-md group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-brain text-2xl md:text-3xl"></i>
-                    </div>
-                    <div class="absolute top-0 right-0">
-                        <span class="px-2 py-1 bg-yellow-100 text-yellow-600 text-xs font-medium rounded-full">Bundle</span>
-                    </div>
-                </div>
-                <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-3 text-center">Complete Wellness Bundle</h3>
-                <p class="text-gray-600 text-center mb-4 text-sm md:text-base">Complete wellness package with all programs</p>
-                
-                <div class="mb-4">
-                    <div class="flex justify-between text-sm text-gray-500 mb-2">
-                        <span>Duration:</span>
-                        <span class="font-medium">12 weeks</span>
-                    </div>
-                    <div class="flex justify-between text-sm text-gray-500 mb-2">
-                        <span>Format:</span>
-                        <span class="font-medium">Hybrid</span>
-                    </div>
-                    <div class="flex justify-between text-sm text-gray-500">
-                        <span>Support:</span>
-                        <span class="font-medium">Full Support</span>
-                    </div>
-                </div>
-                
-                <div class="text-center mb-4">
-                    <span class="text-2xl md:text-3xl font-bold text-green-600">₹6,999</span>
-                    <span class="text-gray-400 line-through text-sm ml-2">₹9,999</span>
-                </div>
-                
-                <button class="product-buy-btn w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg text-sm md:text-base">
-                    <i class="fas fa-shopping-cart mr-2"></i>CONTACT TO BUY
-                </button>
-            </div>
-        </div>
-        
-        <!-- View All Products -->
-        <div class="text-center mt-8 md:mt-12" data-aos="fade-up">
-            <button id="view-all-products" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl">
-                <i class="fas fa-store mr-2"></i>View All Products
-            </button>
-        </div>
-    </div>
-</section>
 
 <!-- FAQ Section -->
 <section class="py-12 md:py-16 px-4 bg-white">
