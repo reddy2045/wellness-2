@@ -11,6 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
     
     <style>
         :root {
@@ -157,7 +159,12 @@
 
         /* Left Panel - Benefits Section */
         .left-panel {
-            background: linear-gradient(160deg, #10b981 0%, #0d9488 40%, #047857 100%);
+            background: linear-gradient(160deg, 
+    #6EE7B7 0%, 
+    #34D399 45%, 
+    #10B981 100%
+);
+
             padding: 32px 24px;
             color: var(--white);
             display: flex;
@@ -237,13 +244,15 @@
         }
 
         /* Title & Subtitle */
-        .wellness-title {
-            font-size: clamp(2rem, 4.5vw, 2.5rem);
-            font-weight: 800;
-            margin-bottom: 16px;
-            line-height: 1.2;
-            letter-spacing: -0.01em;
-        }
+.wellness-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: -0.01em;
+    color: #064e3b;
+}
+
+
 
         .wellness-subtitle {
             font-size: 1.05rem;
@@ -253,7 +262,7 @@
             max-width: 500px;
         }
 
-        /* Benefits Carousel with 3-dot Navigation */
+        /* Benefits Carousel */
         .benefits-carousel-container {
             margin: 24px 0 32px;
             position: relative;
@@ -341,17 +350,6 @@
             background: var(--white);
             transform: scale(1.3);
             box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
-        }
-
-        .carousel-dot.active::after {
-            content: '';
-            position: absolute;
-            top: -4px;
-            left: -4px;
-            right: -4px;
-            bottom: -4px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
         /* Left Bottom Card */
@@ -514,21 +512,6 @@
             font-weight: 700;
         }
 
-        .step.completed .step-number {
-            background: var(--success);
-            border-color: var(--success);
-            color: white;
-        }
-
-        .step.completed .step-number::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-weight: bold;
-        }
-
         /* Form Elements */
         .form-label {
             font-weight: 600;
@@ -620,10 +603,6 @@
         .password-toggle:hover {
             background-color: var(--gray-100);
             color: var(--gray-700);
-        }
-
-        .password-toggle:active {
-            transform: translateY(-50%) scale(0.95);
         }
 
         .form-feedback {
@@ -720,11 +699,6 @@
             content: '✓';
             color: var(--success);
             font-weight: bold;
-        }
-
-        .requirements li.invalid::before {
-            content: '○';
-            color: var(--gray-400);
         }
 
         /* Terms Checkbox */
@@ -923,21 +897,6 @@
             text-decoration: underline;
         }
 
-        .login-link a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary-green);
-            transition: width var(--transition-normal);
-        }
-
-        .login-link a:hover::after {
-            width: 100%;
-        }
-
         /* Alert Styling */
         .alert {
             border-radius: var(--radius-lg);
@@ -974,11 +933,6 @@
             border-left: 5px solid #047857;
         }
 
-        .alert .btn-close {
-            padding: 12px;
-            margin-left: auto;
-        }
-
         /* Spinner for loading */
         .spinner {
             width: 24px;
@@ -1003,7 +957,7 @@
             outline-offset: 2px;
         }
 
-        /* Responsive Design - Mobile First */
+        /* Responsive Design */
         @media (max-width: 767px) {
             .register-container {
                 padding: 4px;
@@ -1021,12 +975,10 @@
             .left-panel {
                 padding: 28px 20px;
                 min-height: auto;
-                order: 1;
             }
             
             .right-panel {
                 padding: 28px 20px;
-                order: 2;
             }
             
             .logo {
@@ -1071,7 +1023,7 @@
             }
             
             .carousel-dots {
-                margin-top: 20px;
+                margin-top: 5px;
             }
             
             .left-bottom-card {
@@ -1147,7 +1099,6 @@
             }
         }
 
-        /* Tablet */
         @media (min-width: 768px) and (max-width: 1023px) {
             .wellness-card {
                 flex-direction: row;
@@ -1167,7 +1118,6 @@
             }
         }
 
-        /* Desktop */
         @media (min-width: 1024px) {
             .wellness-card {
                 flex-direction: row;
@@ -1191,7 +1141,6 @@
             }
         }
 
-        /* Small phones */
         @media (max-width: 375px) {
             .wellness-card {
                 border-radius: 20px;
@@ -1270,13 +1219,6 @@
                 padding: 14px 20px;
                 font-size: 1rem;
             }
-            
-            .floating-back-btn {
-                top: 10px;
-                left: 10px;
-                width: 40px;
-                height: 40px;
-            }
         }
 
         /* Print styles */
@@ -1294,11 +1236,6 @@
             .floating-back-btn {
                 display: none;
             }
-        }
-
-        /* Smooth scrolling for anchor links */
-        html {
-            scroll-behavior: smooth;
         }
 
         /* Custom scrollbar */
@@ -1354,7 +1291,7 @@
             
             .form-control,
             .form-select {
-                font-size: 16px !important; /* Prevents iOS zoom */
+                font-size: 16px !important;
             }
             
             .password-toggle {
@@ -1390,7 +1327,9 @@
                         </div>
                         <div class="logo-text">Wellness Coach</div>
                     </div>
-                    <h1 id="pageTitle" class="wellness-title">Join a healthier, happier you</h1>
+                    <h1 id="pageTitle" class="wellness-title">
+    Join a healthier, happier you
+</h1>
                     <p class="wellness-subtitle">
                         Build sustainable habits with personalized plans, 1-on-1 coaching, and a supportive community that keeps you accountable every step of the way.
                     </p>
@@ -1434,11 +1373,7 @@
                         </div>
                         
                         <!-- 3-Dot Navigation -->
-                        <div class="carousel-dots" id="carouselDots">
-                            <button class="carousel-dot active" aria-label="View benefit slide 1"></button>
-                            <button class="carousel-dot" aria-label="View benefit slide 2"></button>
-                            <button class="carousel-dot" aria-label="View benefit slide 3"></button>
-                        </div>
+
                     </div>
                 </div>
                 
@@ -1460,20 +1395,7 @@
                         <p>Sign up in less than a minute. You can always complete your health profile later.</p>
                     </header>
 
-                    <div class="step-indicator" aria-label="Registration progress">
-                        <div class="step active">
-                            <div class="step-number">1</div>
-                            <div class="step-label">Account</div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-label">Health</div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-label">Start</div>
-                        </div>
-                    </div>
+
 
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
@@ -1542,20 +1464,10 @@
                                 <div class="progress">
                                     <div class="progress-bar" id="passwordStrength" style="width: 0%"></div>
                                 </div>
-                            </div>
-                            <p class="password-strength" aria-live="polite" id="passwordStrengthLive"></p>
-                            <div class="requirements" aria-label="Password requirements">
-                                <h6>Password must contain:</h6>
-                                <ul>
-                                    <li id="reqLength">At least 6 characters</li>
-                                    <li id="reqUpper">One uppercase letter</li>
-                                    <li id="reqLower">One lowercase letter</li>
-                                    <li id="reqNumber">One number</li>
-                                </ul>
-                            </div>
+   
                         </div>
 
-                        <!-- Confirm password (CORRECTED FIELD NAME) -->
+                        <!-- Confirm password -->
                         <div class="mb-3">
                             <label for="confirmpassword" class="form-label">
                                 <i class="fas fa-lock" aria-hidden="true"></i> Confirm password <span class="required">*</span>
@@ -1596,11 +1508,11 @@
                     </div>
 
                     <div class="social-login" aria-label="Social sign up options">
-                        <button type="button" class="social-btn">
+                        <button type="button" class="social-btn" id="googleBtn">
                             <i class="fab fa-google" style="color: #DB4437" aria-hidden="true"></i>
                             <span>Google</span>
                         </button>
-                        <button type="button" class="social-btn">
+                        <button type="button" class="social-btn" id="appleBtn">
                             <i class="fab fa-apple" style="color: #000" aria-hidden="true"></i>
                             <span>Apple</span>
                         </button>
@@ -1609,8 +1521,6 @@
                     <div class="login-link">
                         Already have an account? <a href="{{ url_for('login') }}">Sign in</a>
                     </div>
-
-                    <!-- Removed duplicate back home link to avoid confusion -->
                 </div>
             </section>
         </main>
@@ -1624,41 +1534,34 @@
             // ========== BENEFITS CAROUSEL WITH 3-DOT NAVIGATION ==========
             const carousel = document.getElementById('benefitsCarousel');
             const dots = document.querySelectorAll('.carousel-dot');
-            const slides = document.querySelectorAll('.benefit-slide');
             let currentSlide = 0;
             let slideInterval;
-            const slideCount = slides.length;
+            const slideCount = 3;
             
-            // Initialize dots
             function updateDots() {
                 dots.forEach((dot, index) => {
                     dot.classList.toggle('active', index === currentSlide);
                 });
             }
             
-            // Move to specific slide
             function goToSlide(index) {
                 currentSlide = (index + slideCount) % slideCount;
                 carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
                 updateDots();
             }
             
-            // Next slide
             function nextSlide() {
                 goToSlide(currentSlide + 1);
             }
             
-            // Auto-rotate carousel
             function startCarousel() {
                 slideInterval = setInterval(nextSlide, 5000);
             }
             
-            // Stop auto-rotation
             function stopCarousel() {
                 clearInterval(slideInterval);
             }
             
-            // Add click event to dots
             dots.forEach((dot, index) => {
                 dot.addEventListener('click', () => {
                     stopCarousel();
@@ -1666,7 +1569,6 @@
                     startCarousel();
                 });
                 
-                // Keyboard navigation for dots
                 dot.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
@@ -1677,7 +1579,7 @@
                 });
             });
             
-            // Touch/swipe support for mobile
+            // Touch/swipe support
             let startX = 0;
             let endX = 0;
             
@@ -1693,19 +1595,14 @@
             carousel.addEventListener('touchend', () => {
                 const threshold = 50;
                 if (startX - endX > threshold) {
-                    // Swipe left - next slide
                     nextSlide();
                 } else if (endX - startX > threshold) {
-                    // Swipe right - previous slide
                     goToSlide(currentSlide - 1);
                 }
                 startCarousel();
             });
             
-            // Start carousel
             startCarousel();
-            
-            // Pause carousel on hover
             carousel.addEventListener('mouseenter', stopCarousel);
             carousel.addEventListener('mouseleave', startCarousel);
             
@@ -1749,23 +1646,19 @@
                 const hasLower = /[a-z]/.test(value);
                 const hasNumber = /\d/.test(value);
                 
-                // Update requirement indicators
-                requirements.length.className = hasLength ? 'valid' : 'invalid';
-                requirements.upper.className = hasUpper ? 'valid' : 'invalid';
-                requirements.lower.className = hasLower ? 'valid' : 'invalid';
-                requirements.number.className = hasNumber ? 'valid' : 'invalid';
+                requirements.length.className = hasLength ? 'valid' : '';
+                requirements.upper.className = hasUpper ? 'valid' : '';
+                requirements.lower.className = hasLower ? 'valid' : '';
+                requirements.number.className = hasNumber ? 'valid' : '';
                 
-                // Calculate strength (0-100)
                 if (hasLength) strength += 25;
                 if (hasUpper) strength += 25;
                 if (hasLower) strength += 25;
                 if (hasNumber) strength += 25;
                 
-                // Cap at 100
                 strength = Math.min(strength, 100);
                 strengthBar.style.width = strength + '%';
                 
-                // Set strength text and color
                 let label = 'Weak';
                 let color = '#ef4444';
                 
@@ -1778,9 +1671,6 @@
                 } else if (strength >= 50) {
                     label = 'Fair';
                     color = '#f59e0b';
-                } else {
-                    label = 'Weak';
-                    color = '#ef4444';
                 }
                 
                 strengthText.textContent = label;
@@ -1889,7 +1779,6 @@
             const loadingSpinner = document.getElementById('loadingSpinner');
             
             form.addEventListener('submit', function(e) {
-                // Prevent default only for validation
                 let hasError = false;
                 
                 // Validate all fields
@@ -1933,12 +1822,10 @@
                     return;
                 }
                 
-                // If all valid, show loading state and allow form submission
+                // Show loading state
                 submitBtn.disabled = true;
                 submitBtn.querySelector('span').textContent = 'Creating account...';
                 loadingSpinner.style.display = 'block';
-                
-                // Form will submit naturally to Flask backend
             });
             
             // ========== ALERT FUNCTION ==========
@@ -1960,7 +1847,7 @@
                 const stepIndicator = document.querySelector('.step-indicator');
                 stepIndicator.parentNode.insertBefore(alertDiv, stepIndicator.nextSibling);
                 
-                // Auto-dismiss success alerts after 5 seconds
+                // Auto-dismiss success alerts
                 if (type === 'success') {
                     setTimeout(() => {
                         if (alertDiv.parentNode) {
@@ -1971,12 +1858,12 @@
             }
             
             // ========== SOCIAL LOGIN BUTTONS ==========
-            const socialButtons = document.querySelectorAll('.social-btn');
-            socialButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const provider = this.querySelector('span').textContent;
-                    showAlert(`${provider} sign up will be available soon!`, 'error');
-                });
+            document.getElementById('googleBtn').addEventListener('click', function() {
+                showAlert('Google sign up will be available soon!', 'error');
+            });
+            
+            document.getElementById('appleBtn').addEventListener('click', function() {
+                showAlert('Apple sign up will be available soon!', 'error');
             });
             
             // ========== INITIALIZE FORM VALIDATION ==========
@@ -1985,25 +1872,6 @@
                     field.dispatchEvent(new Event('input'));
                 }
             });
-            
-            // ========== MOBILE TOUCH OPTIMIZATIONS ==========
-            if ('ontouchstart' in window) {
-                // Increase touch targets for mobile
-                document.querySelectorAll('button, .form-control, .carousel-dot').forEach(el => {
-                    el.style.minHeight = '44px';
-                    el.style.touchAction = 'manipulation';
-                });
-                
-                // Prevent double-tap zoom
-                let lastTouchEnd = 0;
-                document.addEventListener('touchend', function(event) {
-                    const now = Date.now();
-                    if (now - lastTouchEnd <= 300) {
-                        event.preventDefault();
-                    }
-                    lastTouchEnd = now;
-                }, false);
-            }
             
             // ========== ENTRANCE ANIMATION ==========
             const card = document.querySelector('.wellness-card');
@@ -2027,10 +1895,17 @@
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
             
             if (prefersReducedMotion.matches) {
-                // Disable animations
                 card.style.transition = 'none';
                 strengthBar.style.transition = 'none';
                 stopCarousel();
+            }
+            
+            // ========== ENHANCED TOUCH SUPPORT ==========
+            if ('ontouchstart' in window) {
+                document.querySelectorAll('button, .form-control, .carousel-dot').forEach(el => {
+                    el.style.minHeight = '44px';
+                    el.style.touchAction = 'manipulation';
+                });
             }
         });
     </script>
