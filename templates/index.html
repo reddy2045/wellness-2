@@ -201,16 +201,23 @@
                 {% if current_user.is_authenticated %}
                     <!-- User Info -->
                     <div class="mb-6">
-                        <div class="flex items-center px-4 py-3 bg-gray-50 rounded-lg">
-                            <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-lg mr-3">
-                                {{ current_user.name[0] if current_user.name else 'U' }}
-                            </div>
-                            <div>
-                                <p class="font-medium text-gray-800">{{ current_user.name if current_user.name else 'User' }}</p>
-                                <p class="text-xs text-gray-500 truncate">{{ current_user.email if current_user.email else '' }}</p>
-                            </div>
-                        </div>
-                        
+<a href="{{ url_for('profile') }}" class="block">
+    <div class="flex items-center px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer">
+        <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-full 
+                    flex items-center justify-center text-white font-bold text-lg mr-3">
+            {{ current_user.name[0] if current_user.name else 'U' }}
+        </div>
+        <div>
+            <p class="font-medium text-gray-800">
+                {{ current_user.name if current_user.name else 'User' }}
+            </p>
+            <p class="text-xs text-gray-500 truncate">
+                {{ current_user.email if current_user.email else '' }}
+            </p>
+        </div>
+    </div>
+</a>
+
                         <!-- User Links -->
                         <div class="mt-4 space-y-1">
                             <a href="{{ url_for('profile') }}" class="flex items-center px-4 py-3 text-gray-700 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors duration-200">
