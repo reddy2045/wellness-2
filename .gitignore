@@ -1,15 +1,31 @@
 # Environment variables
 .env
 
-# Python cache
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 
-# Instance folder
+# Virtual environment
+venv/
+ENV/
+
+# Flask
 instance/
+uploads/
+
+# Database
+*.db
+*.sqlite3
+
+# Logs
+*.log
+
+# IDEs
+.vscode/
+.idea/
 
 # OS files
 .DS_Store
 Thumbs.db
-
-
