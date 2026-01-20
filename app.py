@@ -1479,6 +1479,27 @@ def forgot_password():
     
     return render_template('forgot_password.html')
 
+
+
+
+
+@app.route('/fix-admin-password')
+def fix_admin_password():
+    from werkzeug.security import generate_password_hash
+    cursor = mysql.connection.cursor()
+
+    hashed = generate_password_hash("admin@7671")
+
+    cursor.execute(
+        "UPDATE users SET password=%s WHERE email=%s",
+        (hashed, "admin@wellness.com")
+    )
+    mysql.connection.commit()
+
+    return "Admin password fixed"
+
+
+
 @app.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
     email = session.get('reset_email')
@@ -3341,6 +3362,7 @@ if __name__ == '__main__':
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))
     app.run(host="0.0.0.0", port=port)
+
 
 
 
