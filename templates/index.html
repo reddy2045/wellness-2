@@ -533,15 +533,15 @@ body.sidebar-open {
             <!-- Stats Counter -->
             <div class="flex flex-wrap gap-4 mb-6">
                 <div class="text-center">
-                    <div class="text-2xl md:text-3xl font-bold text-green-500 mb-1" data-counter="500">0</div>
+                    <div class="text-2xl md:text-3xl font-bold text-green-500 mb-1" data-counter="500">500</div>
                     <div class="text-xs text-gray-600">Clients Helped</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-2xl md:text-3xl font-bold text-green-500 mb-1" data-counter="95">0</div>
+                    <div class="text-2xl md:text-3xl font-bold text-green-500 mb-1" data-counter="95">95</div>
                     <div class="text-xs text-gray-600">Success Rate</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-2xl md:text-3xl font-bold text-green-500 mb-1" data-counter="5">0</div>
+                    <div class="text-2xl md:text-3xl font-bold text-green-500 mb-1" data-counter="5">5</div>
                     <div class="text-xs text-gray-600">Years Experience</div>
                 </div>
             </div>
@@ -802,127 +802,10 @@ body.sidebar-open {
     </div>
 </section>
 
-<!-- Programs Section - Better tablet grid -->
-<section id="programs" class="py-12 md:py-16 px-4 gradient-bg relative overflow-hidden">
-    <!-- Animated Background -->
-    <div class="absolute inset-0 overflow-hidden">
-        <div class="absolute top-0 left-0 w-64 h-64 bg-green-100 rounded-full opacity-10 animate-pulse"></div>
-        <div class="absolute bottom-0 right-0 w-96 h-96 bg-blue-100 rounded-full opacity-10 animate-pulse-slow"></div>
-    </div>
-    
-    <div class="container mx-auto relative z-10">
-        <div class="text-center mb-8 md:mb-12" data-aos="fade-up">
-            <span class="inline-block px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-medium mb-4">WELLNESS PROGRAMS</span>
-            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 section-title">Transformative Wellness Programs</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">Explore our comprehensive range of wellness programs designed for all fitness levels.</p>
-        </div>
-        
-        <!-- Program Category Filter -->
-        <div class="mb-6 md:mb-8">
-            <div class="flex flex-wrap justify-center gap-2">
-                <button class="program-filter px-4 py-2 bg-green-500 text-white rounded-full text-sm font-medium active" data-filter="all">
-                    All Programs
-                </button>
-                <button class="program-filter px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200" data-filter="fitness">
-                    Fitness
-                </button>
-                <button class="program-filter px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200" data-filter="nutrition">
-                    Nutrition
-                </button>
-                <button class="program-filter px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200" data-filter="wellness">
-                    Wellness
-                </button>
-                <button class="program-filter px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200" data-filter="specialized">
-                    Specialized
-                </button>
-            </div>
-        </div>
-        
-        <!-- Mobile Swipeable Cards -->
-        <div class="block md:hidden overflow-x-auto pb-4">
-            <div class="flex space-x-3 px-2 program-swipe-container">
-                {% set program_data = [
-                    {"icon": "fa-apple-alt", "title": "Balanced Diet", "color": "from-green-100 to-blue-100", "text": "green", "category": "nutrition", "duration": "4 weeks", "level": "Beginner"},
-                    {"icon": "fa-running", "title": "Cardio Fitness", "color": "from-blue-100 to-purple-100", "text": "blue", "category": "fitness", "duration": "8 weeks", "level": "Intermediate"},
-                    {"icon": "fa-weight", "title": "Strength Training", "color": "from-red-100 to-orange-100", "text": "red", "category": "fitness", "duration": "12 weeks", "level": "Advanced"},
-                    {"icon": "fa-heart", "title": "Heart Health", "color": "from-purple-100 to-pink-100", "text": "purple", "category": "wellness", "duration": "6 weeks", "level": "Beginner"},
-                    {"icon": "fa-brain", "title": "Mental Wellness", "color": "from-yellow-100 to-orange-100", "text": "yellow", "category": "wellness", "duration": "8 weeks", "level": "All Levels"},
-                    {"icon": "fa-bed", "title": "Sleep Better", "color": "from-indigo-100 to-blue-100", "text": "indigo", "category": "wellness", "duration": "4 weeks", "level": "Beginner"},
-                    {"icon": "fa-water", "title": "Hydration", "color": "from-pink-100 to-rose-100", "text": "pink", "category": "nutrition", "duration": "4 weeks", "level": "Beginner"},
-                    {"icon": "fa-seedling", "title": "Plant-Based", "color": "from-teal-100 to-green-100", "text": "teal", "category": "nutrition", "duration": "8 weeks", "level": "Intermediate"},
-                    {"icon": "fa-utensils", "title": "Meal Planning", "color": "from-orange-100 to-yellow-100", "text": "orange", "category": "nutrition", "duration": "4 weeks", "level": "Beginner"},
-                    {"icon": "fa-chart-line", "title": "Progress Tracking", "color": "from-cyan-100 to-blue-100", "text": "cyan", "category": "specialized", "duration": "Ongoing", "level": "All Levels"}
-                ] %}
-                
-                {% for program in program_data %}
-                <div class="flex-shrink-0 w-40 bg-white rounded-xl shadow-lg p-3 flex flex-col justify-center items-center text-center hover-card program-item" 
-                     data-index="{{ loop.index0 }}" data-category="{{ program.category }}">
-                    <div class="relative">
-                        <div class="w-12 h-12 bg-gradient-to-br {{ program.color }} rounded-full flex items-center justify-center text-{{ program.text }}-500 mb-2 animate-pulse-slow shadow-md">
-                            <i class="fas {{ program.icon }} text-lg"></i>
-                        </div>
-                        <div class="absolute -top-1 -right-1">
-                            <span class="px-1 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">{{ program.level }}</span>
-                        </div>
-                    </div>
-                    <h3 class="font-bold text-gray-800 text-sm mb-1">{{ program.title }}</h3>
-                    <p class="text-gray-600 text-xs mb-2">{{ program.duration }}</p>
-                    <div class="mt-2">
-                        <span class="text-green-500 text-xs">•••</span>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        
-        <!-- Desktop/Tablet Grid -->
-        <div class="hidden md:grid grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-6 program-grid">
-            {% for program in program_data %}
-            <div class="program-item bg-white rounded-xl shadow-lg p-4 flex flex-col justify-center items-center text-center hover-card transform hover:-translate-y-1 transition-all active:scale-95" 
-                 data-aos="flip-left" data-aos-delay="{{ loop.index * 50 }}" data-category="{{ program.category }}">
-                <div class="relative mb-4">
-                    <div class="w-14 h-14 bg-gradient-to-br {{ program.color }} rounded-full flex items-center justify-center text-{{ program.text }}-500 animate-pulse-slow shadow-md">
-                        <i class="fas {{ program.icon }} text-xl"></i>
-                    </div>
-                    <div class="absolute -top-2 -right-2">
-                        <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">{{ program.level }}</span>
-                    </div>
-                </div>
-                <h3 class="font-bold text-gray-800 text-base mb-2">{{ program.title }}</h3>
-                <p class="text-gray-600 text-sm mb-3">{{ program.duration }}</p>
-                <div class="w-full">
-                    <div class="flex items-center justify-center text-xs text-gray-500 mb-2">
-                        <i class="fas fa-clock mr-1"></i>
-                        <span>{{ program.duration }}</span>
-                    </div>
-                    <button class="program-detail-btn w-full bg-gray-50 hover:bg-gray-100 text-gray-700 py-2 rounded-lg text-sm font-medium transition-colors" data-index="{{ loop.index0 }}">
-                        View Details
-                    </button>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        
-        <!-- Program Info Modal -->
-        <div id="program-modal" class="fixed inset-0 bg-black/50 z-[60] flex items-center justify-center p-4 hidden">
-            <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-hidden">
-                <div class="p-6 overflow-y-auto max-h-[85vh]">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-xl font-bold text-gray-800" id="modal-title">Program Details</h3>
-                        <button class="close-modal text-gray-400 hover:text-gray-600 w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div id="modal-content">
-                        <!-- Content will be loaded here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- Testimonials Section - Better mobile cards -->
+
+
+<!-- Programs Section - Better tablet grid -->
 <section id="testimonials" class="py-12 md:py-16 px-4 bg-white relative overflow-hidden">
     <!-- Background Pattern -->
     <div class="absolute inset-0 bg-gradient-to-br from-green-50/30 to-blue-50/30"></div>
@@ -953,24 +836,21 @@ body.sidebar-open {
                     <span class="text-gray-700 font-medium text-sm">Rate your experience:</span>
                     <div class="star-rating flex">
                         {% for i in range(1, 6) %}
-                        <button class="star text-2xl text-gray-300 hover:text-yellow-400 mx-0.5 transition-colors" data-rating="{{ i }}">
+                        <button type="button" class="star text-2xl text-gray-300 hover:text-yellow-400 mx-0.5 transition-colors" data-rating="{{ i }}">
                             <i class="fas fa-star"></i>
                         </button>
                         {% endfor %}
                     </div>
                 </div>
-                <input type="hidden" id="user-rating" value="0">
+                <input type="hidden" id="user-rating" name="rating" value="0">
             </div>
             
             <!-- Review Form -->
-            <form id="review-form" class="space-y-4">
-                <div>
-                    <label for="review-title" class="block text-gray-700 text-sm font-medium mb-2">Title</label>
-                    <input type="text" id="review-title" name="title" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-300 text-sm" placeholder="Brief title for your review">
-                </div>
+            <form id="review-form" method="POST" action="{{ url_for('submit_review') }}" class="space-y-4">
+                {{ form.csrf_token if form else '' }}
                 <div>
                     <label for="review-text" class="block text-gray-700 text-sm font-medium mb-2">Your Review</label>
-                    <textarea id="review-text" name="review" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-300 text-sm" placeholder="Share your experience..."></textarea>
+                    <textarea id="review-text" name="review_text" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-300 text-sm" placeholder="Share your experience..." required></textarea>
                 </div>
                 <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg">
                     <i class="fas fa-paper-plane mr-2"></i>Submit Review
@@ -984,7 +864,48 @@ body.sidebar-open {
             <!-- Testimonial Cards -->
             <div class="testimonial-slider overflow-hidden">
                 <div class="testimonial-track flex transition-transform duration-500">
-                    <!-- Testimonial 1 -->
+                    {% for review in reviews %}
+                    <div class="testimonial-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-2">
+                        <div class="testimonial-card bg-white rounded-2xl shadow-lg p-4 md:p-6 hover-card h-full">
+                            <div class="flex items-start mb-4">
+                                <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br 
+                                    {% if loop.index % 4 == 1 %}from-green-100 to-green-200 text-green-500
+                                    {% elif loop.index % 4 == 2 %}from-blue-100 to-blue-200 text-blue-500
+                                    {% elif loop.index % 4 == 3 %}from-purple-100 to-purple-200 text-purple-500
+                                    {% else %}from-yellow-100 to-yellow-200 text-yellow-500
+                                    {% endif %}
+                                    rounded-full flex items-center justify-center font-bold mr-3 md:mr-4">
+                                    {{ review.username[0] if review.username else 'U' }}
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-gray-800 text-sm md:text-base">{{ review.username }}</h4>
+                                    <div class="flex text-yellow-400 text-sm md:text-base mt-1">
+                                        {% for i in range(review.rating) %}
+                                        <i class="fas fa-star"></i>
+                                        {% endfor %}
+                                        {% for i in range(5 - review.rating) %}
+                                        <i class="far fa-star"></i>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm md:text-base italic mb-4">"{{ review.review_text }}"</p>
+                            <div class="text-xs text-gray-500">
+                                <i class="fas fa-calendar-alt mr-1"></i> 
+                                {% if review.created_at %}
+                                    {% if review.created_at is string %}
+                                        {{ review.created_at.split(' ')[0] if ' ' in review.created_at else review.created_at }}
+                                    {% else %}
+                                        {{ review.created_at.strftime('%d %b %Y') }}
+                                    {% endif %}
+                                {% else %}
+                                    Recently
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <!-- Default testimonials if no reviews in database -->
                     <div class="testimonial-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-2">
                         <div class="testimonial-card bg-white rounded-2xl shadow-lg p-4 md:p-6 hover-card h-full">
                             <div class="flex items-start mb-4">
@@ -995,9 +916,11 @@ body.sidebar-open {
                                     <h4 class="font-bold text-gray-800 text-sm md:text-base">Anjali Sharma</h4>
                                     <p class="text-gray-500 text-xs md:text-sm">Weight Loss Journey</p>
                                     <div class="flex text-yellow-400 text-sm md:text-base mt-1">
-                                        {% for i in range(5) %}
                                         <i class="fas fa-star"></i>
-                                        {% endfor %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
                                     </div>
                                 </div>
                             </div>
@@ -1008,7 +931,6 @@ body.sidebar-open {
                         </div>
                     </div>
                     
-                    <!-- Testimonial 2 -->
                     <div class="testimonial-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-2">
                         <div class="testimonial-card bg-white rounded-2xl shadow-lg p-4 md:p-6 hover-card h-full">
                             <div class="flex items-start mb-4">
@@ -1019,9 +941,11 @@ body.sidebar-open {
                                     <h4 class="font-bold text-gray-800 text-sm md:text-base">Rajesh Kumar</h4>
                                     <p class="text-gray-500 text-xs md:text-sm">Diabetes Management</p>
                                     <div class="flex text-yellow-400 text-sm md:text-base mt-1">
-                                        {% for i in range(5) %}
                                         <i class="fas fa-star"></i>
-                                        {% endfor %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
                                     </div>
                                 </div>
                             </div>
@@ -1032,7 +956,6 @@ body.sidebar-open {
                         </div>
                     </div>
                     
-                    <!-- Testimonial 3 -->
                     <div class="testimonial-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-2">
                         <div class="testimonial-card bg-white rounded-2xl shadow-lg p-4 md:p-6 hover-card h-full">
                             <div class="flex items-start mb-4">
@@ -1043,9 +966,10 @@ body.sidebar-open {
                                     <h4 class="font-bold text-gray-800 text-sm md:text-base">Priya Reddy</h4>
                                     <p class="text-gray-500 text-xs md:text-sm">Muscle Building</p>
                                     <div class="flex text-yellow-400 text-sm md:text-base mt-1">
-                                        {% for i in range(4) %}
                                         <i class="fas fa-star"></i>
-                                        {% endfor %}
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
                                         <i class="fas fa-star-half-alt"></i>
                                     </div>
                                 </div>
@@ -1056,30 +980,7 @@ body.sidebar-open {
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Testimonial 4 -->
-                    <div class="testimonial-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-2">
-                        <div class="testimonial-card bg-white rounded-2xl shadow-lg p-4 md:p-6 hover-card h-full">
-                            <div class="flex items-start mb-4">
-                                <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-full flex items-center justify-center text-yellow-500 font-bold mr-3 md:mr-4">
-                                    S
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="font-bold text-gray-800 text-sm md:text-base">Sanjay Mehta</h4>
-                                    <p class="text-gray-500 text-xs md:text-sm">Lifestyle Change</p>
-                                    <div class="flex text-yellow-400 text-sm md:text-base mt-1">
-                                        {% for i in range(5) %}
-                                        <i class="fas fa-star"></i>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="text-gray-600 text-sm md:text-base italic mb-4">"Complete lifestyle transformation! I've never felt better. The coaching was professional and personalized."</p>
-                            <div class="text-xs text-gray-500">
-                                <i class="fas fa-calendar-alt mr-1"></i> 2 weeks ago
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
             
@@ -1096,24 +997,277 @@ body.sidebar-open {
     </div>
 </section>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize star rating system
+    const stars = document.querySelectorAll('.star');
+    const ratingInput = document.getElementById('user-rating');
+    
+    if (stars.length > 0 && ratingInput) {
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = parseInt(this.dataset.rating);
+                ratingInput.value = rating;
+                
+                stars.forEach((s, index) => {
+                    if (index < rating) {
+                        s.classList.add('active');
+                        s.classList.remove('text-gray-300');
+                        s.classList.add('text-yellow-400');
+                    } else {
+                        s.classList.remove('active');
+                        s.classList.add('text-gray-300');
+                        s.classList.remove('text-yellow-400');
+                    }
+                });
+            });
+            
+            star.addEventListener('mouseover', function() {
+                const rating = parseInt(this.dataset.rating);
+                stars.forEach((s, index) => {
+                    if (index < rating) {
+                        s.classList.add('text-yellow-300');
+                    }
+                });
+            });
+            
+            star.addEventListener('mouseout', function() {
+                const currentRating = parseInt(ratingInput.value);
+                stars.forEach((s, index) => {
+                    if (index >= currentRating) {
+                        s.classList.remove('text-yellow-300');
+                    }
+                });
+            });
+        });
+    }
+    
+    // Testimonial Slider Functionality
+    let currentTestimonialSlide = 0;
+    const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+    const track = document.querySelector('.testimonial-track');
+    const prevBtn = document.querySelector('.testimonial-prev');
+    const nextBtn = document.querySelector('.testimonial-next');
+    
+    function updateTestimonialSlider() {
+        if (testimonialSlides.length > 0 && track) {
+            const slideWidth = testimonialSlides[0].offsetWidth;
+            track.style.transform = `translateX(-${currentTestimonialSlide * slideWidth}px)`;
+        }
+    }
+    
+    if (prevBtn && nextBtn && track) {
+        prevBtn.addEventListener('click', function() {
+            const slidesPerView = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1;
+            if (currentTestimonialSlide > 0) {
+                currentTestimonialSlide--;
+                updateTestimonialSlider();
+            }
+        });
+        
+        nextBtn.addEventListener('click', function() {
+            const slidesPerView = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1;
+            if (currentTestimonialSlide < testimonialSlides.length - slidesPerView) {
+                currentTestimonialSlide++;
+                updateTestimonialSlider();
+            }
+        });
+        
+        // Auto-slide testimonials
+        setInterval(() => {
+            if (testimonialSlides.length > 0) {
+                const slidesPerView = window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1;
+                if (currentTestimonialSlide < testimonialSlides.length - slidesPerView) {
+                    currentTestimonialSlide++;
+                } else {
+                    currentTestimonialSlide = 0;
+                }
+                updateTestimonialSlider();
+            }
+        }, 5000);
+        
+        // Update slider on window resize
+        window.addEventListener('resize', updateTestimonialSlider);
+    }
+    
+    // Handle form submission with AJAX
+    const reviewForm = document.getElementById('review-form');
+    if (reviewForm) {
+        reviewForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const rating = parseInt(ratingInput.value);
+            const reviewText = document.getElementById('review-text').value;
+            
+            if (rating === 0) {
+                alert('Please select a rating');
+                return;
+            }
+            
+            if (!reviewText.trim()) {
+                alert('Please enter your review');
+                return;
+            }
+            
+            // Create form data
+            const formData = new FormData(this);
+            formData.append('rating', rating);
+            
+            // Show loading state
+            const submitBtn = reviewForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Submitting...';
+            submitBtn.disabled = true;
+            
+            // Submit via AJAX
+            fetch(this.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response;
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(() => {
+                // Show success message
+                showNotification('Thank you for your review! It will be visible after approval.', 'success');
+                
+                // Reset form
+                reviewForm.reset();
+                ratingInput.value = 0;
+                
+                // Reset stars
+                stars.forEach(star => {
+                    star.classList.remove('active', 'text-yellow-400', 'text-yellow-300');
+                    star.classList.add('text-gray-300');
+                });
+                
+                // Reload page after 2 seconds to show updated testimonials
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Error submitting review. Please try again.', 'error');
+            })
+            .finally(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            });
+        });
+    }
+    
+    // Function to show notifications
+    function showNotification(message, type = 'success') {
+        // Remove any existing notifications
+        const existingNotification = document.querySelector('.custom-notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+        
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `custom-notification fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 transform transition-all duration-300 ${
+            type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+        }`;
+        notification.innerHTML = `
+            <div class="flex items-center">
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} mr-2"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        }, 3000);
+    }
+});
+
+// Add CSS for custom notification
+const style = document.createElement('style');
+style.textContent = `
+    .custom-notification {
+        animation: slideIn 0.3s ease-out;
+    }
+    
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+    
+    .star.active {
+        color: #fbbf24 !important;
+    }
+    
+    .testimonial-slider {
+        overflow: hidden;
+    }
+    
+    .testimonial-track {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+    
+    .testimonial-slide {
+        flex-shrink: 0;
+        padding: 0 8px;
+    }
+    
+    .hover-card {
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+    
+    .hover-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        border-color: rgba(59, 130, 246, 0.2);
+    }
+    
+    .section-title {
+        background: linear-gradient(90deg, #059669 0%, #2563eb 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+`;
+document.head.appendChild(style);
+</script>
+
+<!-- Testimonials Section - Better mobile cards -->
+
+
 <!-- Stats Section -->
 <section class="py-8 md:py-12 px-4 bg-gradient-to-r from-green-500 to-blue-500 text-white">
     <div class="container mx-auto">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             <div class="text-center" data-aos="zoom-in">
-                <div class="text-2xl md:text-3xl lg:text-4xl font-bold mb-2" data-counter="500">0</div>
+                <div class="text-2xl md:text-3xl lg:text-4xl font-bold mb-2" data-counter="500">500</div>
                 <p class="text-sm md:text-base opacity-90">Happy Clients</p>
             </div>
             <div class="text-center" data-aos="zoom-in" data-aos-delay="100">
-                <div class="text-2xl md:text-3xl lg:text-4xl font-bold mb-2" data-counter="95">0</div>
+                <div class="text-2xl md:text-3xl lg:text-4xl font-bold mb-2" data-counter="95">95</div>
                 <p class="text-sm md:text-base opacity-90">Success Rate</p>
             </div>
             <div class="text-center" data-aos="zoom-in" data-aos-delay="200">
-                <div class="text-2xl md:text-3xl lg:text-4xl font-bold mb-2" data-counter="5">0</div>
+                <div class="text-2xl md:text-3xl lg:text-4xl font-bold mb-2" data-counter="5">5</div>
                 <p class="text-sm md:text-base opacity-90">Years Experience</p>
             </div>
             <div class="text-center" data-aos="zoom-in" data-aos-delay="300">
-                <div class="text-2xl md:text-3xl lg:text-4xl font-bold mb-2" data-counter="1000">0</div>
+                <div class="text-2xl md:text-3xl lg:text-4xl font-bold mb-2" data-counter="1000">1000</div>
                 <p class="text-sm md:text-base opacity-90">Sessions Conducted</p>
             </div>
         </div>
@@ -1628,9 +1782,38 @@ body.sidebar-open {
 </footer>
 
 <!-- Back to Top Button -->
-<button id="backToTop" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-green-500 to-green-600 text-white rounded-full shadow-xl z-40 opacity-0 transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-2xl" aria-label="Back to top">
+<button id="backToTop"
+    class="fixed bottom-6 right-6 md:bottom-8 md:right-8 
+           w-10 h-10 md:w-12 md:h-12 
+           bg-gradient-to-br from-green-500 to-green-600 
+           text-white rounded-full shadow-xl z-40 
+           opacity-0 transition-all duration-300 
+           hover:scale-110 active:scale-95 hover:shadow-2xl"
+    aria-label="Back to top">
     <i class="fas fa-chevron-up text-sm md:text-base"></i>
 </button>
+<script>
+const backToTopBtn = document.getElementById("backToTop");
+
+// Show button after scrolling
+window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+        backToTopBtn.classList.remove("opacity-0");
+        backToTopBtn.classList.add("opacity-100");
+    } else {
+        backToTopBtn.classList.remove("opacity-100");
+        backToTopBtn.classList.add("opacity-0");
+    }
+});
+
+// Scroll smoothly to top
+backToTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
+</script>
 
 <!-- Custom CSS -->
 <style>
