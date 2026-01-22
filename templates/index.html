@@ -670,7 +670,7 @@ body.sidebar-open {
             </div>
         </div>
         
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6" id="services-grid">
             <!-- Weight Loss Program -->
             <div class="service-card service-item bg-white rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6 border border-gray-100 hover-card" data-category="weight" data-aos="zoom-in">
                 <div class="relative">
@@ -699,7 +699,7 @@ body.sidebar-open {
                 </ul>
                 <div class="flex justify-between items-center">
                     <span class="text-lg font-bold text-green-600">₹2,999</span>
-                    <button class="service-btn bg-red-50 hover:bg-red-100 active:bg-red-200 text-red-500 px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 text-sm md:text-base">
+                    <button class="service-btn details-btn bg-red-50 hover:bg-red-100 active:bg-red-200 text-red-500 px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 text-sm md:text-base" data-service="weight-loss">
                         <i class="fas fa-info-circle mr-1"></i> Details
                     </button>
                 </div>
@@ -728,7 +728,7 @@ body.sidebar-open {
                 </ul>
                 <div class="flex justify-between items-center">
                     <span class="text-lg font-bold text-green-600">₹3,499</span>
-                    <button class="service-btn bg-blue-50 hover:bg-blue-100 active:bg-blue-200 text-blue-500 px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 text-sm md:text-base">
+                    <button class="service-btn details-btn bg-blue-50 hover:bg-blue-100 active:bg-blue-200 text-blue-500 px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 text-sm md:text-base" data-service="weight-gain">
                         <i class="fas fa-info-circle mr-1"></i> Details
                     </button>
                 </div>
@@ -757,7 +757,7 @@ body.sidebar-open {
                 </ul>
                 <div class="flex justify-between items-center">
                     <span class="text-lg font-bold text-green-600">₹2,499</span>
-                    <button class="service-btn bg-green-50 hover:bg-green-100 active:bg-green-200 text-green-500 px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 text-sm md:text-base">
+                    <button class="service-btn details-btn bg-green-50 hover:bg-green-100 active:bg-green-200 text-green-500 px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 text-sm md:text-base" data-service="nutrition">
                         <i class="fas fa-info-circle mr-1"></i> Details
                     </button>
                 </div>
@@ -786,7 +786,7 @@ body.sidebar-open {
                 </ul>
                 <div class="flex justify-between items-center">
                     <span class="text-lg font-bold text-green-600">₹1,999</span>
-                    <button class="service-btn bg-purple-50 hover:bg-purple-100 active:bg-purple-200 text-purple-500 px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 text-sm md:text-base">
+                    <button class="service-btn details-btn bg-purple-50 hover:bg-purple-100 active:bg-purple-200 text-purple-500 px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 text-sm md:text-base" data-service="coaching">
                         <i class="fas fa-info-circle mr-1"></i> Details
                     </button>
                 </div>
@@ -802,200 +802,345 @@ body.sidebar-open {
     </div>
 </section>
 
-
-
-
-<!-- Programs Section - Better tablet grid -->
-<section id="testimonials" class="py-12 md:py-16 px-4 bg-white relative overflow-hidden">
-    <!-- Background Pattern -->
-    <div class="absolute inset-0 bg-gradient-to-br from-green-50/30 to-blue-50/30"></div>
+<!-- Service Details Modal -->
+<div id="service-modal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+    <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
     
-    <div class="container mx-auto relative z-10">
-        <div class="text-center mb-8 md:mb-12" data-aos="fade-up">
-            <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-600 rounded-full text-xs font-medium mb-4">CLIENT REVIEWS</span>
-            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 section-title">What Our Clients Say</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">See what our clients have to say about their transformation journey.</p>
-        </div>
-        
-        <!-- Add Review Form -->
-        {% if current_user.is_authenticated %}
-        <div class="max-w-2xl mx-auto mb-8 md:mb-12 bg-gradient-to-r from-green-50 to-blue-50 p-4 md:p-6 rounded-2xl shadow-lg border border-green-100" data-aos="fade-up">
-            <div class="flex items-center mb-4">
-                <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold mr-3 md:mr-4">
-                    {{ current_user.name[0] if current_user.name else 'U' }}
-                </div>
-                <div>
-                    <h3 class="text-lg md:text-xl font-bold text-gray-800">Share Your Experience</h3>
-                    <p class="text-gray-600 text-sm md:text-base">Help others by sharing your wellness journey</p>
-                </div>
-            </div>
-            
-            <!-- Star Rating -->
-            <div class="mb-4">
-                <div class="flex items-center space-x-1 mb-2">
-                    <span class="text-gray-700 font-medium text-sm">Rate your experience:</span>
-                    <div class="star-rating flex">
-                        {% for i in range(1, 6) %}
-                        <button type="button" class="star text-2xl text-gray-300 hover:text-yellow-400 mx-0.5 transition-colors" data-rating="{{ i }}">
-                            <i class="fas fa-star"></i>
-                        </button>
-                        {% endfor %}
-                    </div>
-                </div>
-                <input type="hidden" id="user-rating" name="rating" value="0">
-            </div>
-            
-            <!-- Review Form -->
-            <form id="review-form" method="POST" action="{{ url_for('submit_review') }}" class="space-y-4">
-                {{ form.csrf_token if form else '' }}
-                <div>
-                    <label for="review-text" class="block text-gray-700 text-sm font-medium mb-2">Your Review</label>
-                    <textarea id="review-text" name="review_text" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-300 text-sm" placeholder="Share your experience..." required></textarea>
-                </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg">
-                    <i class="fas fa-paper-plane mr-2"></i>Submit Review
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl mx-auto overflow-hidden">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between p-4 md:p-6 border-b border-gray-200">
+                <h3 class="text-xl md:text-2xl font-bold text-gray-800" id="modal-title">Service Details</h3>
+                <button id="close-modal" class="text-gray-400 hover:text-gray-600 text-2xl md:text-3xl">
+                    <i class="fas fa-times"></i>
                 </button>
-            </form>
-        </div>
-        {% endif %}
-        
-        <!-- Testimonial Slider -->
-        <div class="relative" data-aos="fade-up">
-            <!-- Testimonial Cards -->
-            <div class="testimonial-slider overflow-hidden">
-                <div class="testimonial-track flex transition-transform duration-500">
-                    {% for review in reviews %}
-                    <div class="testimonial-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-2">
-                        <div class="testimonial-card bg-white rounded-2xl shadow-lg p-4 md:p-6 hover-card h-full">
-                            <div class="flex items-start mb-4">
-                                <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br 
-                                    {% if loop.index % 4 == 1 %}from-green-100 to-green-200 text-green-500
-                                    {% elif loop.index % 4 == 2 %}from-blue-100 to-blue-200 text-blue-500
-                                    {% elif loop.index % 4 == 3 %}from-purple-100 to-purple-200 text-purple-500
-                                    {% else %}from-yellow-100 to-yellow-200 text-yellow-500
-                                    {% endif %}
-                                    rounded-full flex items-center justify-center font-bold mr-3 md:mr-4">
-                                    {{ review.username[0] if review.username else 'U' }}
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="p-4 md:p-6">
+                <div class="flex flex-col md:flex-row gap-6">
+                    <!-- Left Column: Service Info -->
+                    <div class="md:w-2/3">
+                        <div class="mb-4">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div id="modal-icon" class="w-12 h-12 md:w-16 md:h-16 rounded-lg flex items-center justify-center shadow-md">
+                                    <i class="fas text-xl md:text-2xl"></i>
                                 </div>
-                                <div class="flex-1">
-                                    <h4 class="font-bold text-gray-800 text-sm md:text-base">{{ review.username }}</h4>
-                                    <div class="flex text-yellow-400 text-sm md:text-base mt-1">
-                                        {% for i in range(review.rating) %}
-                                        <i class="fas fa-star"></i>
-                                        {% endfor %}
-                                        {% for i in range(5 - review.rating) %}
-                                        <i class="far fa-star"></i>
-                                        {% endfor %}
+                                <div>
+                                    <div id="modal-price" class="text-lg md:text-xl font-bold text-green-600"></div>
+                                    <div class="flex items-center gap-2">
+                                        <span id="modal-category" class="px-2 py-1 text-xs font-medium rounded-full"></span>
+                                        <span id="modal-popular" class="px-2 py-1 bg-red-100 text-red-600 text-xs font-medium rounded-full hidden">Popular</span>
                                     </div>
                                 </div>
                             </div>
-                            <p class="text-gray-600 text-sm md:text-base italic mb-4">"{{ review.review_text }}"</p>
-                            <div class="text-xs text-gray-500">
-                                <i class="fas fa-calendar-alt mr-1"></i> 
-                                {% if review.created_at %}
-                                    {% if review.created_at is string %}
-                                        {{ review.created_at.split(' ')[0] if ' ' in review.created_at else review.created_at }}
-                                    {% else %}
-                                        {{ review.created_at.strftime('%d %b %Y') }}
-                                    {% endif %}
-                                {% else %}
-                                    Recently
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    {% else %}
-                    <!-- Default testimonials if no reviews in database -->
-                    <div class="testimonial-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-2">
-                        <div class="testimonial-card bg-white rounded-2xl shadow-lg p-4 md:p-6 hover-card h-full">
-                            <div class="flex items-start mb-4">
-                                <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-green-100 to-green-200 rounded-full flex items-center justify-center text-green-500 font-bold mr-3 md:mr-4">
-                                    A
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="font-bold text-gray-800 text-sm md:text-base">Anjali Sharma</h4>
-                                    <p class="text-gray-500 text-xs md:text-sm">Weight Loss Journey</p>
-                                    <div class="flex text-yellow-400 text-sm md:text-base mt-1">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="text-gray-600 text-sm md:text-base italic mb-4">"I lost 12 kg in just 3 months with Radhakrishna's guidance. The personalized diet plan was easy to follow and I never felt deprived."</p>
-                            <div class="text-xs text-gray-500">
-                                <i class="fas fa-calendar-alt mr-1"></i> 2 months ago
+                            
+                            <p id="modal-description" class="text-gray-600 mb-4 text-sm md:text-base"></p>
+                            
+                            <div class="mb-4">
+                                <h4 class="font-bold text-gray-800 mb-2">What's Included:</h4>
+                                <ul id="modal-features" class="text-gray-600 space-y-2 text-sm md:text-base"></ul>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="testimonial-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-2">
-                        <div class="testimonial-card bg-white rounded-2xl shadow-lg p-4 md:p-6 hover-card h-full">
-                            <div class="flex items-start mb-4">
-                                <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center text-blue-500 font-bold mr-3 md:mr-4">
-                                    R
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="font-bold text-gray-800 text-sm md:text-base">Rajesh Kumar</h4>
-                                    <p class="text-gray-500 text-xs md:text-sm">Diabetes Management</p>
-                                    <div class="flex text-yellow-400 text-sm md:text-base mt-1">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="text-gray-600 text-sm md:text-base italic mb-4">"As a diabetic, I was struggling to manage my weight. The customized nutrition plan helped me control my sugar levels and lose 8 kg."</p>
-                            <div class="text-xs text-gray-500">
-                                <i class="fas fa-calendar-alt mr-1"></i> 1 month ago
+                    <!-- Right Column: Additional Details & CTA -->
+                    <div class="md:w-1/3">
+                        <div class="bg-gray-50 rounded-xl p-4 md:p-5">
+                            <h4 class="font-bold text-gray-800 mb-3">Program Details</h4>
+                            <ul id="modal-details" class="space-y-3 text-sm md:text-sm text-gray-600">
+                                <!-- Will be populated by JavaScript -->
+                            </ul>
+                            
+                            <div class="mt-6">
+                                <a href="{{ url_for('contact') }}" class="block w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white text-center py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl mb-3">
+                                    <i class="fas fa-calendar-check mr-2"></i>Book Consultation
+                                </a>
+                                <button id="close-modal-2" class="block w-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-center py-3 rounded-lg font-medium transition-all duration-300">
+                                    <i class="fas fa-times mr-2"></i>Close
+                                </button>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="testimonial-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-2">
-                        <div class="testimonial-card bg-white rounded-2xl shadow-lg p-4 md:p-6 hover-card h-full">
-                            <div class="flex items-start mb-4">
-                                <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center text-purple-500 font-bold mr-3 md:mr-4">
-                                    P
-                                </div>
-                                <div class="flex-1">
-                                    <h4 class="font-bold text-gray-800 text-sm md:text-base">Priya Reddy</h4>
-                                    <p class="text-gray-500 text-xs md:text-sm">Muscle Building</p>
-                                    <div class="flex text-yellow-400 text-sm md:text-base mt-1">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="text-gray-600 text-sm md:text-base italic mb-4">"The weight gain program helped me put on healthy weight and build muscle. I feel more confident and energetic now."</p>
-                            <div class="text-xs text-gray-500">
-                                <i class="fas fa-calendar-alt mr-1"></i> 3 weeks ago
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
                 </div>
-            </div>
-            
-            <!-- Slider Controls -->
-            <div class="flex justify-center mt-6 space-x-2">
-                <button class="testimonial-prev w-10 h-10 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="testimonial-next w-10 h-10 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
             </div>
         </div>
     </div>
-</section>
+</div>
+
+<!-- JavaScript for Services Section -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Service data for modal
+    const serviceDetails = {
+        'weight-loss': {
+            title: 'Weight Loss Program',
+            category: 'Weight Management',
+            price: '₹2,999',
+            icon: 'fa-weight',
+            iconColor: 'from-red-100 to-red-200',
+            textColor: 'text-red-500',
+            description: 'A comprehensive 12-week program designed to help you lose weight sustainably while maintaining muscle mass and energy levels.',
+            features: [
+                'Personalized meal plans based on your preferences',
+                'Weekly progress tracking and adjustments',
+                'Regular check-ins with your wellness coach',
+                'Access to our exclusive wellness app',
+                'Recipe database with healthy alternatives',
+                'Exercise guidance and workout plans'
+            ],
+            details: [
+                '<div class="flex justify-between"><span>Duration:</span><span class="font-medium">12 weeks</span></div>',
+                '<div class="flex justify-between"><span>Format:</span><span class="font-medium">Online + App</span></div>',
+                '<div class="flex justify-between"><span>Support:</span><span class="font-medium">24/7 Chat</span></div>',
+                '<div class="flex justify-between"><span>Meal Plans:</span><span class="font-medium">Daily</span></div>',
+                '<div class="flex justify-between"><span>Check-ins:</span><span class="font-medium">Weekly</span></div>'
+            ],
+            popular: true
+        },
+        'weight-gain': {
+            title: 'Weight Gain Program',
+            category: 'Weight Management',
+            price: '₹3,499',
+            icon: 'fa-utensils',
+            iconColor: 'from-blue-100 to-blue-200',
+            textColor: 'text-blue-500',
+            description: 'Designed for individuals looking to gain healthy weight and build lean muscle mass through proper nutrition and exercise guidance.',
+            features: [
+                'Calorie-dense meal plans with macro tracking',
+                'Strength training guidance and workout routines',
+                'Nutritional supplements advice and recommendations',
+                'Muscle recovery and rest optimization',
+                'Portion control and meal timing strategies',
+                'Progress photos and measurements tracking'
+            ],
+            details: [
+                '<div class="flex justify-between"><span>Duration:</span><span class="font-medium">16 weeks</span></div>',
+                '<div class="flex justify-between"><span>Format:</span><span class="font-medium">Online + In-person</span></div>',
+                '<div class="flex justify-between"><span>Support:</span><span class="font-medium">Daily Guidance</span></div>',
+                '<div class="flex justify-between"><span>Workout Plans:</span><span class="font-medium">Customized</span></div>',
+                '<div class="flex justify-between"><span>Check-ins:</span><span class="font-medium">Bi-weekly</span></div>'
+            ],
+            popular: false
+        },
+        'nutrition': {
+            title: 'Personalized Nutrition',
+            category: 'Nutrition Planning',
+            price: '₹2,499',
+            icon: 'fa-clipboard-list',
+            iconColor: 'from-green-100 to-green-200',
+            textColor: 'text-green-500',
+            description: 'Tailored nutrition plans considering your body type, metabolic rate, lifestyle, dietary restrictions, and personal goals.',
+            features: [
+                'Detailed diet charts with portion sizes',
+                'Grocery shopping lists by category',
+                'Recipe suggestions with preparation tips',
+                'Dietary restriction accommodations',
+                'Meal prep and planning strategies',
+                'Seasonal and local food recommendations'
+            ],
+            details: [
+                '<div class="flex justify-between"><span>Duration:</span><span class="font-medium">Flexible</span></div>',
+                '<div class="flex justify-between"><span>Format:</span><span class="font-medium">Online</span></div>',
+                '<div class="flex justify-between"><span>Support:</span><span class="font-medium">Email + Chat</span></div>',
+                '<div class="flex justify-between"><span>Updates:</span><span class="font-medium">Monthly</span></div>',
+                '<div class="flex justify-between"><span>Recipes:</span><span class="font-medium">50+ Included</span></div>'
+            ],
+            popular: false
+        },
+        'coaching': {
+            title: 'Coaching Sessions',
+            category: 'Personal Coaching',
+            price: '₹1,999',
+            icon: 'fa-laptop-medical',
+            iconColor: 'from-purple-100 to-purple-200',
+            textColor: 'text-purple-500',
+            description: 'One-on-one coaching sessions available in flexible formats to provide personalized guidance and support for your wellness journey.',
+            features: [
+                'Flexible scheduling (online/offline)',
+                'Continuous progress monitoring',
+                'Personalized action plans',
+                'Accountability and motivation',
+                'Health and lifestyle assessments',
+                'Ongoing support and adjustments'
+            ],
+            details: [
+                '<div class="flex justify-between"><span>Sessions:</span><span class="font-medium">8 Sessions</span></div>',
+                '<div class="flex justify-between"><span>Duration:</span><span class="font-medium">60 min each</span></div>',
+                '<div class="flex justify-between"><span>Format:</span><span class="font-medium">Your Choice</span></div>',
+                '<div class="flex justify-between"><span>Support:</span><span class="font-medium">Between Sessions</span></div>',
+                '<div class="flex justify-between"><span>Materials:</span><span class="font-medium">Provided</span></div>'
+            ],
+            popular: false
+        }
+    };
+
+    // DOM Elements
+    const modal = document.getElementById('service-modal');
+    const closeButtons = document.querySelectorAll('#close-modal, #close-modal-2');
+    const detailsButtons = document.querySelectorAll('.details-btn');
+    const serviceTabs = document.querySelectorAll('.service-tab');
+    const serviceItems = document.querySelectorAll('.service-item');
+    const viewAllBtn = document.getElementById('view-all-services');
+
+    // Open Modal Function
+    function openModal(serviceId) {
+        const service = serviceDetails[serviceId];
+        if (!service) return;
+
+        // Set modal content
+        document.getElementById('modal-title').textContent = service.title;
+        document.getElementById('modal-price').textContent = service.price;
+        document.getElementById('modal-category').textContent = service.category;
+        document.getElementById('modal-category').className = `px-2 py-1 text-xs font-medium rounded-full ${service.iconColor.replace('from-', 'bg-').split(' ')[0].replace('100', '100')} ${service.textColor}`;
+        document.getElementById('modal-description').textContent = service.description;
+        
+        // Set icon
+        const modalIcon = document.getElementById('modal-icon');
+        modalIcon.className = `w-12 h-12 md:w-16 md:h-16 rounded-lg flex items-center justify-center shadow-md bg-gradient-to-br ${service.iconColor} ${service.textColor}`;
+        modalIcon.querySelector('i').className = `fas ${service.icon} text-xl md:text-2xl`;
+        
+        // Set popular badge
+        const popularBadge = document.getElementById('modal-popular');
+        if (service.popular) {
+            popularBadge.classList.remove('hidden');
+        } else {
+            popularBadge.classList.add('hidden');
+        }
+        
+        // Set features
+        const featuresList = document.getElementById('modal-features');
+        featuresList.innerHTML = '';
+        service.features.forEach(feature => {
+            const li = document.createElement('li');
+            li.className = 'flex items-start';
+            li.innerHTML = `<i class="fas fa-check-circle text-green-500 mr-2 mt-1 flex-shrink-0"></i><span>${feature}</span>`;
+            featuresList.appendChild(li);
+        });
+        
+        // Set details
+        const detailsList = document.getElementById('modal-details');
+        detailsList.innerHTML = '';
+        service.details.forEach(detail => {
+            const li = document.createElement('li');
+            li.innerHTML = detail;
+            detailsList.appendChild(li);
+        });
+        
+        // Show modal
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Close Modal Function
+    function closeModal() {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Filter Services Function
+    function filterServices(category) {
+        serviceItems.forEach(item => {
+            if (category === 'all' || item.dataset.category === category) {
+                item.classList.remove('hidden');
+                item.style.display = 'block';
+            } else {
+                item.classList.add('hidden');
+                item.style.display = 'none';
+            }
+        });
+        
+        // Update active tab
+        serviceTabs.forEach(tab => {
+            if (tab.dataset.category === category) {
+                tab.classList.add('active', 'bg-green-500', 'text-white');
+                tab.classList.remove('bg-gray-100', 'text-gray-700');
+            } else {
+                tab.classList.remove('active', 'bg-green-500', 'text-white');
+                tab.classList.add('bg-gray-100', 'text-gray-700');
+            }
+        });
+    }
+
+    // Event Listeners
+    detailsButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const serviceId = this.dataset.service;
+            openModal(serviceId);
+        });
+    });
+
+    closeButtons.forEach(button => {
+        button.addEventListener('click', closeModal);
+    });
+
+    // Close modal when clicking outside
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Filter tabs
+    serviceTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const category = this.dataset.category;
+            filterServices(category);
+        });
+    });
+
+    // View all services button
+    viewAllBtn.addEventListener('click', function() {
+        filterServices('all');
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+});
+</script>
+
+<!-- Add these styles to your CSS or in a style tag -->
+<style>
+.hover-card {
+    transition: all 0.3s ease;
+}
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+.food-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+#service-modal {
+    transition: opacity 0.3s ease;
+}
+#service-modal > div:first-child {
+    transition: opacity 0.3s ease;
+}
+#service-modal > div:last-child {
+    animation: modalSlideIn 0.3s ease;
+}
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+
+<!-- Programs Section - Better tablet grid -->
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -1277,126 +1422,156 @@ document.head.appendChild(style);
 <!-- Transformation Section - Better mobile layout -->
 <section id="transformations" class="py-12 md:py-16 px-4 bg-gray-50">
     <div class="container mx-auto">
-        <div class="text-center mb-8 md:mb-12" data-aos="fade-up">
-            <span class="inline-block px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-xs font-medium mb-4">SUCCESS STORIES</span>
-            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 section-title">Real Transformations</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">Real transformations from clients who achieved their health goals.</p>
+
+        <!-- Heading -->
+        <div class="text-center mb-10 md:mb-14" data-aos="fade-up">
+            <span class="inline-block px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-xs font-medium mb-3">
+                SUCCESS STORIES
+            </span>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 section-title">
+                Real Transformations
+            </h2>
+            <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">
+                Real results from clients who transformed their health and lifestyle.
+            </p>
         </div>
 
-        <!-- Transformation Gallery -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
-            <!-- Transformation Card 1 -->
-            <div class="transformation-card overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover-card active:scale-95 group" data-aos="zoom-in">
-                <div class="relative h-48 md:h-56 overflow-hidden">
-                    <div class="w-full h-full bg-gradient-to-r from-red-400 to-orange-400 flex items-center justify-center">
-                        <i class="fas fa-running text-white text-5xl md:text-6xl"></i>
-                    </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div class="absolute bottom-4 left-4 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <h3 class="font-bold text-xl md:text-2xl">Weight Loss</h3>
-                        <p class="text-white/90 text-sm">-15 kg in 3 months</p>
-                    </div>
-                    <div class="absolute top-4 right-4">
-                        <span class="px-3 py-1 bg-green-500 text-white text-xs font-medium rounded-full">Success</span>
-                    </div>
-                </div>
-                <div class="p-4 md:p-6 bg-white">
-                    <div class="flex justify-between items-center mb-4">
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 md:w-12 md:h-12 bg-red-100 rounded-full flex items-center justify-center text-red-500">
-                                <i class="fas fa-running"></i>
-                            </div>
-                            <span class="ml-3 font-medium text-gray-800">Sarah's Journey</span>
-                        </div>
-                        <div class="text-green-500 font-bold text-lg">95%</div>
-                    </div>
-                    <p class="text-gray-600 text-sm md:text-base">"The personalized plan helped me lose weight without feeling deprived. Highly recommended!"</p>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <div class="flex items-center text-xs text-gray-500">
-                            <i class="fas fa-clock mr-2"></i>
-                            <span>3 month program</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Transformation Card 2 -->
-            <div class="transformation-card overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover-card active:scale-95 group" data-aos="zoom-in" data-aos-delay="100">
-                <div class="relative h-48 md:h-56 overflow-hidden">
-                    <div class="w-full h-full bg-gradient-to-r from-blue-400 to-purple-400 flex items-center justify-center">
-                        <i class="fas fa-dumbbell text-white text-5xl md:text-6xl"></i>
-                    </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div class="absolute bottom-4 left-4 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <h3 class="font-bold text-xl md:text-2xl">Muscle Gain</h3>
-                        <p class="text-white/90 text-sm">+8 kg in 4 months</p>
-                    </div>
-                    <div class="absolute top-4 right-4">
-                        <span class="px-3 py-1 bg-green-500 text-white text-xs font-medium rounded-full">Success</span>
-                    </div>
-                </div>
-                <div class="p-4 md:p-6 bg-white">
-                    <div class="flex justify-between items-center mb-4">
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-500">
-                                <i class="fas fa-dumbbell"></i>
-                            </div>
-                            <span class="ml-3 font-medium text-gray-800">Mike's Progress</span>
-                        </div>
-                        <div class="text-green-500 font-bold text-lg">92%</div>
-                    </div>
-                    <p class="text-gray-600 text-sm md:text-base">"The nutrition plan and workout guidance helped me build lean muscle effectively."</p>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <div class="flex items-center text-xs text-gray-500">
-                            <i class="fas fa-clock mr-2"></i>
-                            <span>4 month program</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Transformation Card 3 -->
-            <div class="transformation-card overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover-card active:scale-95 group" data-aos="zoom-in" data-aos-delay="200">
-                <div class="relative h-48 md:h-56 overflow-hidden">
-                    <div class="w-full h-full bg-gradient-to-r from-green-400 to-teal-400 flex items-center justify-center">
-                        <i class="fas fa-heart text-white text-5xl md:text-6xl"></i>
-                    </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div class="absolute bottom-4 left-4 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <h3 class="font-bold text-xl md:text-2xl">Healthy Lifestyle</h3>
-                        <p class="text-white/90 text-sm">Improved energy & vitality</p>
-                    </div>
-                    <div class="absolute top-4 right-4">
-                        <span class="px-3 py-1 bg-green-500 text-white text-xs font-medium rounded-full">Success</span>
-                    </div>
-                </div>
-                <div class="p-4 md:p-6 bg-white">
-                    <div class="flex justify-between items-center mb-4">
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-full flex items-center justify-center text-green-500">
-                                <i class="fas fa-heart"></i>
-                            </div>
-                            <span class="ml-3 font-medium text-gray-800">Lisa's Story</span>
-                        </div>
-                        <div class="text-green-500 font-bold text-lg">98%</div>
-                    </div>
-                    <p class="text-gray-600 text-sm md:text-base">"The holistic approach transformed not just my body but my overall wellbeing."</p>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <div class="flex items-center text-xs text-gray-500">
-                            <i class="fas fa-clock mr-2"></i>
-                            <span>6 month program</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+
+            <!-- Card 1 -->
+<!-- Transformation Card -->
+<div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group">
+
+    <!-- Before / After Images -->
+    <div class="grid grid-cols-2 h-52 md:h-60 group">
+
+        <!-- Before Image -->
+        <div class="relative overflow-hidden">
+            <img src="{{ url_for('static', filename='uploads/c1.jpeg') }}"
+                 alt="Before"
+                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            <span class="absolute top-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                Before
+            </span>
         </div>
-        
-        <!-- View More Button -->
-        <div class="text-center mt-8 md:mt-12" data-aos="fade-up">
-            <button id="view-more-transformations" class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl">
-                <i class="fas fa-images mr-2"></i>View More Transformations
+
+        <!-- After Image -->
+        <div class="relative overflow-hidden">
+            <img src="{{ url_for('static', filename='uploads/c2.jpeg') }}"
+                 alt="After"
+                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+            <span class="absolute top-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded">
+                After
+            </span>
+        </div>
+
+    </div>
+
+    <!-- Content -->
+    <div class="p-5">
+        <h3 class="font-semibold text-gray-800 text-lg mb-2">
+            Weight Loss Transformation
+        </h3>
+
+        <p class="text-gray-600 text-sm mb-4">
+            "Personalized wellness plan helped me lose 15kg safely and sustainably."
+        </p>
+
+        <div class="flex justify-between items-center text-xs text-gray-500 border-t pt-3">
+            <span>3 Months Program</span>
+            <span class="bg-green-100 text-green-600 px-2 py-1 rounded-full">
+                Success
+            </span>
+        </div>
+    </div>
+
+</div>
+
+            <!-- Card 2 -->
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group" data-aos="zoom-in" data-aos-delay="100">
+
+                <div class="grid grid-cols-2 h-52 md:h-60">
+                    <div class="relative overflow-hidden">
+                        <img src="{{ url_for('static', filename='uploads/e1.jpeg') }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded">Before</span>
+                    </div>
+                    <div class="relative overflow-hidden">
+
+                        <img src="{{ url_for('static', filename='uploads/e2.jpeg') }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded">After</span>
+                    </div>
+                </div>
+
+                <div class="p-5">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-semibold text-gray-800 text-lg">
+                            Weight Loss Transformation
+                        </h3>
+                        <span class="text-green-600 font-bold text-sm">
+                            +8 kg
+                        </span>
+                    </div>
+
+                    <p class="text-gray-600 text-sm mb-4">
+                        “The workouts and nutrition guidance helped me build lean muscle confidently.”
+                    </p>
+
+                    <div class="flex justify-between items-center text-xs text-gray-500 border-t pt-3">
+                        <span>Mike • 4 Months</span>
+                        <span class="bg-green-100 text-green-600 px-2 py-1 rounded-full">
+                            Success
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group" data-aos="zoom-in" data-aos-delay="200">
+
+                <div class="grid grid-cols-2 h-52 md:h-60">
+                    <div class="relative overflow-hidden">
+                        <img src="{{ url_for('static', filename='uploads/f1.jpeg') }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded">Before</span>
+                    </div>
+                    <div class="relative overflow-hidden">
+                        <img src="{{ url_for('static', filename='uploads/f2.jpeg') }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-2 right-2 bg-green-600 text-white text-xs px-2 py-1 rounded">After</span>
+                    </div>
+                </div>
+
+                <div class="p-5">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-semibold text-gray-800 text-lg">
+                            Weight Loss Transformation
+                        </h3>
+                        <span class="text-green-600 font-bold text-sm">
+                            100%
+                        </span>
+                    </div>
+
+                    <p class="text-gray-600 text-sm mb-4">
+                        “I feel more energetic, confident, and healthier than ever before.”
+                    </p>
+
+                    <div class="flex justify-between items-center text-xs text-gray-500 border-t pt-3">
+                        <span>Lisa • 6 Months</span>
+                        <span class="bg-green-100 text-green-600 px-2 py-1 rounded-full">
+                            Success
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center mt-10 md:mt-14" data-aos="fade-up">
+            <button class="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-full font-medium transition transform hover:scale-105 shadow-lg">
+                <i class="fas fa-images mr-2"></i> View More Transformations
             </button>
         </div>
+
     </div>
 </section>
 
@@ -1417,7 +1592,7 @@ document.head.appendChild(style);
 
     <!-- Profile Image -->
     <img
-        src="{{ url_for('static', filename='uploads/profile_6_abb0bc90.jpg') }}"
+        src="{{ url_for('static', filename='uploads/yesu p.jpeg') }}"
         alt="Profile Image"
         class="w-[85%] h-[85%] rounded-full object-cover border-4 border-blue-100"
     />
@@ -1556,11 +1731,11 @@ document.head.appendChild(style);
         </div>
         
         <div class="max-w-3xl mx-auto" data-aos="fade-up">
-            <div class="space-y-4">
-                <!-- FAQ Item 1 -->
+            <div class="space-y-4" id="faq-container">
+                <!-- FAQ Item 1 - FIXED: Added missing button -->
                 <div class="faq-item bg-gray-50 rounded-xl overflow-hidden">
                     <button class="faq-question w-full text-left p-4 md:p-6 flex justify-between items-center hover:bg-gray-100 transition-colors">
-                        <span class="font-medium text-gray-800 text-sm md:text-base">How do I know which program is right for me?</span>
+                        <span class="font-medium text-gray-800 text-sm md:text-base">How do I choose the right wellness program for me?</span>
                         <i class="fas fa-chevron-down text-gray-500 transition-transform duration-300"></i>
                     </button>
                     <div class="faq-answer p-4 md:p-6 border-t border-gray-200 hidden">
@@ -1624,6 +1799,235 @@ document.head.appendChild(style);
     </div>
 </section>
 
+<!-- JavaScript for FAQ Toggle Functionality -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+            const faqItem = this.closest('.faq-item');
+            const answer = faqItem.querySelector('.faq-answer');
+            const icon = this.querySelector('i');
+            
+            // Toggle current answer
+            answer.classList.toggle('hidden');
+            
+            // Rotate icon
+            icon.classList.toggle('rotate-180');
+            
+            // Optional: Close other open FAQs
+            faqQuestions.forEach(otherQuestion => {
+                if (otherQuestion !== question) {
+                    const otherItem = otherQuestion.closest('.faq-item');
+                    const otherAnswer = otherItem.querySelector('.faq-answer');
+                    const otherIcon = otherQuestion.querySelector('i');
+                    
+                    otherAnswer.classList.add('hidden');
+                    otherIcon.classList.remove('rotate-180');
+                }
+            });
+        });
+    });
+});
+</script>
+
+<!-- Add this to your CSS or in a style tag -->
+<style>
+.rotate-180 {
+    transform: rotate(180deg);
+}
+</style>
+<section id="testimonials" class="py-12 md:py-16 px-4 bg-white relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 bg-gradient-to-br from-green-50/30 to-blue-50/30"></div>
+    
+    <div class="container mx-auto relative z-10">
+        <div class="text-center mb-8 md:mb-12" data-aos="fade-up">
+            <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-600 rounded-full text-xs font-medium mb-4">CLIENT REVIEWS</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 section-title">What Our Clients Say</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">See what our clients have to say about their transformation journey.</p>
+        </div>
+        
+        <!-- Add Review Form -->
+        {% if current_user.is_authenticated %}
+        <div class="max-w-2xl mx-auto mb-8 md:mb-12 bg-gradient-to-r from-green-50 to-blue-50 p-4 md:p-6 rounded-2xl shadow-lg border border-green-100" data-aos="fade-up">
+            <div class="flex items-center mb-4">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold mr-3 md:mr-4">
+                    {{ current_user.name[0] if current_user.name else 'U' }}
+                </div>
+                <div>
+                    <h3 class="text-lg md:text-xl font-bold text-gray-800">Share Your Experience</h3>
+                    <p class="text-gray-600 text-sm md:text-base">Help others by sharing your wellness journey</p>
+                </div>
+            </div>
+            
+            <!-- Star Rating -->
+            <div class="mb-4">
+                <div class="flex items-center space-x-1 mb-2">
+                    <span class="text-gray-700 font-medium text-sm">Rate your experience:</span>
+                    <div class="star-rating flex">
+                        {% for i in range(1, 6) %}
+                        <button type="button" class="star text-2xl text-gray-300 hover:text-yellow-400 mx-0.5 transition-colors" data-rating="{{ i }}">
+                            <i class="fas fa-star"></i>
+                        </button>
+                        {% endfor %}
+                    </div>
+                </div>
+                <input type="hidden" id="user-rating" name="rating" value="0">
+            </div>
+            
+            <!-- Review Form -->
+            <form id="review-form" method="POST" action="{{ url_for('submit_review') }}" class="space-y-4">
+                {{ form.csrf_token if form else '' }}
+                <div>
+                    <label for="review-text" class="block text-gray-700 text-sm font-medium mb-2">Your Review</label>
+                    <textarea id="review-text" name="review_text" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-300 text-sm" placeholder="Share your experience..." required></textarea>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg">
+                    <i class="fas fa-paper-plane mr-2"></i>Submit Review
+                </button>
+            </form>
+        </div>
+        {% endif %}
+        
+        <!-- Testimonial Slider -->
+        <div class="relative" data-aos="fade-up">
+            <!-- Testimonial Cards -->
+            <div class="testimonial-slider overflow-hidden">
+                <div class="testimonial-track flex transition-transform duration-500">
+                    {% for review in reviews %}
+                    <div class="testimonial-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-2">
+                        <div class="testimonial-card bg-white rounded-2xl shadow-lg p-4 md:p-6 hover-card h-full">
+                            <div class="flex items-start mb-4">
+                                <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br 
+                                    {% if loop.index % 4 == 1 %}from-green-100 to-green-200 text-green-500
+                                    {% elif loop.index % 4 == 2 %}from-blue-100 to-blue-200 text-blue-500
+                                    {% elif loop.index % 4 == 3 %}from-purple-100 to-purple-200 text-purple-500
+                                    {% else %}from-yellow-100 to-yellow-200 text-yellow-500
+                                    {% endif %}
+                                    rounded-full flex items-center justify-center font-bold mr-3 md:mr-4">
+                                    {{ review.username[0] if review.username else 'U' }}
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-gray-800 text-sm md:text-base">{{ review.username }}</h4>
+                                    <div class="flex text-yellow-400 text-sm md:text-base mt-1">
+                                        {% for i in range(review.rating) %}
+                                        <i class="fas fa-star"></i>
+                                        {% endfor %}
+                                        {% for i in range(5 - review.rating) %}
+                                        <i class="far fa-star"></i>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm md:text-base italic mb-4">"{{ review.review_text }}"</p>
+                            <div class="text-xs text-gray-500">
+                                <i class="fas fa-calendar-alt mr-1"></i> 
+                                {% if review.created_at %}
+                                    {% if review.created_at is string %}
+                                        {{ review.created_at.split(' ')[0] if ' ' in review.created_at else review.created_at }}
+                                    {% else %}
+                                        {{ review.created_at.strftime('%d %b %Y') }}
+                                    {% endif %}
+                                {% else %}
+                                    Recently
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <!-- Default testimonials if no reviews in database -->
+                    <div class="testimonial-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-2">
+                        <div class="testimonial-card bg-white rounded-2xl shadow-lg p-4 md:p-6 hover-card h-full">
+                            <div class="flex items-start mb-4">
+                                <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-green-100 to-green-200 rounded-full flex items-center justify-center text-green-500 font-bold mr-3 md:mr-4">
+                                    A
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-gray-800 text-sm md:text-base">Anjali Sharma</h4>
+                                    <p class="text-gray-500 text-xs md:text-sm">Weight Loss Journey</p>
+                                    <div class="flex text-yellow-400 text-sm md:text-base mt-1">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm md:text-base italic mb-4">"I lost 12 kg in just 3 months with Radhakrishna's guidance. The personalized diet plan was easy to follow and I never felt deprived."</p>
+                            <div class="text-xs text-gray-500">
+                                <i class="fas fa-calendar-alt mr-1"></i> 2 months ago
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-2">
+                        <div class="testimonial-card bg-white rounded-2xl shadow-lg p-4 md:p-6 hover-card h-full">
+                            <div class="flex items-start mb-4">
+                                <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full flex items-center justify-center text-blue-500 font-bold mr-3 md:mr-4">
+                                    R
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-gray-800 text-sm md:text-base">Rajesh Kumar</h4>
+                                    <p class="text-gray-500 text-xs md:text-sm">Diabetes Management</p>
+                                    <div class="flex text-yellow-400 text-sm md:text-base mt-1">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm md:text-base italic mb-4">"As a diabetic, I was struggling to manage my weight. The customized nutrition plan helped me control my sugar levels and lose 8 kg."</p>
+                            <div class="text-xs text-gray-500">
+                                <i class="fas fa-calendar-alt mr-1"></i> 1 month ago
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 px-2">
+                        <div class="testimonial-card bg-white rounded-2xl shadow-lg p-4 md:p-6 hover-card h-full">
+                            <div class="flex items-start mb-4">
+                                <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full flex items-center justify-center text-purple-500 font-bold mr-3 md:mr-4">
+                                    P
+                                </div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-gray-800 text-sm md:text-base">Priya Reddy</h4>
+                                    <p class="text-gray-500 text-xs md:text-sm">Muscle Building</p>
+                                    <div class="flex text-yellow-400 text-sm md:text-base mt-1">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm md:text-base italic mb-4">"The weight gain program helped me put on healthy weight and build muscle. I feel more confident and energetic now."</p>
+                            <div class="text-xs text-gray-500">
+                                <i class="fas fa-calendar-alt mr-1"></i> 3 weeks ago
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- Slider Controls -->
+            <div class="flex justify-center mt-6 space-x-2">
+                <button class="testimonial-prev w-10 h-10 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="testimonial-next w-10 h-10 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
 <!-- Footer - Improved mobile layout -->
 <footer class="bg-gradient-to-b from-gray-900 to-gray-800 text-white pt-12 pb-8 px-4">
     <div class="container mx-auto">
